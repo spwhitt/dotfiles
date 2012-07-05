@@ -14,4 +14,4 @@ alias sml='rlwrap -c sml'
 # apt-get convenience
 alias ai="sudo apt-get install"
 alias ar="sudo apt-get remove"
-alias acs="sudo apt-cache search"
+alias acs="apt-cache search"

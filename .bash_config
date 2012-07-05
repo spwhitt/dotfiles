@@ -1,0 +1,17 @@
+# vim: set syntax=sh:
+
+# Used to track my dotfiles without having to make ~/ a git repo
+# see http://necoro.wordpress.com/2009/10/08/managing-your-configuration-files-with-git-and-stgit/
+alias dotfiles='git --git-dir=/home/spencer/.dotfiles.git/ --work-tree=/home/spencer'
+
+# I tend to open vim in the command line, but gvim is better.
+# If I need to open terminal vim at any point, I can run vi.
+alias vim='gvim'
+
+# Make the SML interpreter usable
+alias sml='rlwrap -c sml'
+
+# apt-get convenience
+alias ai="sudo apt-get install"
+alias ar="sudo apt-get remove"
+alias acs="sudo apt-cache search"

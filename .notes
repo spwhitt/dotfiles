@@ -1,0 +1,17 @@
+This file is so that a year from now, when I'm setting this up again, I can remember what I did.
+
+I'm managing my dotfiles based on these instructions:
+  http://necoro.wordpress.com/2009/10/08/managing-your-configuration-files-with-git-and-stgit/
+
+thought these ones are practically the same:
+  http://silas.sewell.org/blog/2009/03/08/profile-management-with-git-and-github/
+
+Here are the relevant bits:
+
+cd ~
+mkdir ~/.dotfiles.git
+alias dotfiles='git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME'
+dotfiles init
+echo "*" >> .gitignore
+
+Use "dotfiles add -f" to add files

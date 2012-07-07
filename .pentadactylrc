@@ -2,6 +2,8 @@
 
 set mapleader=","
 
+cmap <Leader>v :!gvim $HOME/.pentadactylrc
+
 " Easier tab navigation
 "map <S-H> gT
 "map <S-L> gt

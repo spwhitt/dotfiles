@@ -15,3 +15,5 @@ alias sml='rlwrap -c sml'
 alias ai="sudo apt-get install"
 alias ar="sudo apt-get remove"
 alias acs="apt-cache search"
+
+export PYTHONPATH=/home/spencer/Projects/s5g:PYTHONPATH

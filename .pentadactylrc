@@ -1,8 +1,8 @@
 " vim: set syntax=vim:
 
-set mapleader=","
+set mapleader=" "
 
-cmap <Leader>v :!gvim $HOME/.pentadactylrc
+cmap <Leader>ev :!gvim $HOME/.pentadactylrc
 
 " Easier tab navigation
 "map <S-H> gT
@@ -12,4 +12,3 @@ cmap <Leader>v :!gvim $HOME/.pentadactylrc
 imap jk <Esc>
 cmap jk <ESC>
 vmap jk <ESC>
-

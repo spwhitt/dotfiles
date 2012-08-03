@@ -8,6 +8,9 @@ alias dotfiles='git --git-dir=/home/spencer/.dotfiles.git/ --work-tree=/home/spe
 # If I need to open terminal vim at any point, I can run vi.
 alias vim='gvim'
 
+# Everybody should do this
+alias rm='trash-put'
+
 # Make the SML interpreter usable
 alias sml='rlwrap -c sml'
 
@@ -16,4 +19,5 @@ alias ai="sudo apt-get install"
 alias ar="sudo apt-get remove"
 alias acs="apt-cache search"
 
-export PYTHONPATH=/home/spencer/Projects/s5g:PYTHONPATH
+export PYTHONPATH=/home/spencer/Projects/s5g:$PYTHONPATH
+export PATH=/home/spencer/Projects/s5g:$PATH

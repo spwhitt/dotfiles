@@ -22,7 +22,6 @@ call vundle#rc()
 " let Vundle manage itself
 Bundle 'gmarik/vundle'
 
-" Bundle 'YankRing.vim'
 " Bundle 'kien/ctrlp.vim'
 Bundle 'bufexplorer.zip'
 Bundle 'SirVer/ultisnips'
@@ -36,26 +35,21 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'sessionman.vim'
+Bundle 'repeat.vim'
+Bundle 'sjl/clam.vim'
 
 " Color scheme
-" Force csapprox to use gui colors, even if terminal pretends it only supports
-" 8 colors
-Bundle 'CSApprox'
 Bundle 'wgibbs/vim-irblack'
 Bundle 'sjl/badwolf'
+Bundle 'xoria256.vim'
+Bundle 'nanotech/jellybeans.vim'
+Bundle 'Lucius'
 
 " Filetypes
 Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-haml'
 Bundle 'groenewege/vim-less'
 Bundle 'sophacles/vim-bundle-mako'
-
-"Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-
-"Bundle 'L9'
-"Bundle 'FuzzyFinder'
-" non github repos
-"Bundle 'git://git.wincent.com/command-t.git'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                Utilities                                "
@@ -81,15 +75,15 @@ endfunction
 """"""""""""""""
 "  Appearance  "
 """"""""""""""""
-set background=dark
-colorscheme ir_black
-" Fix wildmenu colors
-hi WildMenu gui=italic guibg=#202020 guifg=yellow
-" Force gnome-terminal to display colorscheme correctly
 if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
     set t_Co=256
 endif
-
+"set background=dark
+"colorscheme ir_black
+colorscheme badwolf
+" Fix wildmenu colors
+"hi WildMenu gui=italic guibg=#202020 guifg=yellow
+" Force gnome-terminal to display colorscheme correctly
 
 " No extra gui crap
 set guioptions-=m
@@ -178,7 +172,7 @@ set incsearch
 """"""""""""
 "  Backup  "
 """"""""""""
-" Turn backup off, since most stuff is in SVN, git et.c anyway...
+" Turn backup off, most stuff is in git
 set nobackup
 set nowb
 set noswapfile
@@ -186,6 +180,9 @@ set noswapfile
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                              Key Bindings                               "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Run python
+noremap <silent> - :w<cr> :!python ./learn.py<cr>
 
 " Too lazy to hold shift
 noremap ; :
@@ -199,10 +196,16 @@ inoremap  <esc>  <nop>
 vnoremap  <esc>  <nop>
 cnoremap  <esc>  <nop>
 
+" Messing around
+" noremap h <nop>
+" noremap j <nop>
+" noremap k <nop>
+" noremap l <nop>
+
 " Tab navigation
 noremap <S-H> gT
 noremap <S-L> gt
-noremap <leader>te :tabedit<CR>
+noremap <leader>tn :tabedit<CR>
 noremap <leader>tc :tabclose<CR>
 
 " Switch windows with ctrl
@@ -235,7 +238,7 @@ noremap <leader>= <C-w>=
 cmap w!! w !sudo tee % >/dev/null
 
 " Toggle spell check
-nnoremap <silent> <leader>s :setlocal spell!<CR>
+nnoremap <silent> <leader>ss :setlocal spell!<cr>
 
 " Disable highlight
 noremap <silent> <leader><cr> :noh<cr>

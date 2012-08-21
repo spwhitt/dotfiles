@@ -21,3 +21,6 @@ alias acs="apt-cache search"
 
 export PYTHONPATH=/home/spencer/Projects/s5g:$PYTHONPATH
 export PATH=/home/spencer/Projects/s5g:$PATH
+
+# Enable RVM
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"

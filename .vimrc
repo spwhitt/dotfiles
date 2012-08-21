@@ -6,6 +6,9 @@
 " 1) git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 " 2) Move this file to your home directory
 " 3) Launch vim and run :BundleInstall
+"
+" TODO: Text object representing entire file
+" Then I can get rid of _ commands.
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                 Plugins                                 "
@@ -218,6 +221,9 @@ noremap <A-j> <C-W>J
 noremap <A-k> <C-W>K
 noremap <A-h> <C-W>H
 noremap <A-l> <C-W>L
+
+" Make Y behave like everyone else
+nnoremap Y y$
 
 " Completion;
 " Tags

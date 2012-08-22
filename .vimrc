@@ -292,3 +292,4 @@ nnoremap <leader>ds :Sexplore<cr>
 " Make is pretty crappy about tabs vs spaces
 autocmd FileType make setlocal noexpandtab
 autocmd FileType ruby setlocal ts=2 sts=2 sw=2
+autocmd FileType haml setlocal ts=2 sts=2 sw=2

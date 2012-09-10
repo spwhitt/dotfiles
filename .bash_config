@@ -1,5 +1,12 @@
 # vim: set syntax=sh:
 
+# Swap two filenames
+function swap {
+mv $1 .tmp_2747475682
+mv $2 $1
+mv .tmp_2747475682 $2
+}
+
 # Used to track my dotfiles without having to make ~/ a git repo
 # see http://necoro.wordpress.com/2009/10/08/managing-your-configuration-files-with-git-and-stgit/
 alias dotfiles='git --git-dir=/home/spencer/.dotfiles.git/ --work-tree=/home/spencer'
@@ -9,7 +16,8 @@ alias dotfiles='git --git-dir=/home/spencer/.dotfiles.git/ --work-tree=/home/spe
 alias vim='gvim'
 
 # Everybody should do this
-alias rm='trash-put'
+alias rm="echo 'Use trash'"
+alias trash="trash-put"
 
 # Make the SML interpreter usable
 alias sml='rlwrap -c sml'
@@ -19,8 +27,18 @@ alias ai="sudo apt-get install"
 alias ar="sudo apt-get remove"
 alias acs="apt-cache search"
 
+# UB Related
+# TODO: Bash script to create ssh and sftp at same time
+alias tlake="ssh swhitt@timberlake.cse.buffalo.edu"
+alias tlakeftp="sftp swhitt@timberlake.cse.buffalo.edu"
+alias ratz="ssh swhitt@ratz.cse.buffalo.edu"
+alias ratzftp="sftp swhitt@ratz.cse.buffalo.edu"
+
 export PYTHONPATH=/home/spencer/Projects/s5g:$PYTHONPATH
 export PATH=/home/spencer/Projects/s5g:$PATH
 
 # Enable RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+# Enable autojump
+[[ -s ~/.autojump/etc/profile.d/autojump.bash ]] && source ~/.autojump/etc/profile.d/autojump.bash

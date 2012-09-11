@@ -1,12 +1,5 @@
 #!/bin/bash
 
-# Install vundle if necessary
-if [ ! -e ${HOME}/.vim/bundle/vundle ]
-then
-    echo "Installing vundle"
-    git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-fi
-
 function install {
     # TODO: Offer to replace symbolic link
     if [ -h $2 ]
@@ -29,3 +22,14 @@ install "bash_config" "${HOME}/.bash_config"
 install "vimrc" "${HOME}/.vimrc"
 install "gitconfig" "${HOME}/.gitconfig"
 install "pentadactylrc" "${HOME}/.pentadactylrc"
+
+# Install vundle if necessary
+if [ ! -e ${HOME}/.vim/bundle/vundle ]
+then
+    echo "Installing vundle"
+    git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+fi
+
+echo
+echo "To complete the install, run the following command, if necessary:"
+echo "echo \". ~/.bash_config\" >> ~/.bashrc"

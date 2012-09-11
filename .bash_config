@@ -27,12 +27,15 @@ alias ai="sudo apt-get install"
 alias ar="sudo apt-get remove"
 alias acs="apt-cache search"
 
-# UB Related
-# TODO: Bash script to create ssh and sftp at same time
-alias tlake="ssh swhitt@timberlake.cse.buffalo.edu"
-alias tlakeftp="sftp swhitt@timberlake.cse.buffalo.edu"
-alias ratz="ssh swhitt@ratz.cse.buffalo.edu"
-alias ratzftp="sftp swhitt@ratz.cse.buffalo.edu"
+# Sets up aliases for ssh and sftp access to a computer
+function remote {
+    alias $1="ssh $2"
+    alias $1"ftp"="sftp $2"
+}
+
+# Remote computer access
+remote "tlake" "swhitt@timberlake.cse.buffalo.edu"
+remote "ratz" "swhitt@ratz.cse.buffalo.edu"
 
 export PYTHONPATH=/home/spencer/Projects/s5g:$PYTHONPATH
 export PATH=/home/spencer/Projects/s5g:$PATH

@@ -25,28 +25,32 @@ call vundle#rc()
 " let Vundle manage itself
 Bundle 'gmarik/vundle'
 
-" Bundle 'kien/ctrlp.vim'
-Bundle 'bufexplorer.zip'
-Bundle 'SirVer/ultisnips'
-
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
+" Editing commands
+Bundle 'repeat.vim'
 Bundle 'tpope/vim-surround'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'wojtekmach/vim-rename'
+Bundle 'SirVer/ultisnips'
+
+" Management
+Bundle 'sessionman.vim'
+Bundle 'bufexplorer.zip'
+
+" External Integration
 Bundle 'tpope/vim-fugitive'
 Bundle 'scrooloose/syntastic'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'sessionman.vim'
-Bundle 'repeat.vim'
 Bundle 'sjl/clam.vim'
 
 " Color scheme
-Bundle 'wgibbs/vim-irblack'
+"Bundle 'wgibbs/vim-irblack'
 Bundle 'sjl/badwolf'
-Bundle 'xoria256.vim'
-Bundle 'nanotech/jellybeans.vim'
-Bundle 'Lucius'
+"Bundle 'xoria256.vim'
+"Bundle 'nanotech/jellybeans.vim'
+"Bundle 'Lucius'
 
 " Filetypes
 Bundle 'tpope/vim-markdown'

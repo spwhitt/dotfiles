@@ -1,0 +1,7 @@
+Host tim
+    HostName timberlake.cse.buffalo.edu
+    User swhitt
+
+Host ratz
+    HostName ratz.cse.buffalo.edu
+    User swhitt

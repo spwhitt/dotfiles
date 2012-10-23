@@ -18,6 +18,7 @@ function install {
     ln -s $PWD/$1 $2
 }
 
+install "ssh_config" "${HOME}/.ssh/config"
 install "bash_config" "${HOME}/.bash_config"
 install "vimrc" "${HOME}/.vimrc"
 install "gitconfig" "${HOME}/.gitconfig"

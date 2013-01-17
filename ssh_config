@@ -5,3 +5,11 @@ Host tim
 Host ratz
     HostName ratz.cse.buffalo.edu
     User swhitt
+
+Host molly
+    HostName molly.cse.buffalo.edu
+    User swhitt
+
+Host starfleet
+    HostName starfleet-command.cse.buffalo.edu
+    User swhitt

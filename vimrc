@@ -9,6 +9,8 @@
 "
 " TODO: Text object representing entire file
 " Then I can get rid of _ commands.
+"
+" TODO: Spaces after , around = + -...
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                 Plugins                                 "
@@ -199,9 +201,9 @@ noremap : ;
 inoremap  jk     <Esc>
 cnoremap  jk     <C-c>
 vnoremap  jk     <ESC>
-inoremap  <esc>  <nop>
-vnoremap  <esc>  <nop>
-cnoremap  <esc>  <nop>
+"inoremap  <esc>  <nop>
+"vnoremap  <esc>  <nop>
+"cnoremap  <esc>  <nop>
 
 " Messing around
 " noremap h <nop>
@@ -297,3 +299,6 @@ nnoremap <leader>ds :Sexplore<cr>
 autocmd FileType make setlocal noexpandtab
 autocmd FileType ruby setlocal ts=2 sts=2 sw=2
 autocmd FileType haml setlocal ts=2 sts=2 sw=2
+
+" Fix nanoc's yaml frontmatter syntax highlighting
+autocmd BufNewFile,BufRead *.md syntax match Comment /\%^---\_.\{-}---$/

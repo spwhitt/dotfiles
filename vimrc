@@ -37,6 +37,7 @@ Bundle 'tpope/vim-surround'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'wojtekmach/vim-rename'
 Bundle 'SirVer/ultisnips'
+Bundle 'mattn/zencoding-vim'
 
 " Management
 Bundle 'sessionman.vim'
@@ -254,6 +255,9 @@ nnoremap <silent> <leader>ss :setlocal spell!<cr>
 
 " Disable highlight
 noremap <silent> <leader><cr> :noh<cr>
+
+" The * command should stay on the current word
+nnoremap * *N
 
 " Easier word deletion in insert mode
 inoremap <C-backspace> <C-w>

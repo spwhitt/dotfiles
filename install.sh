@@ -23,12 +23,21 @@ install "bash_config" "${HOME}/.bash_config"
 install "vimrc" "${HOME}/.vimrc"
 install "gitconfig" "${HOME}/.gitconfig"
 install "pentadactylrc" "${HOME}/.pentadactylrc"
+install "awesome" "${HOME}/.config"
+install "zshrc" "${HOME}/.zshrc"
 
 # Install vundle if necessary
 if [ ! -e ${HOME}/.vim/bundle/vundle ]
 then
     echo "Installing vundle"
     git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+fi
+
+# Install oh-my-zsh if necessary
+if [ ! -e ${HOME}/.oh-my-zsh ]
+then
+    echo "Installing oh-my-zsh"
+    git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 fi
 
 echo

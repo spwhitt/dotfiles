@@ -90,7 +90,7 @@ if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
 endif
 "set background=dark
 "colorscheme ir_black
-colorscheme badwolf
+"colorscheme badwolf
 " Fix wildmenu colors
 "hi WildMenu gui=italic guibg=#202020 guifg=yellow
 " Force gnome-terminal to display colorscheme correctly

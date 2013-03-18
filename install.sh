@@ -26,6 +26,9 @@ install "pentadactylrc" "${HOME}/.pentadactylrc"
 install "awesome" "${HOME}/.config"
 install "zshrc" "${HOME}/.zshrc"
 
+install "awesome.session" "/usr/share/gnome-session/sessions/awesome.session"
+install "gnome-awesome.desktop" "/usr/share/xsessions/gnome-awesome.desktop"
+
 # Install vundle if necessary
 if [ ! -e ${HOME}/.vim/bundle/vundle ]
 then

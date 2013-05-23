@@ -8,7 +8,7 @@ ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="agnoster"
 
 # Example aliases
-# alias zshconfig="mate ~/.zshrc"
+alias zshconfig="vim ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Set to this to use case-sensitive completion
@@ -36,4 +36,11 @@ plugins=(git debian history)
 
 source $ZSH/oh-my-zsh.sh
 
+#zstyle ':vcs_info:*' disable-patterns "$HOME/mnt(|/*)"
+zstyle ':vcs_info:*' disable-patterns "*"
 # Customize to your needs...
+alias mntmarr='sshfs -o reconnect swhitt@marr.cse.buffalo.edu: ~/mnt/marr; cd ~/mnt/marr'
+alias unmntmarr='fusermount -u ~/mnt/marr'
+alias saveme='fusermount -u -z ~/mnt/marr; killall sshfs; sleep 1; killall -9 sshfs;'
+
+alias zshdisablegit='git config --add oh-my-zsh.hide-status 1'

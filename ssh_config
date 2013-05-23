@@ -13,3 +13,14 @@ Host molly
 Host starfleet
     HostName starfleet-command.cse.buffalo.edu
     User swhitt
+
+Host marr
+    HostName marr.cse.buffalo.edu
+    User swhitt
+
+Host armitage
+    HostName armitage.cse.buffalo.edu
+    User swhitt
+
+# Help mitigate freezing issuse with sshfs
+ServerAliveInterval 15

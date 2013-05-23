@@ -36,7 +36,7 @@ Bundle 'repeat.vim'
 Bundle 'tpope/vim-surround'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'wojtekmach/vim-rename'
-Bundle 'SirVer/ultisnips'
+"Bundle 'SirVer/ultisnips'
 Bundle 'mattn/zencoding-vim'
 
 " Management
@@ -47,6 +47,10 @@ Bundle 'bufexplorer.zip'
 Bundle 'tpope/vim-fugitive'
 Bundle 'scrooloose/syntastic'
 Bundle 'sjl/clam.vim'
+" Fast searching
+Bundle 'rking/ag.vim'
+" Just incase Ag is not installed
+Bundle 'mileszs/ack.vim'
 
 " Color scheme
 "Bundle 'wgibbs/vim-irblack'
@@ -122,6 +126,32 @@ set so=7
 """"""""""""""
 "  Behavior  "
 """"""""""""""
+" Capitalization
+if (&tildeop)
+  nmap gcw guw~l
+  nmap gcW guW~l
+  nmap gciw guiw~l
+  nmap gciW guiW~l
+  nmap gcis guis~l
+  nmap gc$ gu$~l
+  nmap gcgc guu~l
+  nmap gcc guu~l
+  vmap gc gu~l
+else
+  nmap gcw guw~h
+  nmap gcW guW~h
+  nmap gciw guiw~h
+  nmap gciW guiW~h
+  nmap gcis guis~h
+  nmap gc$ gu$~h
+  nmap gcgc guu~h
+  nmap gcc guu~h
+  vmap gc gu~h
+endif
+
+" Ctags
+set tags=tags;
+
 " Improvements!
 set nocompatible
 
@@ -136,7 +166,10 @@ set ts=4 sts=4 sw=4 expandtab shiftround
 
 " Indenting
 set ai "Auto indent
-set si "Smart indent
+"set si "Smart indent
+" Smart indent breaks python indenting,
+" use language specific indenting instead
+set nosmartindent
 
 " Soft wrap
 set linebreak
@@ -278,7 +311,7 @@ nnoremap _= :call Preserve("normal gg=G")<CR>
 
 " Open vimrc in a new tab
 " Mnemonic: Edit Vimrc
-nnoremap <leader>ev :vsplit $MYVIMRC<CR>
+nnoremap <leader>ev :e $MYVIMRC<CR>
 
 " Edit UltiSnips file for current file
 " Mnemonic: Edit Snips
@@ -294,6 +327,16 @@ autocmd! bufwritepost .vimrc source $MYVIMRC
 nnoremap <leader>de :Explore<cr>
 nnoremap <leader>dv :Vexplore<cr>
 nnoremap <leader>ds :Sexplore<cr>
+
+" Things to remember
+
+" Return to last edit position when opening files (You want this!)
+autocmd BufReadPost *
+     \ if line("'\"") > 0 && line("'\"") <= line("$") |
+     \   exe "normal! g`\"" |
+     \ endif
+" Remember info about open buffers on close
+set viminfo^=%
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                           File Type Settings                            "

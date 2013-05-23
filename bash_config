@@ -27,8 +27,10 @@ alias spim='rlwrap -c spim'
 
 # apt-get convenience
 alias ai="sudo apt-get install"
-alias ar="sudo apt-get remove"
+alias ar="sudo apt-get autoremove"
 alias acs="apt-cache search"
+
+alias mntmarr="sshfs -o reconnect marr:/projects/video2txt-annotate ~/mnt/marr"
 
 export PYTHONPATH=/home/spencer/Projects/s5g:$PYTHONPATH
 export PATH=/home/spencer/Projects/s5g:$PATH

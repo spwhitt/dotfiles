@@ -126,6 +126,9 @@ set so=7
 """"""""""""""
 "  Behavior  "
 """"""""""""""
+" Put name of current file in titlebar
+set title
+
 " Capitalization
 if (&tildeop)
   nmap gcw guw~l

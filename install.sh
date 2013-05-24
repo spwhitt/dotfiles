@@ -23,11 +23,20 @@ install "bash_config" "${HOME}/.bash_config"
 install "vimrc" "${HOME}/.vimrc"
 install "gitconfig" "${HOME}/.gitconfig"
 install "pentadactylrc" "${HOME}/.pentadactylrc"
-install "awesome" "${HOME}/.config"
 install "zshrc" "${HOME}/.zshrc"
 
-install "awesome.session" "/usr/share/gnome-session/sessions/awesome.session"
-install "gnome-awesome.desktop" "/usr/share/xsessions/gnome-awesome.desktop"
+#install "awesome" "${HOME}/.config"
+#install "awesome.session" "/usr/share/gnome-session/sessions/awesome.session"
+#install "gnome-awesome.desktop" "/usr/share/xsessions/gnome-awesome.desktop"
+
+install "i3/config" "${HOME}/.i3/config"
+install "i3/i3status.conf" "${HOME}/.i3status.conf"
+sudo install "i3/i3.session" "/usr/share/gnome-session/sessions/"
+sudo install "i3/i3-gnome.desktop" "/usr/share/xsessions/"
+sudo install "i3/i3.desktop" "/usr/share/applications/"
+
+# Disable gnome desktop
+gsettings set org.gnome.desktop.background show-desktop-icons false
 
 # Install vundle if necessary
 if [ ! -e ${HOME}/.vim/bundle/vundle ]

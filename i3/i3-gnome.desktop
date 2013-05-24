@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=Awesome GNOME
+Name=i3 GNOME
 Comment=Dynamic window manager
 TryExec=/usr/bin/gnome-session
-Exec=gnome-session --session=awesome
+Exec=gnome-session --session=i3
 Type=XSession

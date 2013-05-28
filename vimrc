@@ -152,6 +152,9 @@ let maplocalleader = "\\"
 
 " Behavior {{{1
 
+    " Put name of current file in titlebar
+    set title
+
     " Tab character settings
     set ts=4 sts=4 sw=4 expandtab shiftround
 

@@ -52,6 +52,4 @@ then
     git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 fi
 
-echo
-echo "To complete the install, run the following command, if necessary:"
-echo "echo \". ~/.bash_config\" >> ~/.bashrc"
+vim +BundleInstall +qall

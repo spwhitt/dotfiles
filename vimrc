@@ -76,6 +76,15 @@ let maplocalleader = "\\"
 
 " Appearance {{{1
 
+    highlight ExtraWhitespace ctermbg=red guibg=red
+    match ExtraWhitespace /\s\+$/
+    augroup MyAutoCmd
+    autocmd BufWinEnter * if &modifiable  | match ExtraWhitespace /\s\+$/ | endif
+    autocmd InsertEnter * if &modifiable  | match ExtraWhitespace /\s\+\%#\@<!$/ | endif
+    autocmd InsertLeave * if &modifiable  | match ExtraWhitespace /\s\+$/ | endif
+    autocmd BufWinLeave * if &modifiable  | call clearmatches() | endif
+    augroup END
+
     " Make collapsed folds look nice {{{2
         " http://dhruvasagar.com/2013/03/28/vim-better-foldtext
         function! NeatFoldText()
@@ -89,7 +98,7 @@ let maplocalleader = "\\"
             return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
         endfunction
         set foldtext=NeatFoldText()
-        " }}}2
+    " }}}2
 
     if has('gui_running')
         " No extra gui crap in gvim
@@ -110,7 +119,10 @@ let maplocalleader = "\\"
 
     colorscheme badwolf
 
-    " Display divider at 80 characters. 
+    " Number column no wider than it needs to be
+    set numberwidth=1
+
+    " Display divider at 80 characters.
     " Highlight any text which flows over the limit
     set textwidth=80
     "set colorcolumn=+1
@@ -142,7 +154,7 @@ let maplocalleader = "\\"
     " Set 5 lines to the cursor - when moving vertically using j/k
     set scrolloff=5
     set sidescrolloff=5
-    
+
     " No annoying sound on errors
     set noerrorbells
     set novisualbell
@@ -153,6 +165,16 @@ let maplocalleader = "\\"
 " Behavior {{{1
     
     AddTabularPattern! strings /"[^"]*"/
+
+    " Hard mode
+    "nnoremap jj <nop>
+    "nnoremap kk <nop>
+    "nnoremap hh <nop>
+    "nnoremap ll <nop>
+
+    " Open new windows to the right or above
+    set splitright
+    set nosplitbelow
 
     " Put name of current file in titlebar
     set title
@@ -224,8 +246,11 @@ let maplocalleader = "\\"
 
 " Key Bindings {{{1
 
+    " Video to text project remotes
+    nnoremap <leader>rs :e scp://starfleet/~/src/video2text/<cr>
+    nnoremap <leader>rm :e scp://marr/~/video2text/<cr>
+
     "This allows for change paste motion cp{motion}
-    " 
     nmap <silent> cp :set opfunc=ChangePaste<CR>g@
     function! ChangePaste(type, ...)
         silent exe "normal! `[v`]\"_c"
@@ -248,7 +273,7 @@ let maplocalleader = "\\"
     " eg: when making an edit from visual block mode
     inoremap  <C-c>  <esc>
     vnoremap  <C-c>  <esc>
-    cnoremap  <C-c>  <esc>
+    "cnoremap  <C-c>  <esc>
 
     " Tab navigation
     noremap <S-H> gT
@@ -261,7 +286,7 @@ let maplocalleader = "\\"
     noremap <C-k> <C-W>k
     noremap <C-h> <C-W>h
     noremap <C-l> <C-W>l
-    
+
     " Move windows with Ctrl+Shift
     noremap <A-j> <C-W>J
     noremap <A-k> <C-W>K
@@ -294,12 +319,20 @@ let maplocalleader = "\\"
 
     " Toggle spell check
     nnoremap <silent> <leader>ss :setlocal spell!<cr>
+    nnoremap <Leader>sj ]s
+    nnoremap <Leader>sk [s
+    nnoremap <Leader>sa zg]s
+    nnoremap <Leader>sd 1z=
+    nnoremap <Leader>sf z=
 
     " Disable highlight
     noremap <silent> <leader><cr> :noh<cr>
 
+    " <Leader>cd: Switch to the directory of the open buffer
+    nnoremap <Leader>cd :cd %:p:h<cr>:pwd<cr>
+
     " The * command should stay on the current word
-    nnoremap * *N
+    nnoremap * *``
 
     " Easier word deletion in insert mode
     inoremap <C-BS> <C-w>

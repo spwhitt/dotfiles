@@ -18,19 +18,20 @@ function install {
     ln -s $PWD/$1 $2
 }
 
-install "ssh_config" "${HOME}/.ssh/config"
-install "bash_config" "${HOME}/.bash_config"
-install "vimrc" "${HOME}/.vimrc"
-install "gitconfig" "${HOME}/.gitconfig"
-install "pentadactylrc" "${HOME}/.pentadactylrc"
-install "zshrc" "${HOME}/.zshrc"
+install "ssh_config"     "${HOME}/.ssh/config"
+install "bash_config"    "${HOME}/.bash_config"
+install "vimrc"          "${HOME}/.vimrc"
+install "gitconfig"      "${HOME}/.gitconfig"
+install "pentadactylrc"  "${HOME}/.pentadactylrc"
+install "zshrc"          "${HOME}/.zshrc"
 
-#install "awesome" "${HOME}/.config"
-#install "awesome.session" "/usr/share/gnome-session/sessions/awesome.session"
-#install "gnome-awesome.desktop" "/usr/share/xsessions/gnome-awesome.desktop"
+#install "awesome"                "${HOME}/.config"
+#install "awesome.session"        "/usr/share/gnome-session/sessions/awesome.session"
+#install "gnome-awesome.desktop"  "/usr/share/xsessions/gnome-awesome.desktop"
 
-#install "i3/config" "${HOME}/.i3/config"
-#install "i3/i3status.conf" "${HOME}/.i3status.conf"
+#install "i3/config"         "${HOME}/.i3/config"
+#install "i3/i3status.conf"  "${HOME}/.i3status.conf"
+
 if [ ! -L ~/.i3 ]
 then
     echo "Placing symbolic link for ~/.i3"
@@ -38,9 +39,9 @@ then
     install "i3" "${HOME}/.i3"
 fi
 
-sudo install "i3/i3.session" "/usr/share/gnome-session/sessions/"
-sudo install "i3/i3-gnome.desktop" "/usr/share/xsessions/"
-sudo install "i3/i3.desktop" "/usr/share/applications/"
+sudo install "i3/i3.session"        "/usr/share/gnome-session/sessions/"
+sudo install "i3/i3-gnome.desktop"  "/usr/share/xsessions/"
+sudo install "i3/i3.desktop"        "/usr/share/applications/"
 
 # Disable gnome desktop
 gsettings set org.gnome.desktop.background show-desktop-icons false

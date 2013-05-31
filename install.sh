@@ -45,6 +45,9 @@ sudo install "i3/i3.desktop" "/usr/share/applications/"
 # Disable gnome desktop
 gsettings set org.gnome.desktop.background show-desktop-icons false
 
+# Gnome terminal settings
+install "gnome-terminal.xml" "${HOME}/.gconf/apps/gnome-terminal/profiles/Default/%gconf.xml"
+
 # Install vundle if necessary
 if [ ! -e ${HOME}/.vim/bundle/vundle ]
 then

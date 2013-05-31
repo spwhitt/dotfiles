@@ -151,6 +151,8 @@ let maplocalleader = "\\"
 
 
 " Behavior {{{1
+    
+    AddTabularPattern! strings /"[^"]*"/
 
     " Put name of current file in titlebar
     set title

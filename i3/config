@@ -11,13 +11,13 @@
 #
 
 # Fix for nvidia cards
-# force_xinerama yes
+force_xinerama yes
 
 set $mod Mod4
 
 # font for window titles. ISO 10646 = Unicode
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-font pango:DejaVu Sans Mono 12
+font pango:DejaVu Sans Mono 11
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -56,7 +56,7 @@ bindsym $mod+f fullscreen
 # Keys are adjacent, which I believe makes sense
 bindsym $mod+q layout stacking
 bindsym $mod+w layout tabbed
-bindsym $mod+e layout default
+bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -143,5 +143,5 @@ bar {
         position top
         tray_output primary
         #font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-        font pango:DejaVu Sans Mono 12
+        font pango:DejaVu Sans Mono 11
 }

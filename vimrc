@@ -163,8 +163,10 @@ let maplocalleader = "\\"
 
 
 " Behavior {{{1
-    
-    AddTabularPattern! strings /"[^"]*"/
+
+    " Create a custom command for each one rather than using AddTabularPattern,
+    " because this way I can put them directly in my vimrc, which is easier
+    command TabularizeStrings :Tabularize /"[^" ]*"/
 
     " Hard mode
     "nnoremap jj <nop>

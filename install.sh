@@ -29,8 +29,15 @@ install "zshrc" "${HOME}/.zshrc"
 #install "awesome.session" "/usr/share/gnome-session/sessions/awesome.session"
 #install "gnome-awesome.desktop" "/usr/share/xsessions/gnome-awesome.desktop"
 
-install "i3/config" "${HOME}/.i3/config"
-install "i3/i3status.conf" "${HOME}/.i3status.conf"
+#install "i3/config" "${HOME}/.i3/config"
+#install "i3/i3status.conf" "${HOME}/.i3status.conf"
+if [ ! -L ~/.i3 ]
+then
+    echo "Placing symbolic link for ~/.i3"
+    mv ~/.i3 ~/.i3-orig
+    install "i3" "${HOME}/.i3"
+fi
+
 sudo install "i3/i3.session" "/usr/share/gnome-session/sessions/"
 sudo install "i3/i3-gnome.desktop" "/usr/share/xsessions/"
 sudo install "i3/i3.desktop" "/usr/share/applications/"
@@ -43,6 +50,9 @@ if [ ! -e ${HOME}/.vim/bundle/vundle ]
 then
     echo "Installing vundle"
     git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+
+    # Install the vim packages managed by vundle
+    vim +BundleInstall +qall
 fi
 
 # Install oh-my-zsh if necessary
@@ -52,4 +62,14 @@ then
     git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 fi
 
-vim +BundleInstall +qall
+# A patched and pretty dmenu
+if [ ! -e ./dmenu2 ]
+then
+    echo "Installing dmenu2"
+    hg clone https://bitbucket.org/melek/dmenu2
+    cd dmenu2
+    make
+    sudo make install
+    cd ..
+fi
+

@@ -5,7 +5,8 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="agnoster"
+#ZSH_THEME="random"
+ZSH_THEME="sorin"
 
 # Example aliases
 alias zshconfig="vim ~/.zshrc"
@@ -44,3 +45,4 @@ alias unmntmarr='fusermount -u ~/mnt/marr'
 alias saveme='fusermount -u -z ~/mnt/marr; killall sshfs; sleep 1; killall -9 sshfs;'
 
 alias zshdisablegit='git config --add oh-my-zsh.hide-status 1'
+alias vim='gvim'

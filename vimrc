@@ -164,6 +164,11 @@ let maplocalleader = "\\"
 
 " Behavior {{{1
 
+    " Trim trailing whitespace
+    nnoremap <leader>tw :%s/\s\+$//<cr>``
+
+    nmap <leader>ts <leader>tw
+
     " Create a custom command for each one rather than using AddTabularPattern,
     " because this way I can put them directly in my vimrc, which is easier
     command TabularizeStrings :Tabularize /"[^" ]*"/

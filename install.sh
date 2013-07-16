@@ -1,5 +1,9 @@
 #!/bin/bash
 
+sudo apt-get install git mercurial build-essential python-pip vim-gnome
+
+sudo pip install i3-py
+
 function install {
     # TODO: Offer to replace symbolic link
     if [ -h $2 ]
@@ -30,7 +34,7 @@ install "zshrc"          "${HOME}/.zshrc"
 #install "gnome-awesome.desktop"  "/usr/share/xsessions/gnome-awesome.desktop"
 
 #install "i3/config"         "${HOME}/.i3/config"
-#install "i3/i3status.conf"  "${HOME}/.i3status.conf"
+install "i3/i3status.conf"  "${HOME}/.i3status.conf"
 
 if [ ! -L ~/.i3 ]
 then

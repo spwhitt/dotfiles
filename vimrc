@@ -73,6 +73,7 @@ let maplocalleader = "\\"
         Bundle 'tpope/vim-haml'
         Bundle 'groenewege/vim-less'
         Bundle 'sophacles/vim-bundle-mako'
+        Bundle 'saltstack/salt-vim'
 
 " Appearance {{{1
 

@@ -1,10 +1,7 @@
+" vim: expandtab foldmethod=marker foldcolumn=2
+"
 " File: .vimrc
 " Author: Spencer Whitt
-
-" Install instructions:
-" 1) git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-" 2) Move this file to your home directory
-" 3) Launch vim and run :BundleInstall
 
 let mapleader = " "
 let g:mapleader = " "
@@ -14,32 +11,36 @@ let maplocalleader = "\\"
 
     " Vundle Setup {{{2
 
-        " this section is required to initialize vundle
-        filetype off
+        set nocompatible              " be iMproved, required
+        filetype off                  " required
 
-        set rtp+=~/.vim/bundle/vundle/
-        call vundle#rc()
+        " set the runtime path to include Vundle and initialize
+        set rtp+=~/.vim/bundle/Vundle.vim
+        call vundle#begin()
 
         " let vundle manage itself
-        Bundle 'gmarik/vundle'
+        Plugin 'gmarik/Vundle.vim'
 
     " Visual Appearance {{{2
-        Bundle 'sjl/badwolf'
-        Bundle 'Lokaltog/vim-powerline'
+        Plugin 'sjl/badwolf'
+        Plugin 'altercation/vim-colors-solarized'
+        " Plugin 'Lokaltog/vim-powerline'
+        Plugin 'bling/vim-airline'
 
     " Text edit commands {{{2
-        Bundle 'repeat.vim'
-        Bundle 'godlygeek/tabular'
-        Bundle 'mattn/zencoding-vim'
-        Bundle 'wojtekmach/vim-rename'
-        Bundle 'scrooloose/nerdcommenter'
-        Bundle 'vim-scripts/matchit.zip'
-        Bundle 'nelstrom/vim-visual-star-search'
+        Plugin 'repeat.vim'
+        Plugin 'godlygeek/tabular'
+        Plugin 'mattn/emmet-vim'
+        Plugin 'wojtekmach/vim-rename'
+        " Plugin 'scrooloose/nerdcommenter'
+        Plugin 'tpope/vim-commentary'
+        Plugin 'vim-scripts/matchit.zip'
+        Plugin 'nelstrom/vim-visual-star-search'
 
         let g:UltiSnipsExpandTrigger="<tab>"
         let g:UltiSnipsJumpForwardTrigger="<tab>"
         let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-        Bundle 'SirVer/ultisnips'
+        " Plugin 'SirVer/ultisnips'
 
     " Text objects {{{2
 
@@ -49,42 +50,58 @@ let maplocalleader = "\\"
         " ae, ie             : The entire buffer
         " az, iz             : a fold
         " ai, aI             : an indentation level
-        Bundle 'kana/vim-textobj-user'
-        Bundle 'tpope/vim-surround'
-        Bundle 'coderifous/textobj-word-column.vim'
-        Bundle 'thinca/vim-textobj-between'
-        Bundle 'kana/vim-textobj-entire'
-        Bundle 'kana/vim-textobj-fold'
-        Bundle 'kana/vim-textobj-indent'
+        Plugin 'kana/vim-textobj-user'
+        Plugin 'tpope/vim-surround'
+        Plugin 'coderifous/textobj-word-column.vim'
+        Plugin 'thinca/vim-textobj-between'
+        Plugin 'kana/vim-textobj-entire'
+        Plugin 'kana/vim-textobj-fold'
+        Plugin 'kana/vim-textobj-indent'
 
     " Management {{{2
-        Bundle 'sessionman.vim'
-        Bundle 'bufexplorer.zip'
+        Plugin 'sessionman.vim'
+        Plugin 'bufexplorer.zip'
+        Plugin 'kien/ctrlp.vim'
+        Plugin 'scratch.vim'
 
     " External Integration {{{2
-        Bundle 'tpope/vim-fugitive'
-        Bundle 'airblade/vim-gitgutter'
-        Bundle 'scrooloose/syntastic'
-        Bundle 'rking/ag.vim'
-        Bundle 'mileszs/ack.vim'
+        Plugin 'jamessan/vim-gnupg'
+        Plugin 'tpope/vim-fugitive'
+        Plugin 'airblade/vim-gitgutter'
+        Plugin 'scrooloose/syntastic'
+        Plugin 'rking/ag.vim'
+        Plugin 'mileszs/ack.vim'
 
     " Additional Filetype Support {{{2
-        Bundle 'tpope/vim-markdown'
-        Bundle 'tpope/vim-haml'
-        Bundle 'groenewege/vim-less'
-        Bundle 'sophacles/vim-bundle-mako'
-        Bundle 'saltstack/salt-vim'
+        Plugin 'tpope/vim-markdown'
+        Plugin 'tpope/vim-haml'
+        Plugin 'groenewege/vim-less'
+        Plugin 'sophacles/vim-bundle-mako'
+        Plugin 'saltstack/salt-vim'
+        Plugin 'Glench/Vim-Jinja2-Syntax'
+        Plugin 'wting/rust.vim'
+
+    " End Vundle {{{2
+        call vundle#end()
+        filetype plugin indent on
 
 " Appearance {{{1
 
-    highlight ExtraWhitespace ctermbg=red guibg=red
-    match ExtraWhitespace /\s\+$/
-    augroup MyAutoCmd
-    autocmd BufWinEnter * if &modifiable  | match ExtraWhitespace /\s\+$/ | endif
-    autocmd InsertEnter * if &modifiable  | match ExtraWhitespace /\s\+\%#\@<!$/ | endif
-    autocmd InsertLeave * if &modifiable  | match ExtraWhitespace /\s\+$/ | endif
-    autocmd BufWinLeave * if &modifiable  | call clearmatches() | endif
-    augroup END
+    syntax on
+
+    set guifont=Sauce\ Code\ Powerline:h14
+    let g:airline_powerline_fonts=1
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tabline#show_buffers = 1
+
+    " highlight ExtraWhitespace ctermbg=red guibg=red
+    " match ExtraWhitespace /\s\+$/
+    " augroup MyAutoCmd
+    " autocmd BufWinEnter * if &modifiable  | match ExtraWhitespace /\s\+$/ | endif
+    " autocmd InsertEnter * if &modifiable  | match ExtraWhitespace /\s\+\%#\@<!$/ | endif
+    " autocmd InsertLeave * if &modifiable  | match ExtraWhitespace /\s\+$/ | endif
+    " autocmd BufWinLeave * if &modifiable  | call clearmatches() | endif
+    " augroup END
 
     " Make collapsed folds look nice {{{2
         " http://dhruvasagar.com/2013/03/28/vim-better-foldtext
@@ -98,7 +115,7 @@ let maplocalleader = "\\"
             let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
             return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
         endfunction
-        set foldtext=NeatFoldText()
+        " set foldtext=NeatFoldText()
     " }}}2
 
     if has('gui_running')
@@ -106,28 +123,40 @@ let maplocalleader = "\\"
         set guioptions-=m
         set guioptions-=T
         set guioptions-=e
+        set guioptions-=r
+        set guioptions-=R
+        set guioptions-=l
+        set guioptions-=L
     else
         " gnome-terminal colorscheme fix
         set t_Co=256
         " Mouse support in terminal
-        set mouse=a
+        " set mouse=a
     endif
 
     " Force gnome-terminal to display colorscheme correctly
     "if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
         "set t_Co=256
     "endif
+    " Less visual noise from listchars
+    let g:solarized_visibility="normal"
+    colorscheme solarized
 
-    colorscheme badwolf
+    if has('gui_running')
+        set background=light
+    else
+        set background=dark
+    endif
 
     " Number column no wider than it needs to be
     set numberwidth=1
 
     " Display divider at 80 characters.
-    " Highlight any text which flows over the limit
-    set textwidth=80
-    "set colorcolumn=+1
-    let &colorcolumn=join(range(81,256),",")
+    set colorcolumn=81
+    "let &colorcolumn=join(range(81,256),",")
+
+    " Don't automatically wrap text. Color column is enough as a gentle reminder
+    set textwidth=0
 
     set encoding=utf-8
 
@@ -146,11 +175,12 @@ let maplocalleader = "\\"
 
     " Pretty invisibles
     "set listchars=tab:▸\ ,eol:¬
-    set listchars=tab:▸\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
-
+    "set listchars=tab:▸\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
+    set listchars=tab:▸\ ,trail:⋅,extends:❯,precedes:❮
+    set list
 
     " Indicate if a line is wrapped
-    set showbreak=▸
+    set showbreak=❯
 
     " Set 5 lines to the cursor - when moving vertically using j/k
     set scrolloff=5
@@ -165,6 +195,18 @@ let maplocalleader = "\\"
 
 " Behavior {{{1
 
+    " nnoremap gcw guw~l
+    " nnoremap gcW guW~l
+    " nnoremap gciw guiw~l
+    " nnoremap gciW guiW~l
+    " nmap gcaw gciw
+    " nmap gcaW gciW
+    " nnoremap gcis guis~l
+    " nnoremap gc$ gu$~l
+    " nnoremap gcgc guu~l
+    " nnoremap gcc guu~l
+    " vnoremap gc gu~l
+
     " Trim trailing whitespace
     nnoremap <leader>tw :%s/\s\+$//<cr>``
 
@@ -172,7 +214,7 @@ let maplocalleader = "\\"
 
     " Create a custom command for each one rather than using AddTabularPattern,
     " because this way I can put them directly in my vimrc, which is easier
-    command TabularizeStrings :Tabularize /"[^" ]*"/
+    " command TabularizeStrings :Tabularize /"[^" ]*"/
 
     " Hard mode
     "nnoremap jj <nop>
@@ -196,16 +238,11 @@ let maplocalleader = "\\"
     set nosmartindent
 
     " Line numbering
+    set number
     set relativenumber
 
     " Ctags
     set tags=tags;
-
-    " Improvements!
-    set nocompatible
-
-    " Enable file type detection
-    filetype plugin indent on
 
     " Don't have to save buffers before opening new ones
     set hidden
@@ -214,7 +251,7 @@ let maplocalleader = "\\"
     set linebreak
 
     " gq command formats with par
-    set formatprg=par\ -r
+    " set formatprg=par\ -r
 
     " Set to auto read when a file is changed from the outside
     set autoread
@@ -239,6 +276,9 @@ let maplocalleader = "\\"
     set nowb
     set noswapfile
 
+    " Disable Ex mode, which is just annoying
+    nnoremap Q <nop>
+
     " Search {{{2
         " Ignore case when searching
         set ignorecase
@@ -255,8 +295,8 @@ let maplocalleader = "\\"
 " Key Bindings {{{1
 
     " Video to text project remotes
-    nnoremap <leader>rs :e scp://starfleet/~/src/video2text/<cr>
-    nnoremap <leader>rm :e scp://marr/~/video2text/<cr>
+    " nnoremap <leader>rs :e scp://starfleet/~/src/video2text/<cr>
+    " nnoremap <leader>rm :e scp://marr/~/video2text/<cr>
 
     "This allows for change paste motion cp{motion}
     nmap <silent> cp :set opfunc=ChangePaste<CR>g@
@@ -267,10 +307,11 @@ let maplocalleader = "\\"
 
     " Enter key inserts a new line
     nnoremap <cr> o<esc>
+    nnoremap <S-cr> O<esc>
 
     " Too lazy to hold shift
-    noremap ; :
-    noremap : ;
+    " noremap ; ;
+	" noremap : :
 
     " Force myself to move away from Esc, use Ctrl+c instead
     inoremap  <esc>  <nop>
@@ -346,7 +387,8 @@ let maplocalleader = "\\"
     inoremap <C-BS> <C-w>
 
     " Remap VIM 0 to first non-blank character
-    noremap 0 ^
+    " noremap 0 ^
+    nnoremap 0 0
 
 " File Explorer {{{1
 
@@ -371,12 +413,16 @@ let maplocalleader = "\\"
     autocmd FileType make setlocal noexpandtab
     autocmd FileType ruby setlocal ts=2 sts=2 sw=2
     autocmd FileType haml setlocal ts=2 sts=2 sw=2
+    autocmd FileType yaml setlocal ts=2 sts=2 sw=2
+    autocmd FileType python setlocal ts=4 sts=4 sw=4 noexpandtab
 
     " Fix nanoc's yaml frontmatter syntax highlighting
     autocmd BufNewFile,BufRead *.md syntax match Comment /\%^---\_.\{-}---$/
 
+    autocmd BufNewFile,BufRead *.j2 set syntax=jinja
 
-" VIMRC Specific {{{1
+    " Comment settings for cmake
+    autocmd FileType cmake set commentstring=#\ %s
 
     " Open vimrc in a new tab
     " Mnemonic: Edit Vimrc
@@ -389,5 +435,3 @@ let maplocalleader = "\\"
 
     " Automatically source the vimrc file after saving it
     autocmd! bufwritepost .vimrc source $MYVIMRC
-
-    " vim: set foldmethod=marker foldcolumn=2:

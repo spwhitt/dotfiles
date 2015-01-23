@@ -1,11 +1,11 @@
 [user]
-	name = Spencer Whitt
-	email = spencerlwhitt@gmail.com
+    name = Spencer Whitt
+    email = sw@swhitt.me
 [color]
-	status = auto
-	branch = auto
+    status = auto
+    branch = auto
 [core]
-	editor = vim
+    editor = vim
 [alias]
     ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
     ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
@@ -14,6 +14,5 @@
     fl = log -u
     news = log -p HEAD@{1}..HEAD@{0}
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-
 [push]
-	default = simple
+    default = simple

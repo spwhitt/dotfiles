@@ -1,7 +1,0 @@
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=i3
-Comment=The i3 launcher!
-TryExec=i3
-Exec=i3

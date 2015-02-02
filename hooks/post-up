@@ -1,8 +1,16 @@
 #!/usr/bin/env bash
 
-if [ ! -e $HOME/.vim/bundle/Vundle.vim ]; then
-  git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+# if [ ! -e $HOME/.vim/bundle/Vundle.vim ]; then
+#   git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+# fi
+
+if [ ! -e $HOME/.vim/autoload/plug.vim ]; then
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
+
+# Directory for Vim's persistent undo feature
+mkdir -p ~/.vim/undo
 
 # if [ ! -e $HOME/.antigen ]; then
 #   git clone https://github.com/zsh-users/antigen.git ~/.antigen
@@ -12,4 +20,4 @@ if [ ! -e $HOME/.oh-my-zsh ]; then
     git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 fi
 
-vim +PluginInstall +PluginClean! +qall
+vim +PlugInstall +PlugClean! +qall

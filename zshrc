@@ -92,3 +92,8 @@ export TERM="xterm-256color"
 function mkcd () {
   mkdir $1; cd $1;
 }
+
+# Source Nix on OS X
+if [ -e /Users/swhitt/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/swhitt/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+export NIX_PATH=$HOME/nixpkgs/:nixpkgs=$HOME/nixpkgs/

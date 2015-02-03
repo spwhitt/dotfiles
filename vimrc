@@ -29,6 +29,11 @@ let maplocalleader = "\\"
         " A collection of highly unobjectionable improvements to Vim defaults
         Plug 'tpope/vim-sensible'
 
+        " --
+        " Collection of highly useful pairs of mappings
+        " ]q [q: Forward and back in the quickfix list
+        Plug 'tpope/vim-unimpaired'
+
         " ---
         " Allow plugins to extend Vim's . command
         Plug 'repeat.vim'

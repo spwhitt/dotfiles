@@ -20,4 +20,4 @@ if [ ! -e $HOME/.oh-my-zsh ]; then
     git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 fi
 
-vim +PlugInstall +PlugClean! +qall
+vim +PlugClean! +PlugInstall +qall

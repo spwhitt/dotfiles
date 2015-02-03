@@ -148,8 +148,7 @@ let maplocalleader = "\\"
         Plug 'sessionman.vim'
 
         " ---
-        " I can just use :b, :find, etc. what is this for exactly?
-        "Plug 'kien/ctrlp.vim'
+        Plug 'kien/ctrlp.vim'
 
         " ---
         " Improvements to netrw. Use this, not NerdTree

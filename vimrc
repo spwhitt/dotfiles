@@ -459,6 +459,9 @@ let maplocalleader = "\\"
     " Reclaim U as redo
     nnoremap U <C-R>
 
+    " Remove old redo binding to force switch
+    nnoremap <C-r> <nop>
+
     " Reclaim S for use in the surround plugin. This is consistent with surround's
     " visual mode S mapping. This is a recursive mapping intentionally.
     nmap S ys

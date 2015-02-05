@@ -574,7 +574,6 @@ let maplocalleader = "\\"
     autocmd FileType ruby setlocal ts=2 sts=2 sw=2
     autocmd FileType haml setlocal ts=2 sts=2 sw=2
     autocmd FileType yaml setlocal ts=2 sts=2 sw=2
-    autocmd FileType python setlocal ts=4 sts=4 sw=4 noexpandtab
 
     " Fix nanoc's yaml frontmatter syntax highlighting
     autocmd BufNewFile,BufRead *.md syntax match Comment /\%^---\_.\{-}---$/

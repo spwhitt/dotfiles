@@ -224,6 +224,9 @@ let maplocalleader = "\\"
         Plug 'Glench/Vim-Jinja2-Syntax'
         Plug 'wting/rust.vim'
 
+        Plug 'spwhitt/vim-nix'
+        " Plug 'file:///Users/swhitt/src/vim-nix'
+
     " Other {{{2
 
         " ---

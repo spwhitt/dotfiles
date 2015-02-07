@@ -69,6 +69,7 @@ if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
   export EDITOR='mvim'
+  alias vim='mvim'
 fi
 
 # Fix tmux colors. Without this Vim displays strangely in tmux

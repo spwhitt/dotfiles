@@ -96,4 +96,4 @@ function mkcd () {
 # Source Nix on OS X
 if [ -e /Users/swhitt/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/swhitt/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
-export NIX_PATH=$HOME/nixpkgs/:nixpkgs=$HOME/nixpkgs/
+export NIX_PATH=$NIX_PATH:$HOME/nixpkgs/:nixpkgs=$HOME/nixpkgs/

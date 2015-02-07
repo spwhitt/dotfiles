@@ -97,3 +97,7 @@ function mkcd () {
 if [ -e /Users/swhitt/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/swhitt/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
 export NIX_PATH=$NIX_PATH:$HOME/nixpkgs/:nixpkgs=$HOME/nixpkgs/
+
+if [[ -n $SSH_CONNECTION ]]; then
+    [ -z "$TMUX" ] && exec tmux
+fi

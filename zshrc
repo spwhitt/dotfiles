@@ -94,6 +94,9 @@ esac
 
 source $ZSH/oh-my-zsh.sh
 
+# Turn off annoying [mosh] noise in terminal title
+export MOSH_TITLE_NOPREFIX=1
+
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 

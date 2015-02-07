@@ -599,3 +599,4 @@ let maplocalleader = "\\"
 
     " Automatically source the vimrc file after saving it
     autocmd! bufwritepost .vimrc source $MYVIMRC
+    autocmd! bufwritepost vimrc source $MYVIMRC

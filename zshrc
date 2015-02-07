@@ -8,6 +8,10 @@ if [[ -n $SSH_CONNECTION ]]; then
   ZSH_TMUX_AUTOSTART=true;
 fi
 
+# The tmux plugin's color fix wasn't working for me so I'm doing my own
+ZSH_TMUX_FIXTERM=false;
+export TERM=xterm-256color
+
 # Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
 

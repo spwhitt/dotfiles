@@ -1,28 +1,12 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
 ZSH_THEME="robbyrussell"
 
 # Autostart tmux if we're inside a ssh connection
 if [[ -n $SSH_CONNECTION ]]; then
   ZSH_TMUX_AUTOSTART=true;
 fi
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
@@ -36,7 +20,7 @@ fi
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
 # much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
+DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
@@ -51,6 +35,30 @@ fi
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git svn pip lein fasd cabal git-extras colored-man gitignore mosh tmux)
+
+# ------------------------------------------------------------------------------
+# Editor (VIM obviously)
+# 'vim' intelligently chooses between gui and terminal
+# 'vi' is used to force terminal vim when necessary
+
+# Detect graphical editor
+if command -v mvim >/dev/null 2>&1; then
+    export GUI_EDITOR=mvim
+elif command -v gvim >/dev/null 2>&1; then
+    export GUI_EDITOR=gvim
+else
+    # No gui, fall back on terminal
+    export GUI_EDITOR=vim
+fi
+
+# Use terminal vim in SSH, GUI vim otherwise
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR=$GUI_EDITOR
+fi
+
+alias vim=$EDITOR
 
 # User configuration
 
@@ -68,14 +76,6 @@ source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='mvim'
-  alias vim='mvim'
-fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"

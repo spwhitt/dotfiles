@@ -60,17 +60,37 @@ fi
 
 alias vim=$EDITOR
 
+# ------------------------------------------------------------------------------
+# Platform Specific
+
+case $(uname -a) in
+    *NixOS*)
+        # Tab completion for manpages
+        export MANPATH="/run/current-system/sw/share/man/:$HOME/.nix-profile/share/man/:$MANPATH"
+        ;;
+
+    *Darwin*)
+        # Setup for Nix on OS X (added by Nix installer)
+        if [ -e /Users/swhitt/.nix-profile/etc/profile.d/nix.sh ]; then
+            . /Users/swhitt/.nix-profile/etc/profile.d/nix.sh; fi
+
+        # For homebrew
+        export PATH=/usr/local/bin:$PATH
+        ;;
+esac
+
+# ------------------------------------------------------------------------------
+# Host Specific
+
+case $(hostname) in
+    Spencers-MacBook-Pro.local)
+        # Point to my personal copy of nixpkgs
+        export NIX_PATH=$NIX_PATH:$HOME/nixpkgs/:nixpkgs=$HOME/nixpkgs/
+        ;;
+esac
+
+# ------------------------------------------------------------------------------
 # User configuration
-
-platform=$(uname)
-
-if [[ "$platform" == "Darwin" ]]; then
-    # For homebrew
-    export PATH=/usr/local/bin:$PATH
-fi
-
-# For NixOS
-export MANPATH="/run/current-system/sw/share/man/:$HOME/.nix-profile/share/man/:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -95,8 +115,3 @@ source $ZSH/oh-my-zsh.sh
 function mkcd () {
   mkdir $1; cd $1;
 }
-
-# Source Nix on OS X
-if [ -e /Users/swhitt/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/swhitt/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
-
-export NIX_PATH=$NIX_PATH:$HOME/nixpkgs/:nixpkgs=$HOME/nixpkgs/

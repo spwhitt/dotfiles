@@ -101,6 +101,9 @@ let maplocalleader = "\\"
         " ---
         " Lightweight improvements to status bar
 
+        " Always show airline
+        set laststatus=2
+
         " Don't show mode below the status line, airline handles this for us
         set noshowmode
 
@@ -309,9 +312,6 @@ let maplocalleader = "\\"
 
     " Don't automatically wrap text. Color column is enough as a gentle reminder
     set textwidth=0
-
-    " Always show airline
-    set laststatus=2
 
     " Nice autocomplete bar
     set wildmenu

@@ -153,6 +153,7 @@ let maplocalleader = "\\"
         Plug 'sessionman.vim'
 
         " ---
+        let g:ctrlp_working_path_mode = '0'
         Plug 'kien/ctrlp.vim'
 
         " ---

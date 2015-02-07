@@ -339,6 +339,10 @@ let maplocalleader = "\\"
 
 " Behavior {{{1
 
+    " Same split behavior as tmux
+    set splitright
+    set splitbelow
+
     set modeline
 
     " Put name of current file in titlebar
@@ -499,10 +503,20 @@ let maplocalleader = "\\"
     nnoremap <cr> o<esc>
     nnoremap <S-cr> O<esc>
 
+    " Press q to quit macro mode
+    " Press v to quit visual mode
+    " Press V to quit visual line mode
+    " Press C-v to quit visual block mode
+    " Press jk to quit insert mode
+    inoremap jk <esc>
+    " Force myself to switch from <esc> and <C-c> to the above scheme:
+    noremap <esc> <nop>
+    noremap <C-c> <nop>
+
     " Ctrl+c behaves different from esc in certain situations
     " eg: when making an edit from visual block mode
-    inoremap  <C-c>  <esc>
-    vnoremap  <C-c>  <esc>
+    " inoremap  <C-c>  <esc>
+    " vnoremap  <C-c>  <esc>
     "cnoremap  <C-c>  <esc>
 
     " Tab navigation

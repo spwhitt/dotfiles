@@ -7,6 +7,11 @@ export ZSH=$HOME/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 ZSH_THEME="robbyrussell"
 
+# Autostart tmux if we're inside a ssh connection
+if [[ -n $SSH_CONNECTION ]]; then
+  ZSH_TMUX_AUTOSTART=true;
+fi
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -45,7 +50,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git svn pip lein fasd cabal git-extras colored-man gitignore mosh)
+plugins=(git svn pip lein fasd cabal git-extras colored-man gitignore mosh tmux)
 
 # User configuration
 
@@ -72,9 +77,6 @@ else
   alias vim='mvim'
 fi
 
-# Fix tmux colors. Without this Vim displays strangely in tmux
-export TERM="xterm-256color"
-
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
@@ -98,7 +100,3 @@ function mkcd () {
 if [ -e /Users/swhitt/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/swhitt/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 
 export NIX_PATH=$NIX_PATH:$HOME/nixpkgs/:nixpkgs=$HOME/nixpkgs/
-
-if [[ -n $SSH_CONNECTION ]]; then
-    [ -z "$TMUX" ] && exec tmux
-fi

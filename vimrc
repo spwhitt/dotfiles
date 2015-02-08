@@ -220,6 +220,9 @@ let maplocalleader = "\\"
         Plug 'rking/ag.vim'
         Plug 'mileszs/ack.vim'
 
+        " ---
+        Plug 'christoomey/vim-tmux-navigator'
+
     " Additional Filetype Support {{{2
         Plug 'tpope/vim-markdown'
         Plug 'tpope/vim-haml'

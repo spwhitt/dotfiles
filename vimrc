@@ -513,7 +513,6 @@ let maplocalleader = "\\"
     " Press jk to quit insert mode
     inoremap jk <esc>
     " Force myself to switch from <esc> and <C-c> to the above scheme:
-    noremap <esc> <nop>
     noremap <C-c> <nop>
 
     " Ctrl+c behaves different from esc in certain situations

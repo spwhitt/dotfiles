@@ -248,24 +248,6 @@ let maplocalleader = "\\"
         " Manage buffers. <leader>be to open
         Plug 'bufexplorer.zip'
 
-        " ---
-        " m, - Toggle mark at current line (alphabetical order)
-        " m_ - clear all marks in file
-        " m] - jump to next local mark
-        " m[ - jump to previous local mark
-        " m? - open location list
-        "
-        " Vim builtin marks cheatsheet:
-        "  m[a-zA-Z] - Set mark
-        "  . - Last change to file
-        "  [ - First char of previous yank or change
-        "  ] - First char of previous yank or change
-        "  < - First char of last visual area
-        "  > - Last char of last visual area
-        "  ' - Previous jump
-        "  " - Position last exited current buffer
-        "  ^ - Last exited insert mode
-        Plug 'jeetsukumaran/vim-markology'
     " }}}
 
     call plug#end()

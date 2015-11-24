@@ -143,21 +143,12 @@ let maplocalleader = "\\"
         " I may not use these much, or at all
 
         " ---
-        Plug 'jamessan/vim-gnupg'
-
-        " ---
         " Write HTML, XML, etc more quickly by expanding from an abbreviated form
         " Expand abbreviation with: <c-y>,
         " Almost all other emmet keybindings are better accomplished with
         " native Vim features so don't bother learning them
         Plug 'mattn/emmet-vim'
 
-        " ---
-        Plug 'sessionman.vim'
-
-        " ---
-        let g:ctrlp_working_path_mode = '0'
-        Plug 'kien/ctrlp.vim'
 
         " ---
         " Improvements to netrw. Use this, not NerdTree
@@ -178,14 +169,6 @@ let maplocalleader = "\\"
         " Align text
         " :Tab /pattern
         Plug 'godlygeek/tabular'
-
-        " ---
-        " Toggle comments in code
-        " gc<motion>: Toggle command
-        " gcc: Toggle line
-        " gcu: Uncomment adjacent lines
-        " gc: Text object
-        Plug 'tpope/vim-commentary'
 
         " ---
         Plug 'wojtekmach/vim-rename'
@@ -222,6 +205,7 @@ let maplocalleader = "\\"
 
         " ---
         Plug 'christoomey/vim-tmux-navigator'
+
 
     " Additional Filetype Support {{{2
         Plug 'tpope/vim-markdown'
@@ -271,7 +255,7 @@ let maplocalleader = "\\"
 
     colorscheme solarized
 
-    set guifont=Sauce\ Code\ Powerline:h14
+    " set guifont=Sauce\ Code\ Powerline:h14
 
     " Make collapsed folds look nice {{{2
         " http://dhruvasagar.com/2013/03/28/vim-better-foldtext
@@ -338,7 +322,7 @@ let maplocalleader = "\\"
     set softtabstop=4
     set shiftwidth=4
     " Insert spaces instead of tab character when tab key is pressed
-    set expandtab
+    set noexpandtab
     " Round indent to multiple of shiftwidth when using > and <
     set shiftround
 
@@ -488,20 +472,11 @@ let maplocalleader = "\\"
     nnoremap <cr> o<esc>
     nnoremap <S-cr> O<esc>
 
-    " Press q to quit macro mode
-    " Press v to quit visual mode
-    " Press V to quit visual line mode
-    " Press C-v to quit visual block mode
-    " Press jk to quit insert mode
-    inoremap jk <esc>
-    " Force myself to switch from <esc> and <C-c> to the above scheme:
-    noremap <C-c> <nop>
-
     " Ctrl+c behaves different from esc in certain situations
     " eg: when making an edit from visual block mode
-    " inoremap  <C-c>  <esc>
-    " vnoremap  <C-c>  <esc>
-    "cnoremap  <C-c>  <esc>
+    inoremap  <C-c>  <esc>
+    vnoremap  <C-c>  <esc>
+    cnoremap  <C-c>  <esc>
 
     " Tab navigation
     noremap <S-H> gT

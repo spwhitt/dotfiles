@@ -290,14 +290,17 @@ nnoremap <silent> <leader>h :Help
         nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
 
         " Custom mappings for the unite buffer
-        autocmd FileType unite call s:unite_settings()
-        function! s:unite_settings()
-        " Play nice with supertab
-        " let b:SuperTabDisabled=1
-        " Enable navigation with control-j and control-k in insert mode
-        imap <buffer> <C-j>   <Plug>(unite_select_next_line)
-        imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
-        endfunction
+        augroup unite_buffer_settings
+            autocmd!
+            autocmd FileType unite call s:unite_settings()
+            function! s:unite_settings()
+            " Play nice with supertab
+            " let b:SuperTabDisabled=1
+            " Enable navigation with control-j and control-k in insert mode
+            imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+            imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+            endfunction
+        augroup END
 
         " ---
         " :Gcd, :Glcd - cd relative to repo
@@ -319,7 +322,10 @@ nnoremap <silent> <leader>h :Help
         Plug 'neomake/neomake'
         " Plug 'benjie/neomake-local-eslint.vim'
         " Run on every buffer save and open
-        autocmd! BufEnter,BufWritePost * Neomake
+        augroup neomake_auto_run
+            autocmd!
+            autocmd BufEnter,BufWritePost * Neomake
+        augroup END
 
         " ---
         " :Ag and :Ack
@@ -462,7 +468,10 @@ nnoremap <silent> <leader>h :Help
 
     " Properly disable sound on errors on MacVim
     if has("gui_macvim")
-        autocmd GUIEnter * set vb t_vb=
+        augroup macvim_vb
+            autocmd!
+            autocmd GUIEnter * set vb t_vb=
+        augroup END
     endif
 
 " Behavior {{{1
@@ -743,32 +752,33 @@ nnoremap <silent> <leader>h :Help
 " Filetype Settings {{{1
 
     " Make is pretty crappy about tabs vs spaces
-    autocmd FileType make setlocal noexpandtab
-    " autocmd BufRead */TVS/* setlocal noexpandtab
-    autocmd FileType ruby setlocal ts=2 sts=2 sw=2
-    autocmd FileType haml setlocal ts=2 sts=2 sw=2
-    autocmd FileType yaml setlocal ts=2 sts=2 sw=2
-    autocmd FileType haskell setlocal ts=2 sts=2 sw=2
-    autocmd FileType javascript setlocal ts=2 sts=2 sw=2 expandtab
+    augroup filetype_settings
+        autocmd!
+        autocmd FileType make setlocal noexpandtab
 
-    " Fix nanoc's yaml frontmatter syntax highlighting
-    autocmd BufNewFile,BufRead *.md syntax match Comment /\%^---\_.\{-}---$/
+        " autocmd BufRead */TVS/* setlocal noexpandtab
 
-    autocmd BufNewFile,BufRead *.j2 set syntax=jinja
+        autocmd FileType ruby setlocal ts=2 sts=2 sw=2
+        autocmd FileType haml setlocal ts=2 sts=2 sw=2
+        autocmd FileType yaml setlocal ts=2 sts=2 sw=2
+        autocmd FileType haskell setlocal ts=2 sts=2 sw=2
+        autocmd FileType javascript setlocal ts=2 sts=2 sw=2 expandtab
 
-    " Comment settings for cmake
-    autocmd FileType cmake set commentstring=#\ %s
+        " Fix nanoc's yaml frontmatter syntax highlighting
+        autocmd BufNewFile,BufRead *.md syntax match Comment /\%^---\_.\{-}---$/
+
+        autocmd BufNewFile,BufRead *.j2 set syntax=jinja
+
+        " Comment settings for cmake
+        autocmd FileType cmake set commentstring=#\ %s
+    augroup END
 
     " Open vimrc in a new tab
     " Mnemonic: Edit Vimrc
     nnoremap <leader>ev :e $MYVIMRC<CR>
 
     " Automatically source the vimrc file after saving it
-    " autocmd! bufwritepost .vimrc source $MYVIMRC
-    " autocmd! bufwritepost vimrc source $MYVIMRC
-
     augroup reload_vimrc
         autocmd!
         autocmd bufwritepost $MYVIMRC nested source $MYVIMRC
     augroup END
-

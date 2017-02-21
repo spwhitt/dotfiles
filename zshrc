@@ -34,7 +34,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git svn pip lein fasd cabal git-extras gitignore mosh tmux nix zsh_reload)
+plugins=(git svn pip lein fasd cabal git-extras gitignore mosh nix zsh_reload)
 
 # ------------------------------------------------------------------------------
 # Editor (VIM obviously)
@@ -119,3 +119,19 @@ export MOSH_TITLE_NOPREFIX=1
 function mkcd () {
   mkdir $1; cd $1;
 }
+
+export PYTHONPATH=$HOME/TVS/caffe/python:$PYTHONPATH
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f /Users/swhitt/google-cloud-sdk/path.zsh.inc ]; then
+  source '/Users/swhitt/google-cloud-sdk/path.zsh.inc'
+fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f /Users/swhitt/google-cloud-sdk/completion.zsh.inc ]; then
+  source '/Users/swhitt/google-cloud-sdk/completion.zsh.inc'
+fi
+
+export SSL_CERT_FILE=""
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

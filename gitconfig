@@ -1,23 +1,39 @@
 [user]
-    name = Spencer Whitt
-    email = sw@swhitt.me
+name = Spencer Whitt
+email = me@swhitt.me
+
 [core]
-    editor = vim
+editor = nvim
+excludesfile = ~/.gitignore_global
+
 [color]
-    status = auto
-    branch = auto
+status = auto
+branch = auto
+
 [merge]
-    tool = vimdiff
-    conflictstyle = diff3
-[mergetool]
-    prompt = false
+tool = nvimdiff
+# tool = kdiff3
+conflictstyle = diff3
+
+[diff]
+tool = nvimdiff
+#[mergetool]
+#prompt = false
+
+[difftool "nvimdiff"]
+cmd="nvim -d \"$LOCAL\" \"$REMOTE\""
+
 [alias]
-    ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
-    ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
-    lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
-    ld = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
-    fl = log -u
-    news = log -p HEAD@{1}..HEAD@{0}
-    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+ld = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+fl = log -u
+news = log -p HEAD@{1}..HEAD@{0}
+lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+
 [push]
-    default = simple
+default = simple
+
+[rerere]
+enabled = true

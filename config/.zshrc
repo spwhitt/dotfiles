@@ -34,7 +34,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git svn pip lein fasd cabal git-extras gitignore mosh nix zsh_reload fancy-ctrl-z)
+plugins=(git svn pip lein fasd cabal git-extras gitignore mosh zsh_reload fancy-ctrl-z)
 
 # ------------------------------------------------------------------------------
 # Editor (VIM obviously)

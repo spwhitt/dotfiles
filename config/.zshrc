@@ -76,7 +76,6 @@ case $(uname -a) in
 
         # For homebrew
         export PATH=/usr/local/bin:$PATH
-        plugins+=( brew brew-cask )
         ;;
 esac
 

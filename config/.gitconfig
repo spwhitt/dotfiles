@@ -19,6 +19,9 @@
 
 [diff]
     tool = nvimdiff
+    algorithm = patience
+    prompt = false
+
 #[mergetool]
 #prompt = false
 

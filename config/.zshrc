@@ -34,7 +34,13 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git svn pip lein fasd cabal git-extras gitignore mosh zsh_reload fancy-ctrl-z)
+plugins=(
+  git gitignore svn
+  pip lein cabal 
+  fasd git-extras mosh
+  zsh_reload fancy-ctrl-z
+  docker docker-compose yarn kubectl
+  )
 
 # ------------------------------------------------------------------------------
 # Editor (VIM obviously)
@@ -134,3 +140,6 @@ fi
 export SSL_CERT_FILE=""
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# OPAM configuration
+. /Users/swhitt/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true

@@ -9,8 +9,8 @@
 
 " If there is a .nvimrc or .exrc in the current directory, read it (securely)
 " Enables project-specific configuration
-set exrc
-set secure
+" set exrc
+" set secure
 
 " set t_Co=256
 let mapleader = " "
@@ -182,7 +182,7 @@ Plug 'Shougo/vimfiler.vim'
     " ---
     " Align text
     " :Tab /pattern
-    Plug 'godlygeek/tabular'
+    Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
 
     " ---
     " Toggle comments in code
@@ -193,7 +193,7 @@ Plug 'Shougo/vimfiler.vim'
     Plug 'tpope/vim-commentary'
 
     " ---
-    Plug 'wojtekmach/vim-rename'
+    Plug 'wojtekmach/vim-rename', { 'on': 'Rename' }
 
 " External Integration {{{2
 
@@ -245,8 +245,8 @@ Plug 'Shougo/vimfiler.vim'
 
     " ---
     "  Disabled for now
-    let g:gitgutter_enabled = 0
-    Plug 'airblade/vim-gitgutter'
+    " let g:gitgutter_enabled = 0
+    " Plug 'airblade/vim-gitgutter'
 
     " ---
     let g:neomake_javascript_enabled_makers = ['eslint']
@@ -265,8 +265,8 @@ Plug 'Shougo/vimfiler.vim'
 
     " ---
     " :Ag and :Ack
-    Plug 'rking/ag.vim'
-    Plug 'mileszs/ack.vim'
+    Plug 'rking/ag.vim', { 'on': 'Ag' }
+    Plug 'mileszs/ack.vim', { 'on': 'Ack' }
 
 " Additional Filetype Support {{{2
 "
@@ -281,6 +281,7 @@ Plug 'Shougo/vimfiler.vim'
     Plug 'wting/rust.vim'
     Plug 'vim-jp/vim-cpp'
     Plug 'lambdatoast/elm.vim'
+    Plug 'keith/swift.vim'
 
 call plug#end()
 
@@ -349,6 +350,9 @@ call plug#end()
     " Indicate if a line is wrapped
     set showbreak=❯
 
+    " Not wrapping is prettier, but you must know how to scroll right: zL
+    set nowrap
+
     " Scroll screen 4 lines before cursor hits top/bottom
     set scrolloff=4
     set sidescrolloff=4
@@ -367,7 +371,7 @@ call plug#end()
         augroup END
     endif
 
-" Behavior {{{1
+    " Behavior {{{1
 
     " Same split behavior as tmux
     set nosplitright
@@ -421,6 +425,10 @@ call plug#end()
     " Highlight search results
     set hlsearch
 
+    " Don't move cursor on visual yank
+    " Less unexpected cursor movements and side effects = better
+    vnoremap <expr>y "my\"" . v:register . "y`y"
+
     " Return to last edit position when opening files
     " autocmd BufReadPost *
     "             \ if line("'\"") > 0 && line("'\"") <= line("$") |
@@ -432,11 +440,11 @@ call plug#end()
 
     " Remember undo history
     if has("persistent_undo")
-        " set undodir='$HOME/.vim/undo'
-        " set undofile
+      " set undodir='$HOME/.vim/undo'
+      " set undofile
     endif
 
-" Key Bindings {{{1
+    " Key Bindings {{{1
 
     " ---
     " Minimal Vim
@@ -498,8 +506,8 @@ call plug#end()
     "This allows for change paste motion cp{motion}
     nmap <silent> cp :set opfunc=ChangePaste<CR>g@
     function! ChangePaste(type, ...)
-        silent exe "normal! `[v`]\"_c"
-        silent exe "normal! p"
+      silent exe "normal! `[v`]\"_c"
+      silent exe "normal! p"
     endfunction
 
     " Use Ctrl-Space as <esc>
@@ -543,10 +551,18 @@ call plug#end()
     inoremap <C-s>p :split<cr>
 
     " Toggle folds
-    nnoremap - za
+    " nnoremap - za
+
+    " Time based history navigation
+    nnoremap - g-
+    nnoremap + g+
+
 
     " Make Y behave like everyone else
     nnoremap Y y$
+
+    " g0 does what 0 used to
+    nnoremap 0 ^
 
     " Completion;
     " Tags

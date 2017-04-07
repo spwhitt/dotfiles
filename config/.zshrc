@@ -45,26 +45,8 @@ plugins=(
 
 # ------------------------------------------------------------------------------
 # Editor (VIM obviously)
-# 'vim' intelligently chooses between gui and terminal
-# 'vi' is used to force terminal vim when necessary
 
-# Detect graphical editor
-if command -v mvim >/dev/null 2>&1; then
-    export GUI_EDITOR=mvim
-elif command -v gvim >/dev/null 2>&1; then
-    export GUI_EDITOR=gvim
-else
-    # No gui, fall back on terminal
-    export GUI_EDITOR=vim
-fi
-
-# Use terminal vim in SSH, GUI vim otherwise
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR=$GUI_EDITOR
-fi
-
+export EDITOR='nvim'
 alias vim=$EDITOR
 
 # ------------------------------------------------------------------------------

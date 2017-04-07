@@ -1,7 +1,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
-ZSH_THEME="robbyrussell"
+ZSH_THEME="spaceship"
 
 # Autostart tmux if we're inside a ssh connection
 if [[ -n $SSH_CONNECTION ]]; then
@@ -40,6 +40,7 @@ plugins=(
   fasd git-extras mosh
   zsh_reload fancy-ctrl-z
   docker docker-compose yarn kubectl
+  tmux
   )
 
 # ------------------------------------------------------------------------------

@@ -198,8 +198,9 @@ Plug 'Shougo/vimfiler.vim'
 " External Integration {{{2
 
     " Colorschemes
-    Plug 'rafi/awesome-vim-colorschemes'
-    Plug 'chriskempson/base16-vim'
+    " Plug 'rafi/awesome-vim-colorschemes'
+    Plug 'mhartington/oceanic-next'
+    " Plug 'chriskempson/base16-vim'
 
     " Open file with line number
     Plug 'bogado/file-line'
@@ -294,24 +295,12 @@ call plug#end()
     " hi xmlTagName ctermfg=04
     " hi xmlEndTag  ctermfg=04
 
-    " if has('gui_running')
-    "     set background=dark
+    if (has("termguicolors"))
+      set termguicolors
+    endif
 
-    "     " No extra gui crap in gvim
-    "     set guioptions-=m
-    "     set guioptions-=T
-    "     set guioptions-=e
-    "     set guioptions-=r
-    "     set guioptions-=R
-    "     set guioptions-=l
-    "     set guioptions-=L
-    " else
-    "     set background=dark
-    " endif
-
-    colorscheme base16-oceanicnext
-
-    set guifont=Sauce\ Code\ Powerline:h14
+    " Theme
+    colorscheme OceanicNext
 
     " Make collapsed folds look nice {{{2
         " http://dhruvasagar.com/2013/03/28/vim-better-foldtext

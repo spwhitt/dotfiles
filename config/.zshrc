@@ -57,7 +57,7 @@ alias vim=nvim
 case $(uname -a) in
     *NixOS*)
         # Tab completion for manpages
-        export MANPATH="/run/current-system/sw/share/man/:$HOME/.nix-profile/share/man/:$MANPATH"
+        # export MANPATH="/run/current-system/sw/share/man/:$HOME/.nix-profile/share/man/:$MANPATH"
         alias open="xdg-open"
         ;;
 

@@ -47,8 +47,9 @@ plugins=(
 # ------------------------------------------------------------------------------
 # Editor (VIM obviously)
 
-export EDITOR='nvim'
-alias vim=$EDITOR
+export EDITOR='emacsclient -c'
+export VISUAL="$EDITOR"
+alias vim=nvim
 
 # ------------------------------------------------------------------------------
 # Platform Specific
@@ -121,9 +122,6 @@ export MOSH_TITLE_NOPREFIX=1
 function mkcd () {
   mkdir $1; cd $1;
 }
-
-
-export SSL_CERT_FILE=""
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

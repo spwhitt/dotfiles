@@ -42,7 +42,8 @@ endfunction
 command! -nargs=? -complete=help Help call OpenHelpInCurrentWindow(<q-args>)
 nnoremap <silent> <leader>h :Help
 
-call plug#begin('~/.vim/bundle')
+call plug#begin('~/.local/share/nvim/plugged')
+
 " --
 " Collection of highly useful pairs of mappings
 " ]q [q: Forward and back in the quickfix list
@@ -50,7 +51,7 @@ Plug 'tpope/vim-unimpaired'
 
 " ---
 " Allow plugins to extend Vim's . command
-Plug 'tpope/repeat.vim'
+Plug 'tpope/vim-repeat'
 
 " ---
 " Extends Vim's % command

@@ -5,28 +5,24 @@
     email = me@swhitt.me
 
 [core]
-    editor = nvim
+    # editor = nvim
     excludesfile = ~/.gitignore_global
 
 [color]
     status = auto
     branch = auto
 
-[merge]
-    tool = nvimdiff
-# tool = kdiff3
-    conflictstyle = diff3
+# [merge]
+    # tool = nvimdiff
+    # conflictstyle = diff3
 
-[diff]
-    tool = nvimdiff
-    algorithm = patience
-    prompt = false
+# [diff]
+    # tool = nvimdiff
+    # algorithm = patience
+    # prompt = false
 
-#[mergetool]
-#prompt = false
-
-[difftool "nvimdiff"]
-    cmd="nvim -d \"$LOCAL\" \"$REMOTE\""
+# [difftool "nvimdiff"]
+    # cmd="nvim -d \"$LOCAL\" \"$REMOTE\""
 
 [alias]
     ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
@@ -39,6 +35,3 @@
 
 [push]
     default = simple
-
-[rerere]
-    enabled = true

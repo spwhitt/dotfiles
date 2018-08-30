@@ -1,4 +1,4 @@
-[submodule "oh-my-zsh/custom/plugins/nix"]
+[submodule "config/.oh-my-zsh-custom/plugins/nix"]
 	path = config/.oh-my-zsh-custom/plugins/nix
 	url = git@github.com:spwhitt/nix-zsh-completions.git
 [submodule "config/.emacs.d"]

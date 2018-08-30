@@ -37,7 +37,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git gitignore svn
-  pip lein cabal 
+  pip lein cabal
   fasd git-extras mosh
   zsh_reload fancy-ctrl-z
   docker docker-compose yarn kubectl
@@ -51,6 +51,9 @@ export EDITOR='emacsclient -c'
 export VISUAL="$EDITOR"
 alias vim=nvim
 
+# Create new emacs frame and raise it to top
+alias emacs='emacsclient -e "(select-frame-set-input-focus (selected-frame))" -c -a ""'
+
 # ------------------------------------------------------------------------------
 # Platform Specific
 
@@ -63,11 +66,11 @@ case $(uname -a) in
 
     *Darwin*)
         # Setup for Nix on OS X (added by Nix installer)
-        if [ -e /Users/swhitt/.nix-profile/etc/profile.d/nix.sh ]; then
-            . /Users/swhitt/.nix-profile/etc/profile.d/nix.sh; fi
+        # if [ -e /Users/swhitt/.nix-profile/etc/profile.d/nix.sh ]; then
+        #   . /Users/swhitt/.nix-profile/etc/profile.d/nix.sh; fi
 
         # For homebrew
-        export PATH=/usr/local/bin:$PATH
+        export PATH=/usr/local/bin:/Users/swhitt/.local/bin:$PATH
         ;;
 esac
 
@@ -127,3 +130,15 @@ function mkcd () {
 
 # OPAM configuration
 . /Users/swhitt/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[[ -f /Users/swhitt/TVS/LightbrushCloud/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/swhitt/TVS/LightbrushCloud/serverless/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[[ -f /Users/swhitt/TVS/LightbrushCloud/serverless/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/swhitt/TVS/LightbrushCloud/serverless/node_modules/tabtab/.completions/sls.zsh
+
+# Open logbook at todays date
+function lb() {
+  nvim ~/logbook/$(date '+%Y-%m-%d').md
+}

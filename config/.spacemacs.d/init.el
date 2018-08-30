@@ -42,7 +42,8 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      helm
-     ;; auto-completion
+     ;; ivy
+     auto-completion
      ;; better-defaults
      emacs-lisp
      git
@@ -157,7 +158,7 @@ values."
    dotspacemacs-emacs-leader-key "M-m"
    ;; Major mode leader key is a shortcut key which is the equivalent of
    ;; pressing `<leader> m`. Set it to `nil` to disable it. (default ",")
-   dotspacemacs-major-mode-leader-key ","
+   dotspacemacs-major-mode-leader-key nil
    ;; Major mode leader key accessible in `emacs state' and `insert state'.
    ;; (default "C-M-m")
    dotspacemacs-major-mode-emacs-leader-key "C-M-m"
@@ -169,7 +170,7 @@ values."
    ;; works in the GUI. (default nil)
    dotspacemacs-distinguish-gui-tab t
    ;; If non nil `Y' is remapped to `y$' in Evil states. (default nil)
-   dotspacemacs-remap-Y-to-y$ nil
+   dotspacemacs-remap-Y-to-y$ t
    ;; If non-nil, the shift mappings `<' and `>' retain visual state if used
    ;; there. (default t)
    dotspacemacs-retain-visual-state-on-shift t
@@ -205,7 +206,7 @@ values."
    dotspacemacs-helm-no-header nil
    ;; define the position to display `helm', options are `bottom', `top',
    ;; `left', or `right'. (default 'bottom)
-   dotspacemacs-helm-position 'left
+   dotspacemacs-helm-position 'bottom
    ;; Controls fuzzy matching in helm. If set to `always', force fuzzy matching
    ;; in all non-asynchronous sources. If set to `source', preserve individual
    ;; source settings. Else, disable fuzzy matching in all sources.
@@ -225,7 +226,7 @@ values."
    ;; If non nil a progress bar is displayed when spacemacs is loading. This
    ;; may increase the boot time on some systems and emacs builds, set it to
    ;; nil to boost the loading time. (default t)
-   dotspacemacs-loading-progress-bar t
+   dotspacemacs-loading-progress-bar nil
    ;; If non nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
    dotspacemacs-fullscreen-at-startup nil
@@ -298,7 +299,7 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup nil
+   dotspacemacs-whitespace-cleanup 'trailing
    ))
 
 (defun dotspacemacs/user-init ()
@@ -322,6 +323,12 @@ you should place your code here."
   (setq-default dotspacemacs-configuration-layers
                 '((syntax-checking :variables syntax-checking-enable-tooltips nil)))
 
+  ;; Remove powerline separators because they are unnecessary visual noise
+  (setq-default powerline-default-separator 'nil)
+
+
+  ;; U = redo - C-r is a crap binding
+  (define-key evil-normal-state-map (kbd "U") 'undo-tree-redo)
 
   ;; Use flycheck errors, not js2 errors
   (setq js2-mode-show-parse-errors nil)
@@ -348,13 +355,16 @@ you should place your code here."
   ;; (setq helm-split-window-inside-p t)
   ;; (setq-default helm-display-function )
 
-  ;; Open helm fullscreen (I think I kind of like this)
-  ;; Samewindow is technically DEPRECATED - but it doesn't seem to work otherwise
+  ;; Open helm fullscreen
   (setq helm-full-frame nil)
-  (setq helm-samewindow t)
 
-  ;; Should open in current window
-  ;; (setq helm-split-window-default-side 'same)
+  ;; Helm-swoop doesn't work fullscreen
+  (defadvice helm-swoop (around helm-swoop-no-full-frame activate)
+    (let ((helm-full-frame nil) (helm-split-window-default-side 'left))
+      ad-do-it))
+
+  ;; Should open in current window. Also 'below 'above 'left 'right 'same 'other
+  (setq helm-split-window-default-side 'same)
 )
 
 ;; Do not write anything past this comment. This is where Emacs will

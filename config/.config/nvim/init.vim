@@ -198,6 +198,11 @@ Plug 'Shougo/vimfiler.vim'
 
 " External Integration {{{2
 
+  Plug 'let-def/vimbufsync'
+  Plug 'trefis/coquille'
+  " Plug 'jvoorhis/coq.vim'
+  " Plug 'vim-scripts/CoqIDE'
+
     " Colorschemes
     " Plug 'rafi/awesome-vim-colorschemes'
     Plug 'mhartington/oceanic-next'
@@ -274,6 +279,7 @@ Plug 'Shougo/vimfiler.vim'
 "
     " Syntax Plugins
     let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+    Plug 'derekelkins/agda-vim'
     Plug 'pangloss/vim-javascript'
     Plug 'mxw/vim-jsx'
     Plug 'tpope/vim-markdown'

@@ -1,3 +1,9 @@
 [submodule "oh-my-zsh/custom/plugins/nix"]
-	path = config/.oh-my-zsh/custom/plugins/nix
+	path = config/.oh-my-zsh-custom/plugins/nix
 	url = git@github.com:spwhitt/nix-zsh-completions.git
+[submodule "config/.emacs.d"]
+	path = config/.emacs.d
+	url = https://github.com/syl20bnr/spacemacs
+[submodule "config/.oh-my-zsh"]
+	path = config/.oh-my-zsh
+	url = https://github.com/robbyrussell/oh-my-zsh.git

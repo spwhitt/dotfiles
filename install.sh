@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
 
-stow config
-stow osx
+stow -v config
 
-if [ ! -e $HOME/.oh-my-zsh ]; then
-    git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
-fi
+# stow osx
 
 nvim +PlugClean! +PlugInstall +qall
 

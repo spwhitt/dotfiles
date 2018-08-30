@@ -50,7 +50,7 @@ Plug 'tpope/vim-unimpaired'
 
 " ---
 " Allow plugins to extend Vim's . command
-Plug 'repeat.vim'
+Plug 'tpope/repeat.vim'
 
 " ---
 " Extends Vim's % command

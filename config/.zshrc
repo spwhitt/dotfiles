@@ -1,6 +1,9 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
+# Move custom folder so it's not located inside oh-my-zsh repository
+ZSH_CUSTOM=$HOME/.oh-my-zsh-custom/
+
 ZSH_THEME="spaceship"
 
 # Autostart tmux if we're inside a ssh connection
@@ -27,8 +30,6 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # HIST_STAMPS="mm/dd/yyyy"
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -74,6 +75,18 @@ esac
 
 case $(hostname) in
     Spencers-MacBook-Pro.local)
+        # The next line updates PATH for the Google Cloud SDK.
+        if [ -f /Users/swhitt/google-cloud-sdk/path.zsh.inc ]; then
+          source '/Users/swhitt/google-cloud-sdk/path.zsh.inc'
+        fi
+
+        # The next line enables shell command completion for gcloud.
+        if [ -f /Users/swhitt/google-cloud-sdk/completion.zsh.inc ]; then
+          source '/Users/swhitt/google-cloud-sdk/completion.zsh.inc'
+        fi
+
+        export PYTHONPATH=$HOME/TVS/caffe/python:$PYTHONPATH
+
         # Point to my personal copy of nixpkgs
         export NIX_PATH=$NIX_PATH:$HOME/nixpkgs/:nixpkgs=$HOME/nixpkgs/
         ;;
@@ -109,17 +122,6 @@ function mkcd () {
   mkdir $1; cd $1;
 }
 
-export PYTHONPATH=$HOME/TVS/caffe/python:$PYTHONPATH
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f /Users/swhitt/google-cloud-sdk/path.zsh.inc ]; then
-  source '/Users/swhitt/google-cloud-sdk/path.zsh.inc'
-fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f /Users/swhitt/google-cloud-sdk/completion.zsh.inc ]; then
-  source '/Users/swhitt/google-cloud-sdk/completion.zsh.inc'
-fi
 
 export SSL_CERT_FILE=""
 

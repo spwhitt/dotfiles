@@ -7,3 +7,6 @@
 [submodule "config/.oh-my-zsh"]
 	path = home/.oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh.git
+[submodule "home/.Xresources.d/Xresources-themes"]
+	path = home/.Xresources.d/Xresources-themes
+	url = https://github.com/logico-dev/Xresources-themes

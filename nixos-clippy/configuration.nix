@@ -17,8 +17,10 @@ in
   boot.loader.grub.device = "/dev/sda";
   boot.kernelParams = [ "acpi_backlight=vendor" ];
 
+  # Needed for TLP on my thinkpad
+  boot.extraModulePackages = [ pkgs.linuxPackages.acpi_call ];
+
   networking.hostName = "clippy";
-  networking.networkmanager.enable = true;
   # networking.firewall.allowedTCPPorts = [ 6680 ];
   
   fonts.fonts = [
@@ -27,56 +29,9 @@ in
 
   nixpkgs.config = {
     allowUnfree = true;
-    # chromium.enablePepperFlash = true;
-
-    # Doesn't appear to work yet, but enabling in case it's fixed
-    # chromium.enableWideVine = true;
   };
 
   security.sudo.wheelNeedsPassword = false;
-
-  services.openssh.enable = true;
-
-  # services.mopidy.enable = true;
-  # services.mopidy.extensionPackages = with pkgs; [
-  #   # Backends
-  #   mopidy-spotify
-  #   # mopidy-spotify-tunigo
-  #   mopidy-soundcloud
-  #   mopidy-youtube
-
-  #   # Web interfaces
-  #   mopidy-moped
-  #   mopidy-mopify
-  #   mopidy-musicbox-webclient
-  # ];
-
-  # services.mopidy.configuration = ''
-  #   [mpd]
-  #   hostname = ::
-
-  #   [audio]
-  #   mixer_volume = 20
-
-  #   [spotify]
-  #   enabled = true
-  #   username = ehloha
-  #   password = 5lAp30biGvnd
-
-  #   [http]
-  #   enabled = true
-  #   hostname = 0.0.0.0
-  #   port = 6680
-  #   static_dir =
-  #   zeroconf = Mopidy HTTP server on $hostname
-
-  #   [mopify]
-  #   enabled = true
-  #   debug = false
-
-  #   [soundcloud]
-  #   auth_token = 1-35204-191607214-3015b57cccfa20
-  # '';
 
   environment.systemPackages = with pkgs; [
     # Applications
@@ -106,19 +61,23 @@ in
     nodejs-8_x
     libpng12
 
-    xfce.xfce4-power-manager
-    # xfce.xfce4-display-settings
-
-    # Modify backlight
-    light
     # Network manager applet
     networkmanagerapplet
+
     # Pulse audio applet
     pa_applet
   ];
 
+  networking.networkmanager.enable = true;
+
+  services.openssh.enable = true;
+
   virtualisation.docker.enable = true;
 
+  # Run emacs daemon for fast open
+  services.emacs.enable = true;
+
+  # Enable shells
   programs.zsh.enable = true;
   programs.xonsh.enable = true;
   programs.fish.enable = true;
@@ -127,9 +86,8 @@ in
   programs.bash.enableCompletion = true;
   # programs.way-cooler.enable = true;
 
-  # services.thinkfan.enable = true;
-
   # Power management
+  # services.thinkfan.enable = true;
   services.tlp.enable = true;
 
   programs.plotinus.enable = true;
@@ -151,67 +109,28 @@ in
   services.xserver = {
     enable = true;
     layout = "us";
-    # Make the Caps Lock key an additional escape
-    xkbOptions = "caps:escape";
+    # Make the Caps Lock key an additional super
+    # (my daskeyboard has no super on the left)
+    xkbOptions = "caps:super";
+
     videoDrivers = [
       # "nouveau"
       "nvidia"
     ];
 
-    # deviceSection = ''
-    #   Identifier "NVIDIA"
-    #   Driver "nvidia"
-    #   Option  "NoLogo" "True"
-    #   Option "RegistryDwords" "EnableBrightnessControl=1"
-    # '';
-
     # Touch pad settings
     libinput = {
       enable = true;
       naturalScrolling = true;
-
     };
 
-    # synaptics = {
-    #   enable = true;
+    displayManager.lightdm.enable = true;
 
-    #   # Two finger gesture to scroll
-    #   twoFingerScroll = true;
-    #   vertEdgeScroll = false;
-
-    #   # Natural scrolling (inverted)
-    #   additionalOptions = ''
-    #     Option "VertScrollDelta" "-101"
-    #     Option "HorizScrollDelta" "-101"
-    #   '';
-    # };
-
-    # Enable the KDE Desktop Environment.
-    displayManager.slim = {
-      enable = true;
-      defaultUser = "swhitt";
-      autoLogin = true;
-    };
-
-    # displayManager.sddm.enable = true;
-    # displayManager.lightdm.enable = true;
-    # desktopManager.kde4.enable = true;
-    # desktopManager.gnome3.enable = true;
-    # desktopManager.xfce.enable = true;
     windowManager.default = "i3";
-    windowManager.awesome = {
-      enable = true;
-    };
-    windowManager.i3 = {
-      enable = true;
-    };
+    windowManager.i3.enable = true;
+    windowManager.awesome.enable = true;
+    windowManager.xmonad.enable = true;
   };
-
-  # services.gnome3.gnome-online-accounts.enable = true;
-  # services.gnome3.sushi.enable = true;
-  # services.gnome3.gvfs.enable = true;
-
-  services.emacs.enable = true;
 
   systemd.user.services.dropbox = {
     restartIfChanged = true;

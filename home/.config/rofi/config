@@ -1,0 +1,10 @@
+# Gruvbox theme
+rofi.theme: /home/swhitt/.nix-profile/share/rofi/themes/gruvbox-dark-hard.rasi
+
+# Free C+J and C+K Keybindings
+rofi.kb-accept-entry: Return,KP_Enter
+rofi.kb-remove-to-eol: Control+D
+
+# Map C+J and C+K to up and down
+rofi.kb-row-up: Control+k
+rofi.kb-row-down: Control+j

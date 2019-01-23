@@ -1,0 +1,38 @@
+# "~/.scripts/runorraise.sh Chromium chromium-browser"
+#  Mod4 + i
+
+"~/.scripts/runorraise.sh Firefox firefox"
+  Mod4 + i
+
+"~/.scripts/runorraise.sh URxvt urxvt"
+  Mod4 + t
+
+"~/.scripts/runorraise.sh Emacs emacs"
+  Mod4 + e
+
+"~/.scripts/runorraise.sh Thunar thunar"
+  Mod4 + f
+
+"~/.scripts/runorraise.sh Slack slack"
+  Mod4 + s
+
+"wmctrl -c :ACTIVE:"
+  Mod4 + q
+
+"wmctrl -r :ACTIVE: -b toggle,maximized_vert,maximized_horz"
+  Mod4 + space
+
+"rofi -show window"
+  Mod4 + backslash
+
+"rofi -show run"
+  Mod4 + Return
+
+# "xdotool search --onlyvisible --class Chromium windowraise windowfocus"
+#   Mod4 + i
+# 
+# "xdotool search --onlyvisible --class URxvt windowraise windowfocus"
+#   Mod4 + t
+# 
+# "xdotool search --onlyvisible --class Emacs windowraise windowfocus"
+#   Mod4 + e

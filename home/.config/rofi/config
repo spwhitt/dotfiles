@@ -1,5 +1,5 @@
 # Gruvbox theme
-rofi.theme: /home/swhitt/.nix-profile/share/rofi/themes/gruvbox-dark-hard.rasi
+rofi.theme: ./gruvbox-dark-hard.rasi
 
 # Free C+J and C+K Keybindings
 rofi.kb-accept-entry: Return,KP_Enter

@@ -2,6 +2,9 @@
 
 class="$1"
 command="$2"
-# xdotool search --onlyvisible --class $class windowraise windowfocus || $command
-# wmctrl -x -a $class || $command
+
+# Raise or start appropriate window
 ~/.scripts/raiserecent.sh $class || $command
+
+# Warp mouse pointer to window
+xdotool getactivewindow mousemove -w '%1' 0 0

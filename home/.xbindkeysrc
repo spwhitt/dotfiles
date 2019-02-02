@@ -1,38 +1,65 @@
-# "~/.scripts/runorraise.sh Chromium chromium-browser"
-#  Mod4 + i
+##
+# Jump To Application
+##
 
+# Tla
+"~/.scripts/runorraise.sh "TLA+ Toolbox.TLA+ Toolbox" tla-toolbox"
+  Mod4 + t
+
+# Internet
 "~/.scripts/runorraise.sh Firefox firefox"
   Mod4 + i
 
+# /erminal
 "~/.scripts/runorraise.sh URxvt urxvt"
-  Mod4 + t
+  Mod4 + slash
 
+# Editor
 "~/.scripts/runorraise.sh Emacs emacs"
   Mod4 + e
 
+# File manager
 "~/.scripts/runorraise.sh Thunar thunar"
   Mod4 + f
 
+# Slack
 "~/.scripts/runorraise.sh Slack slack"
   Mod4 + s
+
+# Coq
+"~/.scripts/runorraise.sh "CoqIde.CoqIde" coq-ide"
+  Mod4 + c
+
+# Pdf
+"~/.scripts/runorraise.sh "Evince" evince"
+  Mod4 + p
+
+# Displays
+"xfce4-display-settings --minimal"
+  Mod4 + d
+
+##
+# Manipulate active window
+##
+
+# "xdotool getactivewindow windowclose"
+#   Mod4 + q
+#
+# "xdotool getactivewindow windowsize 100% 100%"
+#   Mod4 + space
 
 "wmctrl -c :ACTIVE:"
   Mod4 + q
 
 "wmctrl -r :ACTIVE: -b toggle,maximized_vert,maximized_horz"
-  Mod4 + space
+  Mod4 + KP_Begin
+
+##
+# Run app/window search tool
+##
 
 "rofi -show window"
   Mod4 + backslash
 
 "rofi -show run"
   Mod4 + Return
-
-# "xdotool search --onlyvisible --class Chromium windowraise windowfocus"
-#   Mod4 + i
-# 
-# "xdotool search --onlyvisible --class URxvt windowraise windowfocus"
-#   Mod4 + t
-# 
-# "xdotool search --onlyvisible --class Emacs windowraise windowfocus"
-#   Mod4 + e

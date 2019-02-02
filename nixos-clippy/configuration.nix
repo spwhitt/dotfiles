@@ -15,14 +15,25 @@ in
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;
   boot.loader.grub.device = "/dev/sda";
+
+  # For laptop backlight
   boot.kernelParams = [ "acpi_backlight=vendor" ];
+
+  # For ddcutil to control external monitor settings (backlight, color...)
+  boot.kernelModules = [ "i2c_dev" ];
 
   # Needed for TLP on my thinkpad
   boot.extraModulePackages = [ pkgs.linuxPackages.acpi_call ];
 
   networking.hostName = "clippy";
-  # networking.firewall.allowedTCPPorts = [ 6680 ];
-  
+  networking.firewall.allowedTCPPorts = [ 3000 8080 ];
+
+  # services.openvpn.servers = {
+  #   nordvpn = {
+  #     config = builtins.readFile "/etc/nixos/ovpn/ovpn_udp/us1167.nordvpn.com.udp.ovpn";
+  #   };
+  # };
+
   fonts.fonts = [
     pkgs.source-code-pro
   ];
@@ -35,8 +46,21 @@ in
 
   environment.systemPackages = with pkgs; [
     # Applications
-    # firefox
+    firefox
     chromium
+    slack
+    anki
+    xpdf
+    evince
+    calibre
+    fbreader
+    feh
+    inkscape
+    vlc
+    zotero
+
+    # Terminal
+    rxvt_unicode
 
     # Terminal utils
     ack
@@ -47,10 +71,13 @@ in
     mosh
     git
     git-lfs
-    vim
+    neovim
     rcm
     tree
     psmisc # killall, etc
+    dtrx
+    imagemagick
+    ispell
 
     # Filesystem support
     # fuse_exfat
@@ -58,14 +85,53 @@ in
     dropbox
 
     # Dev
+    ghc
+    haskellPackages.Agda
+    coq
     nodejs-8_x
-    libpng12
+    python3
+    stack
 
     # Network manager applet
     networkmanagerapplet
 
-    # Pulse audio applet
+    # Pulse audio controllers
+    pamixer
     pa_applet
+    pavucontrol
+
+    # ncurses disk usage
+    ncdu
+
+    # dmenu like fuzzy finder utility
+    rofi
+    xbindkeys
+    # Switch windows
+    xdotool
+    wmctrl
+
+    # Basic linux utils
+    usbutils
+    file
+
+    # Monitor control (backlight, color...)
+    xorg.xbacklight
+    ddcutil
+    arandr # GUI for xrandr
+
+    # Basic x utils
+    xorg.xmodmap
+    xorg.xev
+
+    # Used for managing dotfiles
+    stow
+
+    # backup
+    duplicity
+
+    # (pkgs.duplicity.overrideAttrs(old: rec {
+    #   patches = [ ./duplicity.patch ];
+    # }))
   ];
 
   networking.networkmanager.enable = true;
@@ -90,13 +156,20 @@ in
   # services.thinkfan.enable = true;
   services.tlp.enable = true;
 
-  programs.plotinus.enable = true;
-
-  hardware.pulseaudio.enable = true;
-
   hardware.bluetooth.enable = true;
 
+  hardware.pulseaudio.enable = true;
+  # Enable bluetooth, etc.
+  hardware.pulseaudio.package = pkgs.pulseaudioFull;
+
+  # Allow service discovery e.g. network printers
+  services.avahi.enable = true;
+  services.avahi.nssmdns = true;
+  # services.avahi.publish.enable = true;
+  # services.avahi.publish.userServices = true;
+
   services.printing.enable = true;
+  services.printing.browsing = true;
 
   services.redshift = {
     enable = false;
@@ -125,12 +198,18 @@ in
     };
 
     displayManager.lightdm.enable = true;
+    desktopManager.xfce.enable = true;
 
-    windowManager.default = "i3";
+    # windowManager.default = "i3";
     windowManager.i3.enable = true;
     windowManager.awesome.enable = true;
-    windowManager.xmonad.enable = true;
+    windowManager.xmonad = {
+      enable = true;
+      enableContribAndExtras = true;
+    };
   };
+
+  # sound.mediaKeys.enable = true;
 
   systemd.user.services.dropbox = {
     restartIfChanged = true;
@@ -150,4 +229,6 @@ in
   };
 
   time.timeZone = "America/New_York";
+
+  nix.gc.automatic = true;
 }

@@ -3,6 +3,8 @@
 let
 # mypkgs = import /home/swhitt/nixpkgs {};
 
+  # mypkgs = pkgs { overlays = [ (import ./nix/overlay.nix)_]; }
+
 in
 {
   imports = [ ./hardware-configuration.nix ];
@@ -28,11 +30,18 @@ in
   networking.hostName = "clippy";
   networking.firewall.allowedTCPPorts = [ 3000 8080 ];
 
-  # services.openvpn.servers = {
-  #   nordvpn = {
-  #     config = builtins.readFile "/etc/nixos/ovpn/ovpn_udp/us1167.nordvpn.com.udp.ovpn";
-  #   };
-  # };
+  # Works but something is slow.
+  # I think DNS is not being routed through the VPN.
+  # May be better to use networkmanager-openvpn anyway.
+  services.openvpn.servers = {
+    nordvpn = {
+      autoStart = false;
+      config = ''
+        config /etc/nixos/ovpn/ovpn_udp/us3395.nordvpn.com.udp.ovpn
+        auth-user-pass /etc/nixos/nordvpn_auth.txt
+      '';
+    };
+  };
 
   fonts.fonts = [
     pkgs.source-code-pro
@@ -45,6 +54,8 @@ in
   security.sudo.wheelNeedsPassword = false;
 
   environment.systemPackages = with pkgs; [
+    xfce.xfwm4themes
+
     # Applications
     firefox
     chromium
@@ -57,7 +68,7 @@ in
     feh
     inkscape
     vlc
-    zotero
+    # zotero
 
     # Terminal
     rxvt_unicode
@@ -76,7 +87,7 @@ in
     tree
     psmisc # killall, etc
     dtrx
-    imagemagick
+    # imagemagick
     ispell
 
     # Filesystem support
@@ -86,8 +97,8 @@ in
 
     # Dev
     ghc
-    haskellPackages.Agda
-    coq
+    # haskellPackages.Agda
+    # coq
     nodejs-8_x
     python3
     stack
@@ -105,6 +116,7 @@ in
 
     # dmenu like fuzzy finder utility
     rofi
+    networkmanager_dmenu
     xbindkeys
     # Switch windows
     xdotool
@@ -117,6 +129,8 @@ in
     # Monitor control (backlight, color...)
     xorg.xbacklight
     ddcutil
+    light
+    brightnessctl
     arandr # GUI for xrandr
 
     # Basic x utils
@@ -126,15 +140,42 @@ in
     # Used for managing dotfiles
     stow
 
-    # backup
-    duplicity
+    # Build duplicity with support for b2
+    (pkgs.duplicity.overrideAttrs(old: rec {
+      propagatedBuildInputs =
+        old.propagatedBuildInputs ++ [ backblaze-b2 ];
+    }))
 
-    # (pkgs.duplicity.overrideAttrs(old: rec {
-    #   patches = [ ./duplicity.patch ];
-    # }))
+    # Modified zotero
+    (callPackage (import ./zotero) {})
   ];
 
+  services.duplicati = {
+    enable = true;
+    # The default interface "lo" causes an error. This is the correct value
+    interface = "loopback";
+  };
+
   networking.networkmanager.enable = true;
+  # Start VPN automatically
+  networking.networkmanager.dispatcherScripts = [ {
+    source = pkgs.writeScript "startvpn" ''
+      #!/usr/bin/env bash
+      VPN_NAME="us3359.nordvpn.com.udp"
+      interface=$1 status=$2
+      case $status in
+        up|vpn-down)
+          nmcli connection up id "$VPN_NAME"
+          ;;
+        down)
+          if nmcli connection show --active | grep "$VPN_NAME"; then
+            nmcli connection down id "$VPN_NAME"
+          fi
+          ;;
+      esac
+    '';
+    type = "basic";
+  } ];
 
   services.openssh.enable = true;
 
@@ -145,7 +186,7 @@ in
 
   # Enable shells
   programs.zsh.enable = true;
-  programs.xonsh.enable = true;
+  # programs.xonsh.enable = true;
   programs.fish.enable = true;
 
   # programs.zsh.enableCompletion = true;
@@ -170,6 +211,7 @@ in
 
   services.printing.enable = true;
   services.printing.browsing = true;
+  services.printing.drivers = [ pkgs.gutenprint pkgs.brlaser ];
 
   services.redshift = {
     enable = false;
@@ -182,14 +224,16 @@ in
   services.xserver = {
     enable = true;
     layout = "us";
+
     # Make the Caps Lock key an additional super
     # (my daskeyboard has no super on the left)
     xkbOptions = "caps:super";
 
-    videoDrivers = [
+    # Proprietary driver broken for some reason - but default works!
+    # videoDrivers = [
+      # "nvidia"
       # "nouveau"
-      "nvidia"
-    ];
+    # ];
 
     # Touch pad settings
     libinput = {
@@ -199,14 +243,15 @@ in
 
     displayManager.lightdm.enable = true;
     desktopManager.xfce.enable = true;
+    desktopManager.default = "xfce";
 
     # windowManager.default = "i3";
-    windowManager.i3.enable = true;
-    windowManager.awesome.enable = true;
-    windowManager.xmonad = {
-      enable = true;
-      enableContribAndExtras = true;
-    };
+    # windowManager.i3.enable = true;
+    # windowManager.awesome.enable = true;
+    # windowManager.xmonad = {
+      # enable = true;
+      # enableContribAndExtras = true;
+    # };
   };
 
   # sound.mediaKeys.enable = true;

@@ -21,5 +21,5 @@ stow -v -t $HOME osx
 ## Install NixOS Configuration
 
 ```sh
-stow -v 0-t /etc/nixos nixos-clippy
+stow -v -t /etc/nixos nixos-clippy
 ```

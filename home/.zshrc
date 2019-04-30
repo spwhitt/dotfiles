@@ -47,6 +47,7 @@ plugins=(
 # ------------------------------------------------------------------------------
 # Editor (VIM obviously)
 
+export TERMINAL='urxvt'
 export EDITOR='emacsclient -c'
 export VISUAL="$EDITOR"
 alias vim=nvim
@@ -142,3 +143,5 @@ function mkcd () {
 function lb() {
   nvim ~/logbook/$(date '+%Y-%m-%d').md
 }
+
+alias vgaLeft = "xrandr --output VGA-a --auto --left-of LVDS-1"

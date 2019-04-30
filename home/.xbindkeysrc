@@ -63,3 +63,22 @@
 
 "rofi -show run"
   Mod4 + Return
+
+"networkmanager_dmenu"
+  Mod4 + n
+
+##
+# Brightness
+##
+
+"sudo light -A 1"
+  Mod4 + Up
+
+"sudo light -A 10"
+  Shift+Mod4 + Up
+
+"sudo light -U 1"
+  Mod4 + Down
+
+"sudo light -U 10"
+  Shift+Mod4 + Down

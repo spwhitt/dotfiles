@@ -33,12 +33,18 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(yaml
+     html
+     shell-scripts
+     haskell
+     lua
      vimscript
      python
      agda
-     ;; coq
+     coq
      javascript
+     c-c++
+     cmake
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -46,8 +52,25 @@ This function should only modify configuration layer settings."
      ;; ----------------------------------------------------------------
      helm
      ;; ivy
-     auto-completion
-     ;; better-defaults
+
+     (auto-completion :variables
+                      ;; No hijacking my tab and return keys!
+                      ;; Use C-j, C-k, C-l instead
+                      auto-completion-return-key-behavior nil
+                      auto-completion-tab-key-behavior nil
+                      auto-completion-complete-with-key-sequence nil
+
+                      ;; Help tooltip when browsing through list
+                      ;; If annoying set to 'manual, use M-h
+                      auto-completion-enable-help-tooltip 'manual
+
+                      ;; Give this a try, if slow remove
+                      auto-completion-enable-sort-by-usage t
+
+                      ;; Set to 0 to disable automatic popup. Can still access with Tab
+                      auto-completion-idle-delay 0.2
+                      )
+
      emacs-lisp
      git
      markdown
@@ -58,9 +81,17 @@ This function should only modify configuration layer settings."
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
-     ;; spell-checking
-     syntax-checking
-     ;; version-control
+     spell-checking
+
+     (syntax-checking :variables
+                      ;; Disable flycheck tooltips
+                      syntax-checking-enable-tooltips nil)
+
+     version-control
+     themes-megapack
+     nixos
+     systemd
+     docker
      )
 
    ;; List of additional packages that will be installed without being
@@ -77,7 +108,8 @@ This function should only modify configuration layer settings."
 
    ;; A list of packages that will not be installed and loaded.
    ;; flycheck-pos-tip puts flycheck messages in tooltips, which I don't like (text too small etc.)
-   dotspacemacs-excluded-packages '(flycheck-pos-tip)
+   ;; smartparens does annoying auto-insertion of parenthesis that I'm not sure how to cope with
+   dotspacemacs-excluded-packages '( flycheck-pos-tip smartparens )
 
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
@@ -203,11 +235,11 @@ It should only modify the values of Spacemacs settings."
                          spacemacs-light)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
-   ;; `all-the-icons', `custom', `vim-powerline' and `vanilla'. The first three
-   ;; are spaceline themes. `vanilla' is default Emacs mode-line. `custom' is a
-   ;; user defined themes, refer to the DOCUMENTATION.org for more info on how
-   ;; to create your own spaceline theme. Value can be a symbol or list with\
-   ;; additional properties.
+   ;; `all-the-icons', `custom', `doom', `vim-powerline' and `vanilla'. The
+   ;; first three are spaceline themes. `doom' is the doom-emacs mode-line.
+   ;; `vanilla' is default Emacs mode-line. `custom' is a user defined themes,
+   ;; refer to the DOCUMENTATION.org for more info on how to create your own
+   ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
    dotspacemacs-mode-line-theme 'vanilla
    ;; dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5)
@@ -325,12 +357,12 @@ It should only modify the values of Spacemacs settings."
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-active-transparency 90
+   dotspacemacs-active-transparency 100
 
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's inactive or deselected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-inactive-transparency 90
+   dotspacemacs-inactive-transparency 100
 
    ;; If non-nil show the titles of transient states. (default t)
    dotspacemacs-show-transient-state-title t
@@ -394,7 +426,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil, advise quit functions to keep server open when quitting.
    ;; (default nil)
-   dotspacemacs-persistent-server nil
+   dotspacemacs-persistent-server t
 
    ;; List of search tool executable names. Spacemacs uses the first installed
    ;; tool of the list. Supported tools are `rg', `ag', `pt', `ack' and `grep'.
@@ -454,6 +486,7 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
+  (add-to-list 'exec-path "/home/swhitt/.npm-packages/bin" t)
   )
 
 (defun dotspacemacs/user-load ()
@@ -470,16 +503,27 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
-  ;; Disable flycheck tooltips
-  (setq-default dotspacemacs-configuration-layers
-                '((syntax-checking :variables syntax-checking-enable-tooltips nil)))
+  ;; Don't open split for magit - use current buffer
+  ;; https://magit.vc/manual/magit/Switching-Buffers.html
+  (setq-default magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
+
+  ;; Make help windows display in the current window
+  (setq display-buffer-alist
+               '(("\*Help\*" . (display-buffer-same-window))
+                 ("\*Apropos\*" . (display-buffer-same-window))
+                 (".*" . (display-buffer-same-window))))
+
+  ;; Make man pages open in the current window
+  (setq-default Man-notify-method 'pushy)
+
+  ;; Follow symlinks by default, don't ask
+  (setq vc-follow-symlinks t)
 
   ;; Remove powerline separators because they are unnecessary visual noise
   (setq-default powerline-default-separator 'nil)
 
-
   ;; U = redo - C-r is a crap binding
-  (define-key evil-normal-state-map (kbd "U") 'undo-tree-redo)
+  ;; (define-key evil-normal-state-map (kbd "U") 'undo-tree-redo)
 
   ;; Use flycheck errors, not js2 errors
   (setq js2-mode-show-parse-errors nil)
@@ -489,7 +533,11 @@ before packages are loaded."
       (setq next-error-function 'flycheck-next-error))
   )
 
-  (add-to-list 'auto-mode-alist '("\\.js\\'" . react-mode))
+  (setq make-backup-files nil)
+  (setq auto-save-default nil)
+  (setq create-lockfiles nil)
+
+  ;; (add-to-list 'auto-mode-alist '("\\.js\\'" . react-mode))
 
   (setq-default
     ;; js2-mode
@@ -507,7 +555,7 @@ before packages are loaded."
   ;; (setq-default helm-display-function )
 
   ;; Open helm fullscreen
-  (setq helm-full-frame t)
+  ;; (setq helm-full-frame t)
 
   ;; Helm-swoop doesn't work fullscreen
   (defadvice helm-swoop (around helm-swoop-no-full-frame activate)
@@ -515,7 +563,7 @@ before packages are loaded."
       ad-do-it))
 
   ;; Should open in current window. Also 'below 'above 'left 'right 'same 'other
-  (setq helm-split-window-default-side 'same)
+  ;; (setq helm-split-window-default-side 'same)
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -528,14 +576,6 @@ before packages are loaded."
  '(package-selected-packages
    (quote
     (smeargle orgit magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit ghub let-alist with-editor vimrc-mode dactyl-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode anaconda-mode pythonic helm-company helm-c-yasnippet fuzzy company-web web-completion-data company-tern dash-functional company-statistics auto-yasnippet ac-ispell auto-complete company-coq company-math math-symbol-lists company tern web-mode tagedit slim-mode scss-mode sass-mode pug-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mmm-mode markdown-toc markdown-mode less-css-mode htmlize helm-css-scss haml-mode gnuplot gh-md flycheck-pos-tip pos-tip flycheck emmet-mode web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc coffee-mode ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(proof-eager-annotation-face ((t (:background "medium blue"))))
- '(proof-error-face ((t (:background "dark red"))))
- '(proof-warning-face ((t (:background "indianred3")))))
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
 This is an auto-generated function, do not modify its content directly, use
@@ -548,13 +588,11 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (yasnippet-snippets symon string-inflection spaceline-all-the-icons all-the-icons memoize rjsx-mode prettier-js pippel pipenv password-generator overseer org-brain nameless magit-svn json-navigator hierarchy importmagic epc ctable concurrent deferred helm-xref helm-purpose window-purpose imenu-list gitignore-templates evil-org evil-lion evil-goggles evil-cleverparens paredit editorconfig counsel-projectile counsel swiper ivy company-anaconda centered-cursor-mode font-lock+ dotenv-mode smeargle orgit magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit ghub let-alist with-editor vimrc-mode dactyl-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode anaconda-mode pythonic helm-company helm-c-yasnippet fuzzy company-web web-completion-data company-tern dash-functional company-statistics auto-yasnippet ac-ispell auto-complete company-coq company-math math-symbol-lists company tern web-mode tagedit slim-mode scss-mode sass-mode pug-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mmm-mode markdown-toc markdown-mode less-css-mode htmlize helm-css-scss haml-mode gnuplot gh-md flycheck-pos-tip pos-tip flycheck emmet-mode web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc coffee-mode ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
+    (proof-general smeargle orgit magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit magit-popup git-commit ghub let-alist with-editor vimrc-mode dactyl-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode anaconda-mode pythonic helm-company helm-c-yasnippet fuzzy company-web web-completion-data company-tern dash-functional company-statistics auto-yasnippet ac-ispell auto-complete company-coq company-math math-symbol-lists company tern web-mode tagedit slim-mode scss-mode sass-mode pug-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mmm-mode markdown-toc markdown-mode less-css-mode htmlize helm-css-scss haml-mode gnuplot gh-md flycheck-pos-tip pos-tip flycheck emmet-mode web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor yasnippet multiple-cursors js2-mode js-doc coffee-mode ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(proof-eager-annotation-face ((t (:background "medium blue"))))
- '(proof-error-face ((t (:background "dark red"))))
- '(proof-warning-face ((t (:background "indianred3")))))
+ )
 )

@@ -8,3 +8,6 @@ rofi.kb-remove-to-eol: Control+D
 # Map C+J and C+K to up and down
 rofi.kb-row-up: Control+k
 rofi.kb-row-down: Control+j
+
+# Enabled modes
+rofi.modi: window,run,drun

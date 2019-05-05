@@ -1,8 +1,7 @@
 { config, pkgs, ... }:
 
 let
-# mypkgs = import /home/swhitt/nixpkgs {};
-
+  # mypkgs = import /home/swhitt/nixpkgs {};
   # mypkgs = pkgs { overlays = [ (import ./nix/overlay.nix)_]; }
 
 in
@@ -28,7 +27,7 @@ in
   boot.extraModulePackages = [ pkgs.linuxPackages.acpi_call ];
 
   networking.hostName = "clippy";
-  networking.firewall.allowedTCPPorts = [ 3000 8080 ];
+  networking.firewall.allowedTCPPorts = [];
 
   # Works but something is slow.
   # I think DNS is not being routed through the VPN.
@@ -45,10 +44,15 @@ in
 
   fonts.fonts = [
     pkgs.source-code-pro
+    pkgs.powerline-fonts
   ];
 
   nixpkgs.config = {
     allowUnfree = true;
+
+    firefox = {
+      enableAdobeFlash = true;
+    };
   };
 
   security.sudo.wheelNeedsPassword = false;
@@ -57,8 +61,7 @@ in
     xfce.xfwm4themes
 
     # Applications
-    firefox
-    chromium
+    firefoxWrapper
     slack
     anki
     xpdf
@@ -68,10 +71,6 @@ in
     feh
     inkscape
     vlc
-    # zotero
-
-    # Terminal
-    rxvt_unicode
 
     # Terminal utils
     ack
@@ -83,33 +82,20 @@ in
     git
     git-lfs
     neovim
-    rcm
     tree
     psmisc # killall, etc
     dtrx
-    # imagemagick
     ispell
+    direnv
 
     # Filesystem support
     # fuse_exfat
     # exfat-utils
     dropbox
-
-    # Dev
-    ghc
-    # haskellPackages.Agda
-    # coq
-    nodejs-8_x
-    python3
-    stack
+    drive
 
     # Network manager applet
     networkmanagerapplet
-
-    # Pulse audio controllers
-    pamixer
-    pa_applet
-    pavucontrol
 
     # ncurses disk usage
     ncdu
@@ -127,18 +113,8 @@ in
     file
 
     # Monitor control (backlight, color...)
-    xorg.xbacklight
     ddcutil
     light
-    brightnessctl
-    arandr # GUI for xrandr
-
-    # Basic x utils
-    xorg.xmodmap
-    xorg.xev
-
-    # Used for managing dotfiles
-    stow
 
     # Build duplicity with support for b2
     (pkgs.duplicity.overrideAttrs(old: rec {
@@ -148,6 +124,11 @@ in
 
     # Modified zotero
     (callPackage (import ./zotero) {})
+    libreoffice
+    unzip
+    whois
+    bind
+    pciutils
   ];
 
   services.duplicati = {
@@ -159,17 +140,17 @@ in
   networking.networkmanager.enable = true;
   # Start VPN automatically
   networking.networkmanager.dispatcherScripts = [ {
-    source = pkgs.writeScript "startvpn" ''
-      #!/usr/bin/env bash
+    source = pkgs.writeScript "03startvpn" ''
+      #!${pkgs.bash}/bin/bash
       VPN_NAME="us3359.nordvpn.com.udp"
       interface=$1 status=$2
       case $status in
         up|vpn-down)
-          nmcli connection up id "$VPN_NAME"
+          ${pkgs.networkmanager}/bin/nmcli connection up id "$VPN_NAME"
           ;;
         down)
-          if nmcli connection show --active | grep "$VPN_NAME"; then
-            nmcli connection down id "$VPN_NAME"
+          if ${pkgs.networkmanager}/bin/nmcli connection show --active | grep "$VPN_NAME"; then
+            ${pkgs.networkmanager}/bin/nmcli connection down id "$VPN_NAME"
           fi
           ;;
       esac
@@ -186,12 +167,6 @@ in
 
   # Enable shells
   programs.zsh.enable = true;
-  # programs.xonsh.enable = true;
-  programs.fish.enable = true;
-
-  # programs.zsh.enableCompletion = true;
-  programs.bash.enableCompletion = true;
-  # programs.way-cooler.enable = true;
 
   # Power management
   # services.thinkfan.enable = true;
@@ -229,12 +204,6 @@ in
     # (my daskeyboard has no super on the left)
     xkbOptions = "caps:super";
 
-    # Proprietary driver broken for some reason - but default works!
-    # videoDrivers = [
-      # "nvidia"
-      # "nouveau"
-    # ];
-
     # Touch pad settings
     libinput = {
       enable = true;
@@ -270,7 +239,7 @@ in
     uid = 1000;
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "docker" ];
-    shell = "${pkgs.fish}/bin/fish";
+    shell = "${pkgs.zsh}/bin/zsh";
   };
 
   time.timeZone = "America/New_York";

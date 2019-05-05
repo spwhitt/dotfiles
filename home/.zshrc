@@ -37,23 +37,24 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git gitignore svn
-  pip lein cabal
+  pip cabal
   fasd git-extras mosh
   zsh_reload fancy-ctrl-z
-  docker docker-compose yarn kubectl
-  tmux
+  docker docker-compose yarn
+  tmux colored-man-pages
   )
 
 # ------------------------------------------------------------------------------
 # Editor (VIM obviously)
 
-export TERMINAL='urxvt'
-export EDITOR='emacsclient -c'
+export TERMINAL="xfce4-terminal"
+export EDITOR="emacsclient -s /tmp/emacs1000/server -c"
 export VISUAL="$EDITOR"
 alias vim=nvim
 
 # Create new emacs frame and raise it to top
-alias emacs='emacsclient -e "(select-frame-set-input-focus (selected-frame))" -c -a ""'
+alias e=$EDITOR
+# alias e='emacsclient -e "(select-frame-set-input-focus (selected-frame))" -c -a ""'
 
 # ------------------------------------------------------------------------------
 # Platform Specific
@@ -129,19 +130,13 @@ function mkcd () {
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# OPAM configuration
-. /Users/swhitt/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-
-# tabtab source for serverless package
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[[ -f /Users/swhitt/TVS/LightbrushCloud/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/swhitt/TVS/LightbrushCloud/serverless/node_modules/tabtab/.completions/serverless.zsh
-# tabtab source for sls package
-# uninstall by removing these lines or running `tabtab uninstall sls`
-[[ -f /Users/swhitt/TVS/LightbrushCloud/serverless/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/swhitt/TVS/LightbrushCloud/serverless/node_modules/tabtab/.completions/sls.zsh
-
 # Open logbook at todays date
 function lb() {
-  nvim ~/logbook/$(date '+%Y-%m-%d').md
+  $EDITOR ~/logbook/$(date '+%Y-%m-%d').md
 }
 
-alias vgaLeft = "xrandr --output VGA-a --auto --left-of LVDS-1"
+alias vgaLeft "xrandr --output VGA-a --auto --left-of LVDS-1"
+
+alias dtrx "dtrx --one=I"
+
+eval "$(direnv hook zsh)"

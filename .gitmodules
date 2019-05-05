@@ -10,3 +10,9 @@
 [submodule "home/.Xresources.d/Xresources-themes"]
 	path = home/.Xresources.d/Xresources-themes
 	url = https://github.com/logico-dev/Xresources-themes
+[submodule "home/.local/share/xfce4/terminal/colorschemes"]
+	path = home/.local/share/xfce4/terminal/base16-xfce4-terminal
+	url = https://github.com/afg984/base16-xfce4-terminal
+[submodule "home/.oh-my-zsh-custom/themes/spaceship-prompt"]
+	path = home/.oh-my-zsh-custom/themes/spaceship-prompt
+	url = https://github.com/denysdovhan/spaceship-prompt.git

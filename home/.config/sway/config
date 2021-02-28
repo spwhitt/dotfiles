@@ -238,6 +238,7 @@
   for_window [app_id="swaypopup"] floating enable, border pixel 2, sticky enable
   # Make htop big
   for_window [app_id="ghtop"] floating enable, border pixel 2, sticky enable, resize set width 90 ppt height 90 ppt
+  for_window [title="Picture-in-Picture"] floating enable
 
 #
 # Resizing containers:

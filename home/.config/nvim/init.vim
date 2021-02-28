@@ -45,6 +45,15 @@ nnoremap <silent> <leader>h :Help<cr>
 
 call plug#begin('~/.local/share/nvim/plugged')
 
+" --
+" Notetaking (Start simple?)
+Plug 'vimwiki/vimwiki'
+let g:vimwiki_list = [{'path': '~/Data/Dropbox/Notes/', 'syntax': 'markdown', 'ext':'.md'}]
+let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown':'markdown', '.mdown':'markdown'}
+" Include extension in the markdown link [text](text.md) instead of [text](text)
+" Allows other programs to follow the links more easily
+let g:vimwiki_markdown_link_ext = 1
+
 " ---
 " Keybinding hints
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
@@ -195,6 +204,12 @@ Plug 'LnL7/vim-nix'
 " Language Server
 " TODO: Switch to neovim built in server
 Plug 'prabirshrestha/vim-lsp'
+
+" --
+" Vlime
+"
+Plug 'vlime/vlime', { 'rtp': 'vim/' }
+Plug 'kovisoft/paredit'
 
 if executable('rnix-lsp')
     au User lsp_setup call lsp#register_server({

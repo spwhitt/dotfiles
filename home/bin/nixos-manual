@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+print_help() {
+  echo "manual nix|nixos|nixpkgs"
+}
+
+if [ "$#" -ne 1 ]; then
+  print_help
+fi
+
+case "$1" in
+  nix)
+  firefox /var/run/current-system/sw/share/doc/nix/index.html
+  ;;
+  nixos)
+  firefox /var/run/current-system/sw/share/doc/nixos/index.html
+  ;;
+  nixpkgs|nixpkg)
+  firefox /var/run/current-system/sw/share/doc/nixpkgs/manual.html
+  ;;
+  *)
+  print_help
+  ;;
+esac

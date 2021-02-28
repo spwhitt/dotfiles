@@ -12,6 +12,7 @@
 " set exrc
 " set secure
 
+
 " set t_Co=256
 let mapleader = " "
 let g:mapleader = " "
@@ -40,9 +41,13 @@ function! OpenHelpInCurrentWindow(topic)
     endtry
 endfunction
 command! -nargs=? -complete=help Help call OpenHelpInCurrentWindow(<q-args>)
-nnoremap <silent> <leader>h :Help
+nnoremap <silent> <leader>h :Help<cr>
 
 call plug#begin('~/.local/share/nvim/plugged')
+
+" ---
+" Keybinding hints
+Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 
 " --
 " Collection of highly useful pairs of mappings
@@ -57,6 +62,8 @@ Plug 'tpope/vim-repeat'
 " Extends Vim's % command
 Plug 'vim-scripts/matchit.zip'
 
+" ---
+" Motions based on indent depths or levels
 Plug 'jeetsukumaran/vim-indentwise'
 
 " ---
@@ -67,6 +74,10 @@ Plug 'nelstrom/vim-visual-star-search'
 " I can hardly function without these text objects
 " s<char> where char is practically any symbol or t
 Plug 'tpope/vim-surround'
+
+" ---
+" A small taste of structured editing
+Plug 'guns/vim-sexp'
 
 " ---
 " Massive collection of text objects
@@ -175,8 +186,72 @@ Plug 'Yggdroot/indentLine'
 
 " --
 " Replacement for netrw
-let g:vimfiler_as_default_explorer = 1
-Plug 'Shougo/vimfiler.vim'
+" let g:vimfiler_as_default_explorer = 1
+" Plug 'Shougo/vimfiler.vim'
+
+Plug 'LnL7/vim-nix'
+
+" --
+" Language Server
+" TODO: Switch to neovim built in server
+Plug 'prabirshrestha/vim-lsp'
+
+if executable('rnix-lsp')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'rnix-lsp',
+        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'rnix-lsp']},
+        \ 'whitelist': ['nix'],
+        \ })
+endif
+
+
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=yes
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> gs <plug>(lsp-document-symbol-search)
+    nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+    nmap <buffer> gr <plug>(lsp-references)
+    nmap <buffer> gi <plug>(lsp-implementation)
+    nmap <buffer> gt <plug>(lsp-type-definition)
+    nmap <buffer> <leader>rn <plug>(lsp-rename)
+    nmap <buffer> [g <Plug>(lsp-previous-diagnostic)
+    nmap <buffer> ]g <Plug>(lsp-next-diagnostic)
+    nmap <buffer> K <plug>(lsp-hover)
+
+    let g:lsp_format_sync_timeout = 1000
+    autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
+    
+    " refer to doc to add more commands
+endfunction
+
+augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+
+" Plug 'autozimu/LanguageClient-neovim', {
+"     \ 'branch': 'next',
+"     \ 'do': 'bash install.sh',
+"     \ }
+" 
+" let g:LanguageClient_serverCommands = {
+"     \ 'nix': ['rnix-lsp']
+" \ }
+
+" --
+" Install Vim Plugin Packaged with FZF
+Plug '/run/current-system/sw/share/vim-plugins/fzf'
+
+" --
+" Additional FZF Commands/Features
+" Downgrade for now because fzf packaged with nixos isn't recent enough
+" Prefix all commands with Fzf for clarity
+let g:fzf_command_prefix = 'Fzf'
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+Plug 'junegunn/fzf.vim', { 'commit': '4145f53f3d343c389ff974b1f1a68eeb39fba18b' }
 
 " Text edit commands {{{2
 
@@ -199,7 +274,7 @@ Plug 'Shougo/vimfiler.vim'
 " External Integration {{{2
 
   Plug 'let-def/vimbufsync'
-  Plug 'trefis/coquille'
+  " Plug 'trefis/coquille'
   " Plug 'jvoorhis/coq.vim'
   " Plug 'vim-scripts/CoqIDE'
 
@@ -212,43 +287,43 @@ Plug 'Shougo/vimfiler.vim'
     Plug 'bogado/file-line'
 
     " Unite, its dependencies, and additional sources
-    Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-    Plug 'Shougo/neomru.vim'
-    Plug 'Shougo/unite.vim'
-    Plug 'ujihisa/unite-colorscheme'
+    " Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+    " Plug 'Shougo/neomru.vim'
+    " Plug 'Shougo/unite.vim'
+    " Plug 'ujihisa/unite-colorscheme'
 
     " My Unite
-    nnoremap <leader>b :Unite -no-split -start-insert buffer <cr>
-    nnoremap <leader>c :Unite -no-split -start-insert colorscheme <cr>
-    nnoremap <leader>p :Unite -no-split register <cr>
+    " nnoremap <leader>b :Unite -no-split -start-insert buffer <cr>
+    " nnoremap <leader>c :Unite -no-split -start-insert colorscheme <cr>
+    " nnoremap <leader>p :Unite -no-split register <cr>
 
     " Unite
-    let g:unite_source_history_yank_enable = 1
+    " let g:unite_source_history_yank_enable = 1
     " call unite#custom#source('file_rec,file_rec/async', 'ignore_pattern', 'node_modules')
-    nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/git:--exclude-standard<cr>
-    nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
-    nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
-    nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
-    nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
-    nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
+    " nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/git:--exclude-standard<cr>
+    " nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
+    " nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
+    " nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
+    " nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
+    " nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
 
     " Custom mappings for the unite buffer
-    augroup unite_buffer_settings
-        autocmd!
-        autocmd FileType unite call s:unite_settings()
-        function! s:unite_settings()
-        " Play nice with supertab
-        " let b:SuperTabDisabled=1
-        " Enable navigation with control-j and control-k in insert mode
-        imap <buffer> <C-j>   <Plug>(unite_select_next_line)
-        imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
-        endfunction
-    augroup END
+    " augroup unite_buffer_settings
+    "     autocmd!
+    "     autocmd FileType unite call s:unite_settings()
+    "     function! s:unite_settings()
+    "     " Play nice with supertab
+    "     " let b:SuperTabDisabled=1
+    "     " Enable navigation with control-j and control-k in insert mode
+    "     imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+    "     imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+    "     endfunction
+    " augroup END
 
     " ---
     " :Gcd, :Glcd - cd relative to repo
     " :Gstatus, :Gcommit, :Gmerge, :Gdiff, :Gmove...
-    Plug 'tpope/vim-fugitive'
+    " Plug 'tpope/vim-fugitive'
 
     " ---
     "  Disabled for now
@@ -288,8 +363,8 @@ Plug 'Shougo/vimfiler.vim'
     Plug 'Glench/Vim-Jinja2-Syntax'
     Plug 'wting/rust.vim'
     Plug 'vim-jp/vim-cpp'
-    Plug 'lambdatoast/elm.vim'
-    Plug 'keith/swift.vim'
+    " Plug 'lambdatoast/elm.vim'
+    " Plug 'keith/swift.vim'
 
 call plug#end()
 
@@ -340,7 +415,7 @@ call plug#end()
     "set listchars=tab:▸\ ,eol:¬
     "set listchars=tab:▸\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
     "set listchars=tab:▸\ ,trail:⋅,extends:❯,precedes:❮
-    set listchars=tab:▸\ ,extends:❯,precedes:❮,nbsp:±,trail:⋅
+    "set listchars=tab:▸\ ,extends:❯,precedes:❮,nbsp:±,trail:⋅
     set list
 
     " Indicate if a line is wrapped
@@ -350,8 +425,8 @@ call plug#end()
     set nowrap
 
     " Scroll screen 4 lines before cursor hits top/bottom
-    set scrolloff=4
-    set sidescrolloff=4
+    " set scrolloff=4
+    " set sidescrolloff=4
 
     " No annoying sound on errors
     set noerrorbells
@@ -368,6 +443,12 @@ call plug#end()
     endif
 
     " Behavior {{{1
+    
+    " Mouse support
+    set mouse=a
+
+    " Use system clipboard by default
+    set clipboard=unnamedplus
 
     " Same split behavior as tmux
     set nosplitright
@@ -452,9 +533,11 @@ call plug#end()
     nnoremap Q <nop>
 
     " Equivalent to cc
+    " Remapped to use for fzf searching below
     nnoremap S <nop>
 
     " Equivalent to cl
+    " Remapped to use for splits + windows below
     nnoremap s <nop>
 
     " Equivalent to j^, which is a strange thing to want anyway
@@ -517,7 +600,7 @@ call plug#end()
 
     " Neovim's terminal window - bindings to escape
     tnoremap <C-Space> <C-\><C-n>
-    tnoremap <esc> <C-\><C-n>
+    "tnoremap <esc> <C-\><C-n>
 
     " Only highlight first 200 cols (performance)
     set synmaxcol =200
@@ -527,7 +610,8 @@ call plug#end()
     noremap <S-L> gt
 
     " Split control (and tabs)
-    noremap sp :split<cr>
+    noremap ss :split<cr>
+    noremap sh :split<cr>
     noremap sv :vsplit<cr>
     noremap sd :close<cr>
     noremap sj <C-W>j
@@ -539,12 +623,44 @@ call plug#end()
     noremap sH <C-W>H
     noremap sL <C-W>L
     noremap st :tabnew<cr>
+    noremap sn :bn<cr>
+    noremap sp :bp<cr>
+    " switch to previously viewed buffer
+    noremap s6 <C-^><cr>
     noremap s= <C-W>=
     noremap s+ <C-W>_<C-W>\|
     noremap s<Left> :tabprev<cr>
     noremap s<Right> :tabnext<cr>
 
     inoremap <C-s>p :split<cr>
+
+    " Searching
+    " S is not need for switch because it's easy to use cl (Change Left)
+    " It is much better used for this!
+    " Mnemonic: Search X
+    nnoremap Sf :FzfFiles<cr>
+    nnoremap Sg :FzfGFiles<cr>
+    nnoremap Sb :FzfBuffers<cr>
+    " nnoremap Sc :FzfColors!<cr> ???? duplicate binding, not necessary anyway
+    " nnoremap Sag :FzfAg ???? Needs better binding, ag installed, pattern entry
+    " nnoremap Srg :FzfRg ???? Needs better binding, rg installed, pattern entry
+    nnoremap SL :FzfLines<cr>
+    nnoremap Sl :FzfBLines<cr> " ???? Does this add anything over /
+    nnoremap ST :FzfTags<cr>
+    nnoremap St :FzfBTags<cr> " ???? Duplicate Binding
+    nnoremap Sm :FzfMarks<cr>
+    " nnoremap sw :FzfWindows<cr> " Not likely to be useful
+    " nnoremap Sl :FzfLocate "Locate db not generated
+    nnoremap Sr :FzfHistory<cr>
+    nnoremap S: :FzfHistory:<cr>
+    nnoremap S/ :FzfHistory/<cr>
+    " Requires Ultisnips
+    " nnoremap Ss :FzfSnippets!<cr>
+    nnoremap SG :FzfCommits<cr>
+    " nnoremap SG :FzfBCommits!<cr> " Duplicate Binding
+    nnoremap Sc :FzfCommands<cr>
+    nnoremap Sh :FzfHelptags<cr>
+    nnoremap St :FzfFiletypes<cr>
 
     " Toggle folds
     " nnoremap - za

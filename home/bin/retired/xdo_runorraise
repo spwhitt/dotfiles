@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+class="$1"
+command="$2"
+
+# xdotool returns a list of windows matching the class in reverse stacking order
+# The window at the bottom of the list is the window at the top of the screen
+wins=$(xdotool search --onlyvisible --class $class)
+searcherr=$?
+
+# If there was a matching window then focus it and move the mouse there
+echo $searcherr
+if (( $searcherr == 0 )); then
+    echo "raising window"
+    xdotool windowraise "$win" windowfocus "$win" mousemove -w "$win" 0 0
+
+# If there were no matching windows then open one
+else
+    $command
+fi

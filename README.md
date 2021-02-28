@@ -1,25 +1,12 @@
 Dotfiles
 =========
 
-These files are managed with stow
-
-Add -n to any stow command to perform a dry run
-
-
-## Install Dotfiles
+# Installation
 
 ```sh
-stow -v -t $HOME home
-```
+# Test
+./install -R -n
 
-## Install OSX Specific Dotfiles
-
-```sh
-stow -v -t $HOME osx
-```
-
-## Install NixOS Configuration
-
-```sh
-stow -v -t /etc/nixos nixos-clippy
+# Install
+./install -R
 ```

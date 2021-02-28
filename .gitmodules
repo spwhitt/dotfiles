@@ -2,7 +2,7 @@
 	path = home/.oh-my-zsh-custom/plugins/nix
 	url = git@github.com:spwhitt/nix-zsh-completions.git
 [submodule "config/.emacs.d"]
-	path = home/.emacs.d
+	path = home/.emacsconfig/frameworks/spacemacs
 	url = https://github.com/syl20bnr/spacemacs
 [submodule "config/.oh-my-zsh"]
 	path = home/.oh-my-zsh
@@ -10,9 +10,21 @@
 [submodule "home/.Xresources.d/Xresources-themes"]
 	path = home/.Xresources.d/Xresources-themes
 	url = https://github.com/logico-dev/Xresources-themes
-[submodule "home/.local/share/xfce4/terminal/colorschemes"]
-	path = home/.local/share/xfce4/terminal/base16-xfce4-terminal
-	url = https://github.com/afg984/base16-xfce4-terminal
 [submodule "home/.oh-my-zsh-custom/themes/spaceship-prompt"]
 	path = home/.oh-my-zsh-custom/themes/spaceship-prompt
 	url = https://github.com/denysdovhan/spaceship-prompt.git
+[submodule "deps/home-manager"]
+	path = deps/home-manager
+	url = https://github.com/rycee/home-manager
+[submodule "deps/chemacs"]
+	path = deps/chemacs
+	url = https://github.com/plexus/chemacs
+[submodule "home/.emacs.d"]
+	path = home/.emacs.d
+	url = https://github.com/hlissner/doom-emacs
+[submodule "home/.emacsconfig/prelude"]
+	path = home/.emacsconfig/frameworks/prelude
+	url = git://github.com/bbatsov/prelude.git
+[submodule "home/.emacsconfig/frameworks/doom"]
+	path = home/.emacsconfig/frameworks/doom
+	url = https://github.com/hlissner/doom-emacs

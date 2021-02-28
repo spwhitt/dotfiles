@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Recurse into options set
+
+
+path=""
+path+="$(nixos-option "$path" | fzf)"
+while true; do
+  path+=".$(nixos-option "$path" | fzf)"
+done

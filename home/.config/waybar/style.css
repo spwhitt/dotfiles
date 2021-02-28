@@ -1,0 +1,119 @@
+@keyframes blink-warning {
+  70% {
+    color: white;
+  }
+
+  to {
+    color: white;
+    background-color: orange;
+  }
+}
+
+@keyframes blink-critical {
+  70% {
+    color: white;
+  }
+
+  to {
+    color: white;
+    background-color: red;
+  }
+}
+
+* {
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+  /* `otf-font-awesome` is required to be installed for icons */
+  /* font-family: Roboto, Helvetica, Arial, sans-serif; */
+  /* A monospace font prevents annoying shifting of the bar on update */
+  font-family: Source Code Pro;
+  font-size: 14px;
+  min-height: 0;
+}
+
+window#waybar {
+  background-color: #323232;
+  color: #fff;
+  transition-property: background-color;
+  transition-duration: .5s;
+}
+
+/* All widgets, with workspace buttons considered as separate widgets */
+#disk,
+#custom-vpn,
+#battery,
+#clock,
+#cpu,
+#memory,
+#mode,
+#network,
+#pulseaudio,
+#temperature,
+#tray,
+#backlight,
+#workspaces button
+{
+  padding: 2px 0.5em 2px 0.5em;
+}
+
+#clock,
+#window {
+  font-weight: bold;
+}
+
+.warning,
+.disconnected {
+  color: orange;
+  border-color: orange;
+  box-shadow: inset 0 2px orange;
+}
+
+.critical,
+.urgent {
+  color: red;
+  border-color: red;
+  box-shadow: inset 0 2px red;
+}
+
+#battery.warning.discharging {
+  animation-name: blink-warning;
+  animation-duration: 3s;
+}
+
+#battery.critical.discharging {
+  animation-name: blink-critical;
+  animation-duration: 2s;
+}
+
+#workspaces button {
+  color: #888;
+}
+
+#workspaces button.visible {
+  border-color: #656565;
+  box-shadow: inset 0 2px #656565;
+  background-color: #434343;
+}
+
+#workspaces button.focused {
+  border-color: #4c7899;
+  box-shadow: inset 0 2px #4c7899;
+  color: white;
+  background-color: #285577;
+  font-weight: bold;
+}
+
+#workspaces button.urgent {
+  border-color: #c9545d;
+  box-shadow: inset 0 2px #c9545d;
+}
+
+#workspaces button:hover {
+  color: black;
+  background-color: #898989;
+  border-color: #fff;
+  box-shadow: inset 0 2px #fff;
+}
+

@@ -1,4 +1,5 @@
-#!/usr/bin/env python
+#!/usr/bin/env nix-shell
+#! nix-shell -i python -p python
 
 import sys, os
 import os.path as path

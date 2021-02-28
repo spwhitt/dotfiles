@@ -1,5 +1,6 @@
 with import <nixpkgs> {};
-stdenv.mkDerivation rec {
+
+mkShell {
   name="env";
   buildInputs = [
     stow

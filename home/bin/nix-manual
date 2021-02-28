@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+firefox /var/run/current-system/sw/share/doc/nix/manual/index.html

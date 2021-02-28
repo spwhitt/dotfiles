@@ -1,42 +1,62 @@
 ##
 # Jump To Application
+#
+# Cheatsheet:
+#   Get window identifiers: xprop | grep -E "WM_NAME|WM_CLASS"
+#   Reload xbindkeys:
+#   Get keycode: xbindkeys --key
 ##
 
 # Tla
-"~/.scripts/runorraise.sh "TLA+ Toolbox.TLA+ Toolbox" tla-toolbox"
+"runorraise "TLA+ Toolbox.TLA+ Toolbox" tla-toolbox"
   Mod4 + t
 
 # Internet
-"~/.scripts/runorraise.sh Firefox firefox"
+"runorraise Firefox firefox"
   Mod4 + i
 
 # /erminal
-"~/.scripts/runorraise.sh xfce4-terminal xfce4-terminal"
+"runorraise xfce4-terminal xfce4-terminal"
   Mod4 + slash
 
 # Editor
-"~/.scripts/runorraise.sh Emacs emacs"
+"runorraise Emacs "emacsclient -c""
   Mod4 + e
 
 # File manager
-"~/.scripts/runorraise.sh Thunar thunar"
+"runorraise Thunar thunar"
   Mod4 + f
 
 # Slack
-"~/.scripts/runorraise.sh Slack slack"
+"runorraise Slack slack"
   Mod4 + s
 
 # Coq
-"~/.scripts/runorraise.sh "CoqIde.CoqIde" coq-ide"
+"runorraise "CoqIde.CoqIde" coq-ide"
   Mod4 + c
 
 # Pdf
-"~/.scripts/runorraise.sh "Evince" evince"
+"runorraise "Evince" evince"
   Mod4 + p
+
+# Zotero
+"runorraise "Zotero" zotero"
+  Mod4 + z
+
+# Anki
+"runorraise "Anki" anki"
+  Mod4 + a
 
 # Displays
 "xfce4-display-settings --minimal"
   Mod4 + d
+
+"runorraise "TelegramDesktop" telegram-desktop"
+  Mod4 + t
+
+# vscode is already smart enough to implement run-or-raise behavior
+"code ~/Data/Dropbox/VSNotes"
+  Mod4 + n
 
 ##
 # Manipulate active window
@@ -65,7 +85,7 @@
   Mod4 + Return
 
 "networkmanager_dmenu"
-  Mod4 + n
+  Mod4 + w
 
 ##
 # Brightness

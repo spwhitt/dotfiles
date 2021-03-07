@@ -169,6 +169,7 @@ in
     git
     # git-lfs
     neovim
+    neovim-qt
     vscode
     tree
     psmisc # killall, etc

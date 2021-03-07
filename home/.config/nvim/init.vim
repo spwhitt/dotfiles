@@ -13,7 +13,6 @@
 " set secure
 
 
-" set t_Co=256
 let mapleader = " "
 let g:mapleader = " "
 
@@ -163,7 +162,8 @@ let g:airline_mode_map = {
     \ '' : 'S',
     \ }
 
-let g:airline_theme='oceanicnext'
+" let g:airline_theme='oceanicnext'
+let g:airline_theme='one'
 
 " Don't bother displaying file encoding if it's utf-8[unix]
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
@@ -203,21 +203,92 @@ Plug 'LnL7/vim-nix'
 " --
 " Language Server
 " TODO: Switch to neovim built in server
-Plug 'prabirshrestha/vim-lsp'
+" Plug 'prabirshrestha/vim-lsp'
+Plug 'autozimu/LanguageClient-neovim', {
+  \ 'branch': 'next',
+  \ 'do': 'bash install.sh',
+  \ }
+
+let g:LanguageClient_serverCommands = {
+  \ 'ocaml': ['ocamllsp'],
+  \ }
+
+let g:LanguageClient_virtualTextPrefix = "----"
+let g:LanguageClient_useVirtualText="No"
+
+let g:LanguageClient_diagnosticsDisplay = {
+  \   1: {
+  \       "name": "Error",
+  \       "texthl": "LanguageClientError",
+  \       "signText": "✖",
+  \       "signTexthl": "LanguageClientErrorSign",
+  \       "virtualTexthl": "Error",
+  \   },
+  \   2: {
+  \       "name": "Warning",
+  \       "texthl": "LanguageClientWarning",
+  \       "signText": "⚠",
+  \       "signTexthl": "LanguageClientWarningSign",
+  \       "virtualTexthl": "Todo",
+  \   },
+  \   3: {
+  \       "name": "Information",
+  \       "texthl": "LanguageClientInfo",
+  \       "signText": "ℹ",
+  \       "signTexthl": "LanguageClientInfoSign",
+  \       "virtualTexthl": "Todo",
+  \   },
+  \   4: {
+  \       "name": "Hint",
+  \       "texthl": "LanguageClientInfo",
+  \       "signText": "➤",
+  \       "signTexthl": "LanguageClientInfoSign",
+  \       "virtualTexthl": "Todo",
+  \   },
+  \ }
+
+" set completefunc=LanguageClient#complete
+
+Plug 'lifepillar/vim-mucomplete'
+set completeopt=preview
+set completeopt+=menuone
+set completeopt+=noselect
+set shortmess+=c
+set belloff+=ctrlg
+
+let g:mucomplete#chains = {
+    \ 'default' : ['path', 'omni', 'keyn', 'dict', 'uspl'],
+    \ 'vim'     : ['path', 'cmd', 'keyn'],
+    \ 'ocaml'   : ['omni']
+    \ }
+
+imap <c-h> <plug>(MUcompleteCycBwd)
+imap <c-l> <plug>(MUcompleteCycBwd)
+imap <c-j> <plug>(MUcompleteFwd)
+imap <c-k> <plug>(MUcompleteBwd)
+
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+" nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR> 
+" nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR> 
 
 " --
-" Vlime
+" Slime
 "
-Plug 'vlime/vlime', { 'rtp': 'vim/' }
+" Plug 'vlime/vlime', { 'rtp': 'vim/' }
+
+Plug 'jpalardy/vim-slime'
+let g:slime_target="neovim"
+
 Plug 'kovisoft/paredit'
 
-if executable('rnix-lsp')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'rnix-lsp',
-        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'rnix-lsp']},
-        \ 'whitelist': ['nix'],
-        \ })
-endif
+" if executable('rnix-lsp')
+"     au User lsp_setup call lsp#register_server({
+"         \ 'name': 'rnix-lsp',
+"         \ 'cmd': {server_info->[&shell, &shellcmdflag, 'rnix-lsp']},
+"         \ 'whitelist': ['nix'],
+"         \ })
+" endif
 
 
 function! s:on_lsp_buffer_enabled() abort
@@ -296,6 +367,8 @@ Plug 'junegunn/fzf.vim', { 'commit': '4145f53f3d343c389ff974b1f1a68eeb39fba18b' 
     " Colorschemes
     " Plug 'rafi/awesome-vim-colorschemes'
     Plug 'mhartington/oceanic-next'
+    Plug 'rakr/vim-one'
+    Plug 'morhetz/gruvbox'
     " Plug 'chriskempson/base16-vim'
 
     " Open file with line number
@@ -397,7 +470,7 @@ call plug#end()
     endif
 
     " Theme
-    colorscheme OceanicNext
+    colorscheme one
 
     " Make collapsed folds look nice {{{2
         " http://dhruvasagar.com/2013/03/28/vim-better-foldtext
@@ -615,7 +688,7 @@ call plug#end()
 
     " Neovim's terminal window - bindings to escape
     tnoremap <C-Space> <C-\><C-n>
-    "tnoremap <esc> <C-\><C-n>
+    tnoremap <esc> <C-\><C-n>
 
     " Only highlight first 200 cols (performance)
     set synmaxcol =200

@@ -4,12 +4,16 @@
 # -------
 # Environment Variables
 
-# 
-export LEDGER_FILE="$HOME/Data/Projects/Accounting/2020.journal"
-
 # Use neovim for manpages
 export MANPAGER='nvim +Man!'
 
+export TERMINAL='alacritty'
+
+# ------------------------------------------------------------------------------
+# Editor (VIM obviously)
+
+export EDITOR='nvim-qt --nofork'
+export VISUAL="$EDITOR"
 
 # -------
 # Aliases
@@ -29,21 +33,33 @@ alias jctl="journalctl"
 alias dtrx="dtrx --one=I"
 alias ls=exa
 
-alias vim=nvim
+alias vim=nvim-qt
 # *E*ditor
-alias e='$EDITOR'
+alias e=vim
+
 # *E*dit *F*ile/*F*uzzy
-alias fe='vim $(fd -H --type f | fzf)'
+# TODO: Allow setting pattern as well as path
+function fe() {
+  file="$(fd -H --type f | fzf)"
+  e "$file"
+}
+
+# Edit Notes
+function n() {
+  cd "$HOME/Data/Dropbox/Notes" || exit
+  fe "."
+}
+
+# alias fe='vim $(fd -H --type f | fzf)'
 # *E*dit *R*ecent
-alias fr='vim $(fzf)'
-# *H*istory
-#alias fh='print -z $(history|fzf)'
-# alias fh='print -z $(history | fzf | tr -s " " | cut -d" " -f3- )'
+alias fr='e $(fzf)'
 # *R*un command
 alias fr='dmenu_path | fzf --bind "enter:execute({})+abort"'
 
+# Fuzzy Execute
 alias fx='$(fd -H --type x | fzf)'
 
+# Fuzzy Change Directory
 alias fcd='cd "$(fd -t d | fzf)"'
 
 alias open="xdg-open"
@@ -57,17 +73,22 @@ function fman() {
     man -k . | fzf -q "$1" --prompt='man> '  --preview $'echo {} | tr -d \'()\' | awk \'{printf "%s ", $2} {print $1}\' | xargs -r man' | tr -d '()' | awk '{printf "%s ", $2} {print $1}' | xargs -r man;
 }
 
-# FZF History
+# Fuzzy History
 # print -z pushes the arguments onto the editing buffer stack
 fh() {
   print -z "$( history | fzf +s --tac | sed -E 's/ *[0-9]*\*? *//' | sed -E 's/\\/\\\\/g')"
 }
 
-# FZF Bookmarks
+# Fuzzy Bookmarks
 # Add a bookmark
 alias ba='pwd>>~/.bookmarks'
+# Remove a bookmark
+function bd() {
+  local remove=$(fzf < ~/.bookmarks)
+  sed -i "s@$remove@d" ~/.bookmarks
+}
 # Jump to bookmark
-b() {
+function b() {
   local dest=$(fzf < ~/.bookmarks)
   if [[ $dest != '' ]]; then
     cd "$dest"

@@ -116,13 +116,6 @@ plugins=(
   docker docker-compose
   )
 
-# ------------------------------------------------------------------------------
-# Editor (VIM obviously)
-
-export TERMINAL='alacritty'
-# export EDITOR="emacsclient -s /tmp/emacs1000/server -c"
-export EDITOR='nvim'
-export VISUAL="$EDITOR"
 
 
 # ------------------------------------------------------------------------------

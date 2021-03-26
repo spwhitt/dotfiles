@@ -34,7 +34,7 @@
   output * bg ~/.config/sway/backgrounds/spx_wallpaper.jpg fill
 
   # Force a higher resolution because KMS misidentifies this monitor
-  output VGA-1 mode --custom 1920x1080 
+  # output VGA-1 mode --custom 1920x1080 
 
 ### Clamshell Configuration
 
@@ -101,10 +101,18 @@
   # Start a terminal
   bindsym $mod+Return exec $term
 
+  # Search windows
+  bindsym $mod+Backslash exec /home/swhitt/.config/sway/scripts/sway_window_search.sh focus
+  bindsym $mod+Shift+Backslash exec /home/swhitt/.config/sway/scripts/sway_window_search.sh fetch
+
   # Switch apps directly
   # TODO: Repeated presses should cycle matching windows
-  bindsym $mod+i [app_id="firefox" workspace=__focused__] focus
-  bindsym $mod+t [app_id="alacritty" workspace=__focused__] focus
+  bindsym $mod+z [class="Zotero"] focus
+  bindsym $mod+i [app_id="firefox"] focus
+  bindsym $mod+t [app_id="Alacritty"] focus
+
+  bindsym $mod+n exec true | dmenu -p workspace | xargs swaymsg rename workspace to
+  # bindsym $mod+t [app_id="Alacritty" workspace=__focused__] focus
 
   bindsym $mod+m exec true | dmenu -p mark | xargs swaymsg mark
   bindsym $mod+u unmark
@@ -217,7 +225,7 @@
   bindsym $mod+space focus mode_toggle
 
   # Move focus to the parent container
-  bindsym $mod+a focus parent
+  # bindsym $mod+a focus parent
 #
 # Scratchpad:
 #
@@ -238,7 +246,42 @@
   for_window [app_id="swaypopup"] floating enable, border pixel 2, sticky enable
   # Make htop big
   for_window [app_id="ghtop"] floating enable, border pixel 2, sticky enable, resize set width 90 ppt height 90 ppt
-  for_window [title="Picture-in-Picture"] floating enable
+  for_window [title="Picture-in-Picture"] floating enable, sticky enable
+  for_window [app_id="yad"] floating enable, border pixel 2, sticky enable, resize set width 40 ppt height 10 ppt
+
+  mode "sway" {
+    bindsym Space layout toggle
+
+    bindsym m exec true | dmenu -p mark | xargs swaymsg mark
+    bindsym u unmark
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+
+    bindsym $left focus left
+    bindsym $down focus down
+    bindsym $up focus up
+    bindsym $right focus right
+
+    # Or use $mod+[up|down|left|right]
+    bindsym Left focus prev
+    bindsym Down focus child
+    bindsym Up focus parent
+    bindsym Right focus right
+
+    # Move the focused window with the same, but add Shift
+    bindsym Shift+$left move left
+    bindsym Shift+$down move down
+    bindsym Shift+$up move up
+    bindsym Shift+$right move right
+
+    # Ditto, with arrow keys
+    bindsym Shift+Left move left
+    bindsym Shift+Down move down
+    bindsym Shift+Up move up
+    bindsym Shift+Right move right
+  }
+  bindsym $mod+a mode "sway"
 
 #
 # Resizing containers:

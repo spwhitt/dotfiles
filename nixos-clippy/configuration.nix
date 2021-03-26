@@ -60,6 +60,7 @@ in
   environment.homeBinInPath = true;
 
   environment.systemPackages = with pkgs; [
+    jq
     pcmanfm # File browser
 
     fontconfig # Useful utilities like fc-list

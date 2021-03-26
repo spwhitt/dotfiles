@@ -28,6 +28,11 @@ in
     # '';
   };
 
+  services.redshift = {
+    enable = true;
+    package = pkgs.redshift-wlr;
+  };
+
   environment.systemPackages = with pkgs; [
     wl-clipboard # Clipboard for wayland
     # mywaybar # disabled because not needed in terminal

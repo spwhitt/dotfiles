@@ -1,6 +1,12 @@
 # vim: ft=sh:
 # Shell environment configuration sourced for both bash and zsh
 
+# ------
+# FZF
+# source "/home/swhitt/.config/base16-fzf/bash/base16-gruvbox-light-hard.config"
+# Exit on alt-space like my vim
+alias fzf='fzf --bind=alt-space:abort'
+
 # -------
 # Environment Variables
 
@@ -12,7 +18,7 @@ export TERMINAL='alacritty'
 # ------------------------------------------------------------------------------
 # Editor (VIM obviously)
 
-export EDITOR='nvim-qt --nofork'
+export EDITOR='nvim'
 export VISUAL="$EDITOR"
 
 # -------
@@ -31,7 +37,7 @@ alias jctl="journalctl"
 
 # terminal utils
 alias dtrx="dtrx --one=I"
-alias ls=exa
+# alias ls=exa
 
 alias vim=nvim-qt
 # *E*ditor
@@ -94,3 +100,5 @@ function b() {
     cd "$dest"
   fi
 }
+
+alias nixsearch="nix search nixpkgs"

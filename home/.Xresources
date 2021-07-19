@@ -1,6 +1,0 @@
-#include ".Xresources.d/Xresources-themes/base16-gruvbox-dark-hard.Xresources"
-
-Xterm*scrollBar: off
-urxvt*scrollBar: off
-xterm.font: xft:Source Code Pro:size=16
-urxvt.font: xft:Source Code Pro:size=16

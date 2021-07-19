@@ -26,8 +26,8 @@ window:
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
   padding:
-    x: 2
-    y: 2
+    x: 4
+    y: 4
 
   # Spread additional padding evenly around the terminal content.
   dynamic_padding: true
@@ -60,37 +60,27 @@ scrolling:
 
 # Font configuration (changes require restart)
 font:
-  # Normal (roman) font face
-  #normal:
-    # Font family
-    #
-    # Default:
-    #   - (macOS) Menlo
-    #   - (Linux) monospace
-    #   - (Windows) Consolas
-    #family: monospace
-
-    # The `style` can be specified to pick a specific face.
+  normal:
+    family: Source Code Pro
     #style: Regular
 
-  # Bold font face
-  #bold:
+  # bold:
     # Font family
     #
     # If the bold family is not specified, it will fall back to the
     # value specified for the normal font.
-    #family: monospace
+    # family: Source Code Pro
 
     # The `style` can be specified to pick a specific face.
     #style: Bold
 
   # Italic font face
-  #italic:
+  # italic:
     # Font family
     #
     # If the italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    #family: monospace
+    # family: Source Code Pro
 
     # The `style` can be specified to pick a specific face.
     #style: Italic
@@ -125,7 +115,7 @@ font:
   #
   # This is a global setting and will require a log out or restart to take
   # effect.
-  use_thin_strokes: true
+  use_thin_strokes: false
 
 # Display the time it takes to redraw each frame.
 render_timer: false
@@ -136,104 +126,36 @@ persistent_logging: false
 # If `true`, bold text is drawn using the bright color variants.
 draw_bold_text_with_bright_colors: true
 
-# https://github.com/eendroroy/alacritty-theme/
-# Colors (Oceanic Next)
+# Colors (Gruvbox light)
 colors:
   # Default colors
   primary:
-    background: '0x1b2b34'
-    foreground: '0xd8dee9'
+    background: '#f9f5d7' #hard
+    # background: '#fbf1c7' #normal
+    # background: '#f2e5bc' #soft
+    foreground: '#3c3836'
 
   # Normal colors
   normal:
-    black:   '0x29414f'
-    red:     '0xec5f67'
-    green:   '0x99c794'
-    yellow:  '0xfac863'
-    blue:    '0x6699cc'
-    magenta: '0xc594c5'
-    cyan:    '0x5fb3b3'
-    white:   '0x65737e'
+    black:   '#fbf1c7'
+    red:     '#cc241d'
+    green:   '#98971a'
+    yellow:  '#d79921'
+    blue:    '#458588'
+    magenta: '#b16286'
+    cyan:    '#689d6a'
+    white:   '#7c6f64'
 
   # Bright colors
   bright:
-    black:   '0x405860'
-    red:     '0xec5f67'
-    green:   '0x99c794'
-    yellow:  '0xfac863'
-    blue:    '0x6699cc'
-    magenta: '0xc594c5'
-    cyan:    '0x5fb3b3'
-    white:   '0xadb5c0'
-
-# Colors (Tomorrow Night Bright)
-# colors:
-#   # Default colors
-#   primary:
-#     background: '0x000000'
-#     foreground: '0xeaeaea'
-# 
-#     # Bright and dim foreground colors
-#     #
-#     # The dimmed foreground color is calculated automatically if it is not present.
-#     # If the bright foreground color is not set, or `draw_bold_text_with_bright_colors`
-#     # is `false`, the normal foreground color will be used.
-#     #dim_foreground: '0x9a9a9a'
-#     #bright_foreground: '0xffffff'
-# 
-#   # Cursor colors
-#   #
-#   # Colors which should be used to draw the terminal cursor. If these are unset,
-#   # the cursor color will be the inverse of the cell color.
-#   #cursor:
-#   #  text: '0x000000'
-#   #  cursor: '0xffffff'
-# 
-#   # Normal colors
-#   normal:
-#     black:   '0x000000'
-#     red:     '0xd54e53'
-#     green:   '0xb9ca4a'
-#     yellow:  '0xe6c547'
-#     blue:    '0x7aa6da'
-#     magenta: '0xc397d8'
-#     cyan:    '0x70c0ba'
-#     white:   '0xeaeaea'
-# 
-#   # Bright colors
-#   bright:
-#     black:   '0x666666'
-#     red:     '0xff3334'
-#     green:   '0x9ec400'
-#     yellow:  '0xe7c547'
-#     blue:    '0x7aa6da'
-#     magenta: '0xb77ee0'
-#     cyan:    '0x54ced6'
-#     white:   '0xffffff'
-
-  # Dim colors
-  #
-  # If the dim colors are not set, they will be calculated automatically based
-  # on the `normal` colors.
-  #dim:
-  #  black:   '0x000000'
-  #  red:     '0x8c3336'
-  #  green:   '0x7a8530'
-  #  yellow:  '0x97822e'
-  #  blue:    '0x506d8f'
-  #  magenta: '0x80638e'
-  #  cyan:    '0x497e7a'
-  #  white:   '0x9a9a9a'
-
-  # Indexed Colors
-  #
-  # The indexed colors include all colors from 16 to 256.
-  # When these are not set, they're filled with sensible defaults.
-  #
-  # Example:
-  #   `- { index: 16, color: '0xff00ff' }`
-  #
-  indexed_colors: []
+    black:   '#928374'
+    red:     '#9d0006'
+    green:   '#79740e'
+    yellow:  '#b57614'
+    blue:    '#076678'
+    magenta: '#8f3f71'
+    cyan:    '#427b58'
+    white:   '#3c3836'
 
 # Visual Bell
 #
@@ -296,26 +218,6 @@ mouse:
 
   # If this is `true`, the cursor is temporarily hidden when typing.
   hide_when_typing: false
-
-  url:
-    # URL launcher
-    #
-    # This program is executed when clicking on a text which is recognized as a URL.
-    # The URL is always added to the command as the last parameter.
-    #
-    # When set to `None`, URL launching will be disabled completely.
-    #
-    # Default:
-    #   - (macOS) open
-    #   - (Linux) xdg-open
-    #   - (Windows) explorer
-    #launcher: xdg-open
-
-    # URL modifiers
-    #
-    # These are the modifiers that need to be held down for opening URLs when clicking
-    # on them. The available modifiers are documented in the key binding section.
-    modifiers: None
 
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"

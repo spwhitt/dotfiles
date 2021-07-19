@@ -764,6 +764,3 @@ augroup reload_vimrc
   autocmd bufwritepost $MYVIMRC nested source $MYVIMRC
 augroup END
 "}}}1
-
-" NOTES:
-" TODO: Make FZF exit when Alt+Space is pressed

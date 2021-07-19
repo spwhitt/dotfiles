@@ -28,14 +28,19 @@ in
     # '';
   };
 
-  services.redshift = {
-    enable = true;
-    package = pkgs.redshift-wlr;
-  };
+  # QT themeing
+  programs.qt5ct.enable = true;
+
+  # services.redshift = {
+  #   enable = true;
+  #   package = pkgs.redshift-wlr;
+  # };
 
   environment.systemPackages = with pkgs; [
     wl-clipboard # Clipboard for wayland
     # mywaybar # disabled because not needed in terminal
+
+    wdisplays
 
     sway-contrib.grimshot # More convenient CLI for grim/slurp
     slurp # Wayland region selection - compatible with grim, wf-recorder...
@@ -61,6 +66,25 @@ in
 
     playerctl # Control music
     yad # Yet another dialog
+
+    # GTK Theming
+    gtk-engine-murrine
+    gtk_engines
+    gsettings-desktop-schemas
+    lxappearance
+
+    # Not needed?
+    gnome3.adwaita-icon-theme
+
+    pcmanfm # File browser
+
+    # Network manager applet
+    # networkmanagerapplet
+    pavucontrol
+    pamixer # Command line pulse audio control
+
+    i3status
+    i3blocks
   ];
 
   # Waybar icons

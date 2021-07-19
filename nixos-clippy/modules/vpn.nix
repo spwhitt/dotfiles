@@ -46,7 +46,7 @@
     iptables -A nixos-vpn-killswitch -j DROP
 
     # Enable killswitch
-    iptables -A OUTPUT -j nixos-vpn-killswitch
+    # iptables -A OUTPUT -j nixos-vpn-killswitch
 
     # Disable ipv6
     # ip6tables -P INPUT DROP
@@ -77,26 +77,26 @@
   # '';
 
   # Start VPN automatically
-  networking.networkmanager.dispatcherScripts = [ {
-    source = pkgs.writeScript "03startvpn" ''
-      #!${pkgs.bash}/bin/bash
-      VPN_NAME="NordVPN-US"
-      interface=$1 status=$2
-      case $status in
-        up)
-        ${pkgs.networkmanager}/bin/nmcli connection up id "$VPN_NAME"
-        ;;
-        down)
-        if ${pkgs.networkmanager}/bin/nmcli connection show --active | grep "$VPN_NAME"; then
-        ${pkgs.networkmanager}/bin/nmcli connection down id "$VPN_NAME"
-        fi
-        ;;
-        vpn-up)
-        ;;
-      esac
-    '';
-    type = "basic";
-  } ];
+  # networking.networkmanager.dispatcherScripts = [ {
+  #   source = pkgs.writeScript "03startvpn" ''
+  #     #!${pkgs.bash}/bin/bash
+  #     VPN_NAME="NordVPN-US"
+  #     interface=$1 status=$2
+  #     case $status in
+  #       up)
+  #       ${pkgs.networkmanager}/bin/nmcli connection up id "$VPN_NAME"
+  #       ;;
+  #       down)
+  #       if ${pkgs.networkmanager}/bin/nmcli connection show --active | grep "$VPN_NAME"; then
+  #       ${pkgs.networkmanager}/bin/nmcli connection down id "$VPN_NAME"
+  #       fi
+  #       ;;
+  #       vpn-up)
+  #       ;;
+  #     esac
+  #   '';
+  #   type = "basic";
+  # } ];
 
   # Works but something is slow.
   # I think DNS is not being routed through the VPN.

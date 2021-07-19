@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
   environment.systemPackages = [ pkgs.dropbox ];
   systemd.user.services.dropbox = {
     description = "dropbox";

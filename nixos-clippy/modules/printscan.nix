@@ -1,15 +1,16 @@
 { config, pkgs, ... }:
 {
   # Allow service discovery e.g. network printers
-  services.avahi.enable = true;
-  services.avahi.nssmdns = true;
+  services.avahi.enable = false;
+  services.avahi.nssmdns = false;
   # services.avahi.publish.enable = true;
   # services.avahi.publish.userServices = true;
 
   # services.samba.enable = true;
   services.printing.enable = true;
   services.printing.browsing = true;
-  services.printing.drivers = [ pkgs.gutenprint pkgs.brlaser ];
+  # services.printing.drivers = [ pkgs.gutenprint pkgs.brlaser ];
+  services.printing.drivers = [ pkgs.brlaser ];
 
   # Scanning support
   hardware.sane.enable = true;

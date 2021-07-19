@@ -1,53 +1,74 @@
-{ config, pkgs, ... }: 
+{ config, pkgs, ... }:
 let
-  # mypkgs = import /home/swhitt/nixpkgs {};
-  # mypkgs = pkgs { overlays = [ (import ./nix/overlay.nix)_]; }
-  # lorri = 
   # runorraise = pkgs.haskellPackages.callPackage /home/swhitt/Data/Projects/runorraise/runorraise.nix { };
-  nixpkgs_manual = (import <nixpkgs/doc> { inherit pkgs; } );
+  handlr = pkgs.callPackage ./handlr.nix { };
+in {
+  imports = [
+    ./hardware-configuration.nix
+    ./modules/vpn.nix
+    ./modules/audio.nix
+    ./modules/sway.nix
+    # ./modules/kde.nix
+    # ./modules/gnome.nix
+    ./modules/backlight.nix
+    ./modules/dropbox.nix
+    ./modules/googledrive.nix
+    ./modules/printscan.nix
+    ./modules/backup/default.nix
+  ];
 
-  # manix = (import (fetchGit {
-  #     name = "manix-unstable-master";
-  #     url = "https://github.com/mlvzk/manix/";
-  #     ref = "refs/tags/v0.6.2";
-  #     rev = "b428f30d58e2b6955f670e21f881056ab1803541";
-  #   }) { inherit pkgs; });
-in
-  {
-    imports = [
-      ./hardware-configuration.nix
-      ./modules/vpn.nix
-      ./modules/sway.nix
-      ./modules/backlight.nix
-      ./modules/dropbox.nix
-      ./modules/printscan.nix
-      ./modules/backup/default.nix
-    ];
+  # Fix external monitor resolution
+  boot.kernelParams = [ "video=VGA-1:1920x1080@60" ];
 
-  # steam
-  # hardware.opengl.driSupport32Bit = true;
-  # hardware.pulseaudio.support32Bit = true;
+  # Fix conflicting definition
+  programs.ssh.askPassword =
+    pkgs.lib.mkForce "${pkgs.plasma5Packages.ksshaskpass.out}/bin/ksshaskpass";
+
+  # Gruvbox
+  console.colors = [
+    "#f9f5d7" # black hard
+    # "#fbf1c7" # black:
+    "#cc241d" # red:
+    "#98971a" # green:
+    "#d79921" # yellow:
+    "#458588" # blue:
+    "#b16286" # magenta:
+    "#689d6a" # cyan:
+    "#7c6f64" # white:
+    "#928374" # bright black:
+    "#9d0006" # bright red:
+    "#79740e" # bright green:
+    "#b57614" # bright yellow:
+    "#076678" # bright blue:
+    "#8f3f71" # bright magenta:
+    "#427b58" # bright cyan:
+    "#3c3836" # bright white:
+  ];
+
   boot.loader.timeout = 5;
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;
   boot.loader.grub.device = "/dev/sda";
+  # Slows down every rebuild - setup manual entries instead
   # boot.loader.grub.useOSProber = true;
+  boot.loader.grub.extraEntries = ''
+    menuentry "Windows 7" {
+      chainloader (hd1,1)+1
+    }
+  '';
 
   networking.hostName = "clippy";
   networking.domain = "whitt.xyz";
 
   networking.firewall.enable = true;
 
-  # networking.firewall.allowedTCPPorts = [ 9090 ];
-  # networking.firewall.interfaces
+  # documentation = {
+  #   # Generate mandb for searching with apropos
+  #   man.generateCaches = true;
 
-  documentation = {
-    # Generate mandb for searching with apropos
-    man.generateCaches = true;
-
-    # Generate developer focused documentation
-    dev.enable = true;
-  };
+  #   # Generate developer focused documentation
+  #   dev.enable = true;
+  # };
 
   fonts.fonts = [
     pkgs.source-code-pro
@@ -60,12 +81,26 @@ in
   environment.homeBinInPath = true;
 
   environment.systemPackages = with pkgs; [
+    # CLI file manager
+    ranger
+
+    # zsh-syntax-highlighting
+    # zsh-autosuggestions
+    # zsh-completions
+
+    # Github cli
+    gh
+
+    # Manage xdg mime in a semi-sane way
+    handlr
+
+    taskwarrior
+
     jq
-    pcmanfm # File browser
 
     fontconfig # Useful utilities like fc-list
 
-    bitwarden-cli
+    # bitwarden-cli
 
     # Use system trash from cli
     # Alternative is small script which moves files to /tmp/.trash
@@ -74,15 +109,14 @@ in
     # Options database in json form - for searching with fzf
     # TODO: create module for nixos options fzf search tool, or remove in favor
     # of pre-existing tool (manix)
-    config.system.build.manual.optionsJSON
+    # config.system.build.manual.optionsJSON
 
     # Nixpkgs manual
     # TODO: Produces tons of annoying warnings on build
     # nixpkgs_manual
 
     # Manix: Documentation Search for Nix
-    # TODO: Package is in unstable. Remove this after upgrading to next stable release
-    # manix
+    manix
 
     # Manix wrapper script for fzf
     # Unbuffer tricks Manix into outputting color
@@ -94,13 +128,6 @@ in
     nix-du # Analyze nix disk usage
     nix-index # Quickly find files in nix packages
 
-    # Packages required to get gtk themed
-    gnome3.adwaita-icon-theme
-    gtk-engine-murrine
-    gtk_engines
-    gsettings-desktop-schemas
-    lxappearance
-
     # Messaging Apps
     # signal-desktop
     tdesktop
@@ -109,11 +136,11 @@ in
 
     # runorraise
     # lorri
-    xfce.xfwm4themes
+    # xfce.xfwm4themes
 
     rclone
 
-    appimage-run
+    # appimage-run
     p7zip
     zip
     massren
@@ -126,15 +153,23 @@ in
     # skype
     firefox
     # chromium
-    # thunderbird
+    thunderbird
+    aerc
+    w3m # for visualizing html in aerc
     # slack
-    anki
-    evince
+    # anki
+    okular
+    # Very fast keybaord driven pdf, djvu, etc. reader
+    zathura
+    # Very fast pdf viewer
+    mupdf
+    # evince
     calibre # For the epub reader only
     # fbreader
     feh
     # inkscape
-    vlc
+    # vlc
+    mpv
     # webtorrent_desktop
 
     gnupg
@@ -154,11 +189,11 @@ in
     # })
 
     # For ANKI
-    pdf2svg
-    imagemagick
+    # pdf2svg
+    # imagemagick
 
     # Terminal utils
-    exa
+    # exa
     fasd
 
     fzf
@@ -171,7 +206,9 @@ in
     # git-lfs
     neovim
     neovim-qt
-    vscode
+    vim-vint # Linter for viml
+    emacs
+    # vscode
     tree
     psmisc # killall, etc
     dtrx
@@ -182,11 +219,6 @@ in
     # fuse_exfat
     # exfat-utils
     # drive
-
-    # Network manager applet
-    # networkmanagerapplet
-    pavucontrol
-    pamixer # Command line pulse audio control
 
     # ncurses disk usage
     ncdu
@@ -201,6 +233,7 @@ in
     binutils
 
     zotero
+
     # libreoffice
     unzip
     whois
@@ -208,38 +241,18 @@ in
     pciutils
   ];
 
-  # RSS Feed Reader
-  # services.miniflux.enable = true;
-
-  services.neo4j = {
-    enable = false;
-  };
-
-  services.postgresql = {
-    enable = false;
-  };
-
   # Network Manager
   networking.networkmanager.enable = true;
-  programs.nm-applet.enable = true;
-
-  virtualisation = {
-    # Use docker
-    # docker.enable = true;
-
-    # For virt-manager
-    # libvirtd.enable = true;
-
-    # Only host architectures are required to be virtualized - save disk space
-    # libvirtd.qemuPackage = pkgs.qemu_kvm;
-  };
-
-  # Run emacs daemon for fast open
-  # services.emacs.enable = true;
+  # Hoping this fixes the connection problem
+  networking.networkmanager.wifi.scanRandMacAddress = false;
 
   # Enable shells
   programs.zsh.enable = true;
+  # programs.zsh.syntaxHighlighting.enable = true;
+  programs.zsh.enableBashCompletion = true;
+  # programs.zsh.autosuggestions.enable = true;
   programs.zsh.enableCompletion = true;
+
   programs.zsh.interactiveShellInit = ''
     # Completions for FZF
     source ${pkgs.fzf}/share/fzf/completion.zsh
@@ -247,8 +260,8 @@ in
     # Ctrl-T paste selected file path into command line
     # Ctrl-R command history
     source ${pkgs.fzf}/share/fzf/key-bindings.zsh
-    '';
-    programs.bash.interactiveShellInit = ''
+  '';
+  programs.bash.interactiveShellInit = ''
     # Fasd bindings
     eval "$(${pkgs.fasd}/bin/fasd --init auto)"
     # Completions for FZF
@@ -257,29 +270,16 @@ in
     # Ctrl-T paste selected file path into command line
     # Ctrl-R command history
     source ${pkgs.fzf}/share/fzf/key-bindings.bash
-    '';
+  '';
+  programs.fish.enable = true;
 
-  # Power management
-  # services.thinkfan.enable = true;
-  services.tlp.enable = true;
-
-  # temporarily disabled for 19.09:
-  #   - https://github.com/NixOS/nixpkgs/issues/71952
-  # hardware.enableAllFirmware = true;
-  hardware.enableRedistributableFirmware = true;
+  # Broadcom bluetooth
+  hardware.enableAllFirmware = true;
   hardware.cpu.intel.updateMicrocode = true;
-
-  hardware.pulseaudio.enable = true;
-
-  # Enable bluetooth, etc.
-  hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
-  hardware.pulseaudio.package = pkgs.pulseaudioFull;
-
 
   # When a job won't stop for some reason, I don't want to waste 90s
   systemd.extraConfig = ''
-  DefaultTimeoutStopSec=10s
+    DefaultTimeoutStopSec=10s
   '';
 
   users.extraUsers.swhitt = {
@@ -313,9 +313,9 @@ in
     autoOptimiseStore = true;
 
     # Enable Flakes
-    # package = pkgs.nixUnstable;
-    # extraOptions = ''
-    #   experimental-features = nix-command flakes
-    # '';
+    package = pkgs.nixUnstable;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
   };
 }

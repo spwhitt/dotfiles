@@ -24,27 +24,6 @@ in {
   programs.ssh.askPassword =
     pkgs.lib.mkForce "${pkgs.plasma5Packages.ksshaskpass.out}/bin/ksshaskpass";
 
-  # Gruvbox
-  console.colors = [
-    "#f9f5d7" # black hard
-    # "#fbf1c7" # black:
-    "#cc241d" # red:
-    "#98971a" # green:
-    "#d79921" # yellow:
-    "#458588" # blue:
-    "#b16286" # magenta:
-    "#689d6a" # cyan:
-    "#7c6f64" # white:
-    "#928374" # bright black:
-    "#9d0006" # bright red:
-    "#79740e" # bright green:
-    "#b57614" # bright yellow:
-    "#076678" # bright blue:
-    "#8f3f71" # bright magenta:
-    "#427b58" # bright cyan:
-    "#3c3836" # bright white:
-  ];
-
   boot.loader.timeout = 5;
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;

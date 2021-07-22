@@ -4,9 +4,6 @@
 [submodule "config/.oh-my-zsh"]
 	path = home/.oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh.git
-[submodule "deps/home-manager"]
-	path = deps/home-manager
-	url = https://github.com/rycee/home-manager
 [submodule "home/.config/base16-shell"]
 	path = home/.config/base16-shell
 	url = https://github.com/chriskempson/base16-shell.git

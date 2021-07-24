@@ -1,7 +1,9 @@
 " I prefer standard line comments
-setl commentstring=;;\ %s
+setlocal commentstring=;;\ %s
 " Indent properly after this word
-setl lispwords+=define/contract
+setlocal lispwords+=define/contract
+" Compiling isn't so useful in racket. Unit testing is.
+compiler racotest
 
 " Could set equalprg to scmindent here
 " https://github.com/ds26gte/scmindent

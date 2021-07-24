@@ -2,6 +2,9 @@ scriptencoding utf-8
 
 " vim: expandtab foldmethod=marker
 
+let mapleader = ' '
+let g:mapleader = ' '
+let maplocalleader = 's'
 " Plugins {{{1
 call plug#begin('~/.local/share/nvim/plugged')
 
@@ -212,6 +215,135 @@ let g:vimwiki_markdown_link_ext = 1
 call plug#end()
 " Plugin Config {{{1
 
+" Vim Sexp Explicit Mappings {{{2
+    " Disable mapping hooks
+    let g:sexp_filetypes = ''
+    function! s:vim_sexp_mappings()
+        xmap <silent><buffer> af              <Plug>(sexp_outer_list)
+        omap <silent><buffer> af              <Plug>(sexp_outer_list)
+        xmap <silent><buffer> if              <Plug>(sexp_inner_list)
+        omap <silent><buffer> if              <Plug>(sexp_inner_list)
+        xmap <silent><buffer> aF              <Plug>(sexp_outer_top_list)
+        omap <silent><buffer> aF              <Plug>(sexp_outer_top_list)
+        xmap <silent><buffer> iF              <Plug>(sexp_inner_top_list)
+        omap <silent><buffer> iF              <Plug>(sexp_inner_top_list)
+        xmap <silent><buffer> as              <Plug>(sexp_outer_string)
+        omap <silent><buffer> as              <Plug>(sexp_outer_string)
+        xmap <silent><buffer> is              <Plug>(sexp_inner_string)
+        omap <silent><buffer> is              <Plug>(sexp_inner_string)
+        xmap <silent><buffer> ae              <Plug>(sexp_outer_element)
+        omap <silent><buffer> ae              <Plug>(sexp_outer_element)
+        xmap <silent><buffer> ie              <Plug>(sexp_inner_element)
+        omap <silent><buffer> ie              <Plug>(sexp_inner_element)
+        nmap <silent><buffer> (               <Plug>(sexp_move_to_prev_bracket)
+        xmap <silent><buffer> (               <Plug>(sexp_move_to_prev_bracket)
+        omap <silent><buffer> (               <Plug>(sexp_move_to_prev_bracket)
+        nmap <silent><buffer> )               <Plug>(sexp_move_to_next_bracket)
+        xmap <silent><buffer> )               <Plug>(sexp_move_to_next_bracket)
+        omap <silent><buffer> )               <Plug>(sexp_move_to_next_bracket)
+        nmap <silent><buffer> <LocalLeader>b  <Plug>(sexp_move_to_prev_element_head)
+        xmap <silent><buffer> <LocalLeader>b  <Plug>(sexp_move_to_prev_element_head)
+        omap <silent><buffer> <LocalLeader>b  <Plug>(sexp_move_to_prev_element_head)
+        nmap <silent><buffer> <LocalLeader>w  <Plug>(sexp_move_to_next_element_head)
+        xmap <silent><buffer> <LocalLeader>w  <Plug>(sexp_move_to_next_element_head)
+        omap <silent><buffer> <LocalLeader>w  <Plug>(sexp_move_to_next_element_head)
+        nmap <silent><buffer> g<M-e>          <Plug>(sexp_move_to_prev_element_tail)
+        xmap <silent><buffer> g<M-e>          <Plug>(sexp_move_to_prev_element_tail)
+        omap <silent><buffer> g<M-e>          <Plug>(sexp_move_to_prev_element_tail)
+        nmap <silent><buffer> <LocalLeader>e  <Plug>(sexp_move_to_next_element_tail)
+        xmap <silent><buffer> <LocalLeader>e  <Plug>(sexp_move_to_next_element_tail)
+        omap <silent><buffer> <LocalLeader>e  <Plug>(sexp_move_to_next_element_tail)
+        nmap <silent><buffer> [[              <Plug>(sexp_move_to_prev_top_element)
+        xmap <silent><buffer> [[              <Plug>(sexp_move_to_prev_top_element)
+        omap <silent><buffer> [[              <Plug>(sexp_move_to_prev_top_element)
+        nmap <silent><buffer> ]]              <Plug>(sexp_move_to_next_top_element)
+        xmap <silent><buffer> ]]              <Plug>(sexp_move_to_next_top_element)
+        omap <silent><buffer> ]]              <Plug>(sexp_move_to_next_top_element)
+        nmap <silent><buffer> [e              <Plug>(sexp_select_prev_element)
+        xmap <silent><buffer> [e              <Plug>(sexp_select_prev_element)
+        omap <silent><buffer> [e              <Plug>(sexp_select_prev_element)
+        nmap <silent><buffer> ]e              <Plug>(sexp_select_next_element)
+        xmap <silent><buffer> ]e              <Plug>(sexp_select_next_element)
+        omap <silent><buffer> ]e              <Plug>(sexp_select_next_element)
+        nmap <silent><buffer> ==              <Plug>(sexp_indent)
+        nmap <silent><buffer> =-              <Plug>(sexp_indent_top)
+        nmap <silent><buffer> <LocalLeader>i  <Plug>(sexp_round_head_wrap_list)
+        xmap <silent><buffer> <LocalLeader>i  <Plug>(sexp_round_head_wrap_list)
+        nmap <silent><buffer> <LocalLeader>I  <Plug>(sexp_round_tail_wrap_list)
+        xmap <silent><buffer> <LocalLeader>I  <Plug>(sexp_round_tail_wrap_list)
+        nmap <silent><buffer> <LocalLeader>[  <Plug>(sexp_square_head_wrap_list)
+        xmap <silent><buffer> <LocalLeader>[  <Plug>(sexp_square_head_wrap_list)
+        nmap <silent><buffer> <LocalLeader>]  <Plug>(sexp_square_tail_wrap_list)
+        xmap <silent><buffer> <LocalLeader>]  <Plug>(sexp_square_tail_wrap_list)
+        nmap <silent><buffer> <LocalLeader>{  <Plug>(sexp_curly_head_wrap_list)
+        xmap <silent><buffer> <LocalLeader>{  <Plug>(sexp_curly_head_wrap_list)
+        nmap <silent><buffer> <LocalLeader>}  <Plug>(sexp_curly_tail_wrap_list)
+        xmap <silent><buffer> <LocalLeader>}  <Plug>(sexp_curly_tail_wrap_list)
+        nmap <silent><buffer> <LocalLeader>s  <Plug>(sexp_round_head_wrap_element)
+        xmap <silent><buffer> <LocalLeader>s  <Plug>(sexp_round_head_wrap_element)
+        nmap <silent><buffer> <LocalLeader>S  <Plug>(sexp_round_tail_wrap_element)
+        xmap <silent><buffer> <LocalLeader>S  <Plug>(sexp_round_tail_wrap_element)
+        nmap <silent><buffer> <LocalLeader>e[ <Plug>(sexp_square_head_wrap_element)
+        xmap <silent><buffer> <LocalLeader>e[ <Plug>(sexp_square_head_wrap_element)
+        nmap <silent><buffer> <LocalLeader>e] <Plug>(sexp_square_tail_wrap_element)
+        xmap <silent><buffer> <LocalLeader>e] <Plug>(sexp_square_tail_wrap_element)
+        nmap <silent><buffer> <LocalLeader>e{ <Plug>(sexp_curly_head_wrap_element)
+        xmap <silent><buffer> <LocalLeader>e{ <Plug>(sexp_curly_head_wrap_element)
+        nmap <silent><buffer> <LocalLeader>e} <Plug>(sexp_curly_tail_wrap_element)
+        xmap <silent><buffer> <LocalLeader>e} <Plug>(sexp_curly_tail_wrap_element)
+        nmap <silent><buffer> <LocalLeader><  <Plug>(sexp_insert_at_list_head)
+        nmap <silent><buffer> <LocalLeader>>  <Plug>(sexp_insert_at_list_tail)
+        nmap <silent><buffer> <LocalLeader>@  <Plug>(sexp_splice_list)
+        nmap <silent><buffer> <LocalLeader>o  <Plug>(sexp_raise_list)
+        xmap <silent><buffer> <LocalLeader>o  <Plug>(sexp_raise_list)
+        nmap <silent><buffer> <LocalLeader>O  <Plug>(sexp_raise_element)
+        xmap <silent><buffer> <LocalLeader>O  <Plug>(sexp_raise_element)
+        nmap <silent><buffer> <LocalLeader>k  <Plug>(sexp_swap_list_backward)
+        xmap <silent><buffer> <LocalLeader>k  <Plug>(sexp_swap_list_backward)
+        nmap <silent><buffer> <LocalLeader>j  <Plug>(sexp_swap_list_forward)
+        xmap <silent><buffer> <LocalLeader>j  <Plug>(sexp_swap_list_forward)
+        nmap <silent><buffer> <LocalLeader>h  <Plug>(sexp_swap_element_backward)
+        xmap <silent><buffer> <LocalLeader>h  <Plug>(sexp_swap_element_backward)
+        nmap <silent><buffer> <LocalLeader>l  <Plug>(sexp_swap_element_forward)
+        xmap <silent><buffer> <LocalLeader>l  <Plug>(sexp_swap_element_forward)
+        nmap <silent><buffer> <LocalLeader>J  <Plug>(sexp_emit_head_element)
+        xmap <silent><buffer> <LocalLeader>J  <Plug>(sexp_emit_head_element)
+        nmap <silent><buffer> <LocalLeader>K  <Plug>(sexp_emit_tail_element)
+        xmap <silent><buffer> <LocalLeader>K  <Plug>(sexp_emit_tail_element)
+        nmap <silent><buffer> <LocalLeader>H  <Plug>(sexp_capture_prev_element)
+        xmap <silent><buffer> <LocalLeader>H  <Plug>(sexp_capture_prev_element)
+        nmap <silent><buffer> <LocalLeader>L  <Plug>(sexp_capture_next_element)
+        xmap <silent><buffer> <LocalLeader>L  <Plug>(sexp_capture_next_element)
+        " nmap <silent><buffer> <M-k>           <Plug>(sexp_swap_list_backward)
+        " xmap <silent><buffer> <M-k>           <Plug>(sexp_swap_list_backward)
+        " nmap <silent><buffer> <M-j>           <Plug>(sexp_swap_list_forward)
+        " xmap <silent><buffer> <M-j>           <Plug>(sexp_swap_list_forward)
+        " nmap <silent><buffer> <M-h>           <Plug>(sexp_swap_element_backward)
+        " xmap <silent><buffer> <M-h>           <Plug>(sexp_swap_element_backward)
+        " nmap <silent><buffer> <M-l>           <Plug>(sexp_swap_element_forward)
+        " xmap <silent><buffer> <M-l>           <Plug>(sexp_swap_element_forward)
+        " nmap <silent><buffer> <M-S-j>         <Plug>(sexp_emit_head_element)
+        " xmap <silent><buffer> <M-S-j>         <Plug>(sexp_emit_head_element)
+        " nmap <silent><buffer> <M-S-k>         <Plug>(sexp_emit_tail_element)
+        " xmap <silent><buffer> <M-S-k>         <Plug>(sexp_emit_tail_element)
+        " nmap <silent><buffer> <M-S-h>         <Plug>(sexp_capture_prev_element)
+        " xmap <silent><buffer> <M-S-h>         <Plug>(sexp_capture_prev_element)
+        " nmap <silent><buffer> <M-S-l>         <Plug>(sexp_capture_next_element)
+        " xmap <silent><buffer> <M-S-l>         <Plug>(sexp_capture_next_element)
+        imap <silent><buffer> <BS>            <Plug>(sexp_insert_backspace)
+        imap <silent><buffer> "               <Plug>(sexp_insert_double_quote)
+        imap <silent><buffer> (               <Plug>(sexp_insert_opening_round)
+        imap <silent><buffer> )               <Plug>(sexp_insert_closing_round)
+        imap <silent><buffer> [               <Plug>(sexp_insert_opening_square)
+        imap <silent><buffer> ]               <Plug>(sexp_insert_closing_square)
+        imap <silent><buffer> {               <Plug>(sexp_insert_opening_curly)
+        imap <silent><buffer> }               <Plug>(sexp_insert_closing_curly)
+    endfunction
+    augroup VIM_SEXP_MAPPING
+        autocmd!
+        autocmd FileType clojure,scheme,lisp,timl,racket call s:vim_sexp_mappings()
+    augroup END
+" }}}2
 let g:fzf_action = {
       \ 'alt-space': 'abort',
       \}
@@ -271,13 +403,6 @@ imap <c-k> <plug>(MUcompleteBwd)
 " Enables project-specific configuration
 " set exrc
 " set secure
-
-let mapleader = ' '
-let g:mapleader = ' '
-
-" Localleader is meant to be like leader but for commands local to the current
-" buffer.  I've rarely seen it actually used
-let maplocalleader = '\\'
 
 " I'm not interested in forcing the current window to be particularly large
 set winheight=4
@@ -500,7 +625,8 @@ nnoremap Q <nop>
 nnoremap S <nop>
 
 " Equivalent to cl
-" Remapped to use for splits + windows below
+" Might make a good local leader
+" It's on the home row, binding conflicts are not an issue locally, etc.
 nnoremap s <nop>
 
 " Equivalent to j^, which is a strange thing to want anyway
@@ -577,7 +703,7 @@ augroup netrw
 augroup END
 
 " Alt+space already works (as esc) by default, in fact alt+any key works...
-cnoremap <M-Space> <esc>
+cnoremap <M-Space> <C-c>
 xnoremap <M-Space> <esc>
 onoremap <M-Space> <esc>
 tnoremap <M-Space> <C-\><C-n>
@@ -637,6 +763,18 @@ nnoremap <M-K> <C-W>K
 nnoremap <M-H> <C-W>H
 nnoremap <M-L> <C-W>L
 
+" Window move commands work in terminal too
+tnoremap <M-j> <C-\><C-n><C-W>j
+tnoremap <M-k> <C-\><C-n><C-W>k
+tnoremap <M-h> <C-\><C-n><C-W>h
+tnoremap <M-l> <C-\><C-n><C-W>l
+tnoremap <M-J> <C-\><C-n><C-W>J
+tnoremap <M-K> <C-\><C-n><C-W>K
+tnoremap <M-H> <C-\><C-n><C-W>H
+tnoremap <M-L> <C-\><C-n><C-W>L
+
+nnoremap <M-s> :sp<cr>
+nnoremap <M-v> :vsp<cr>
 nnoremap <F2>f :FzfFiles<cr>
 nnoremap <F2>g :Gstatus<cr>
 nnoremap <F2>b :FzfBuffers<cr>
@@ -650,6 +788,8 @@ nnoremap <F2>T :FzfTags<cr>
 nnoremap Sf :FzfFiles<cr>
 nnoremap Sg :FzfGFiles<cr>
 nnoremap Sb :FzfBuffers<cr>
+nnoremap <M-b> :FzfBuffers<cr>
+nnoremap <M-f> :FzfFiles<cr>
 " nnoremap Sc :FzfColors!<cr> ???? duplicate binding, not necessary anyway
 " nnoremap Sag :FzfAg ???? Needs better binding, ag installed, pattern entry
 " nnoremap Srg :FzfRg ???? Needs better binding, rg installed, pattern entry
@@ -675,8 +815,8 @@ nnoremap St :FzfFiletypes<cr>
 " nnoremap - za
 
 " Time based history navigation
-nnoremap - g-
-nnoremap + g+
+" nnoremap - g-
+" nnoremap + g+
 
 " Make Y behave like everyone else
 nnoremap Y y$

@@ -1,6 +1,9 @@
 # vim: ft=sh:
 # Shell environment configuration sourced for both bash and zsh
 
+# Path to nixpkgs used to compile the system
+export NIX_PATH="nixpkgs=$HOME/.dotfiles/deps/nixpkgs/:home-manager=$HOME/.dotfiles/deps/home-manager"
+
 # ------
 # FZF
 # source "/home/swhitt/.config/base16-fzf/bash/base16-gruvbox-light-hard.config"

@@ -1,9 +1,6 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-# Path to nixpkgs used to compile the system
-export NIX_PATH="nixpkgs=$HOME/Data/Repos/nixpkgs/"
-
 # Move custom folder so it's not located inside oh-my-zsh repository
 ZSH_CUSTOM="$HOME/.oh-my-zsh-custom/"
 

@@ -1,20 +1,24 @@
 { config, pkgs, ... }:
 let
-  # runorraise = pkgs.haskellPackages.callPackage /home/swhitt/Data/Projects/runorraise/runorraise.nix { };
+  # runorraise = pkgs.haskellPackages.callPackage
+  #   /home/swhitt/Data/Projects/runorraise/runorraise.nix { };
   handlr = pkgs.callPackage ./handlr.nix { };
+  gnome-magic-window = pkgs.callPackage ./gnome-magic-window.nix { };
 in {
   imports = [
     ./hardware-configuration.nix
     ./modules/vpn.nix
     ./modules/audio.nix
-    ./modules/sway.nix
+    # ./modules/sway.nix
     # ./modules/kde.nix
-    # ./modules/gnome.nix
+    ./modules/gnome.nix
     ./modules/backlight.nix
     ./modules/dropbox.nix
     ./modules/googledrive.nix
     ./modules/printscan.nix
     ./modules/backup/default.nix
+    ./modules/user.nix
+    ./modules/nix-index.nix
   ];
 
   # Fix external monitor resolution
@@ -51,6 +55,7 @@ in {
 
   fonts.fonts = [
     pkgs.source-code-pro
+    pkgs.iosevka
     # pkgs.powerline-fonts
   ];
 
@@ -60,6 +65,17 @@ in {
   environment.homeBinInPath = true;
 
   environment.systemPackages = with pkgs; [
+    gnome-magic-window
+
+    jq # Manipulate JSON in CLI
+    jc # Parse command output to produce JSON
+
+    tmux
+
+    # Hardware info
+    lshw
+    hwinfo
+
     # CLI file manager
     ranger
 
@@ -74,8 +90,6 @@ in {
     handlr
 
     taskwarrior
-
-    jq
 
     fontconfig # Useful utilities like fc-list
 
@@ -131,79 +145,57 @@ in {
     xournal
     # skype
     firefox
-    # chromium
     thunderbird
     aerc
     w3m # for visualizing html in aerc
-    # slack
     # anki
     okular
     # Very fast keybaord driven pdf, djvu, etc. reader
     zathura
-    # Very fast pdf viewer
-    mupdf
-    # evince
-    calibre # For the epub reader only
-    # fbreader
+    foliate # Finally a decent epub reader!
     feh
-    # inkscape
-    # vlc
     mpv
-    # webtorrent_desktop
 
     gnupg
 
     xdg_utils # For managing desktop standards
 
-    fd # Faster find
-    ripgrep # Faster grep
-    shellcheck # Shell script linting
-    # pandoc # Markdown preview
-
+    # Linters, Formatters, and Language Servers
     nixfmt # Format nix code
     rnix-lsp # Language Server for Nix
-
-    # (texlive.combine {
-    # inherit(texlive) scheme-medium collection-pictures tikz-cd;
-    # })
+    shellcheck # Shell script linting
+    vim-vint # Linter for viml
 
     # For ANKI
     # pdf2svg
     # imagemagick
 
     # Terminal utils
-    # exa
     fasd
+    fd # Faster find
+    ripgrep # Faster grep
 
     fzf
 
     wget
     htop
-    #tmux
     #mosh
     git
-    # git-lfs
     neovim
     neovim-qt
-    vim-vint # Linter for viml
     emacs
-    # vscode
     tree
     psmisc # killall, etc
     dtrx
     ispell
     direnv
 
-    # Filesystem support
-    # fuse_exfat
-    # exfat-utils
-    # drive
-
     # ncurses disk usage
     ncdu
 
     # Terminal Emulators
     alacritty
+    kitty
 
     # Basic linux utils
     usbutils
@@ -211,6 +203,7 @@ in {
     unrar
     binutils
 
+    # Library management
     zotero
 
     # libreoffice
@@ -261,30 +254,26 @@ in {
     DefaultTimeoutStopSec=10s
   '';
 
-  users.extraUsers.swhitt = {
-    name = "swhitt";
-    uid = 1000;
-    isNormalUser = true;
-    extraGroups = [
-      "wheel" # Allow use of sudo
-      "networkmanager"
-      "docker"
-    ];
-    shell = "${pkgs.zsh}/bin/zsh";
-  };
-
-  # Localization
-  time.timeZone = "America/New_York";
-
-  location = {
-    latitude = 40.712784;
-    longitude = -74.005941;
-  };
-
   # Nix Related Config
   nixpkgs.config = {
     allowUnfree = true;
     android_sdk.accept_license = true;
+  };
+
+  networking.nat.enable = true;
+  networking.nat.internalInterfaces = [ "ve-+" ];
+  networking.nat.externalInterface = "wlp3s0";
+  networking.networkmanager.unmanaged = [ "interface-name:ve-*" ];
+
+  containers.secure = {
+    config = { config, pkgs, ... }: {
+      users.extraUsers.secure = {
+        name = "secure";
+        uid = 1000;
+        isNormalUser = true;
+      };
+      environment.systemPackages = with pkgs; [ firefox zathura ];
+    };
   };
 
   nix = {

@@ -22,12 +22,12 @@
     },
     "nixpkgs": {
       "locked": {
-        "narHash": "sha256-Q1IOfmVJPqDO9ACVZBnrGO4rP1tNQa9jM8W1XiU0a3I=",
-        "path": "/home/swhitt/Data/Repos/nixpkgs",
+        "narHash": "sha256-t0MHvUrzVeoMhOJt52JTBwrtf3AgkiQSBkAoE2a5VYA=",
+        "path": "/home/swhitt/.dotfiles/deps/nixpkgs",
         "type": "path"
       },
       "original": {
-        "path": "/home/swhitt/Data/Repos/nixpkgs",
+        "path": "/home/swhitt/.dotfiles/deps/nixpkgs",
         "type": "path"
       }
     },

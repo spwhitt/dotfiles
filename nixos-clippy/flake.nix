@@ -1,7 +1,7 @@
 {
   # Use local checkout which has plasma systemd pr incorporated
   # inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.05";
-  inputs.nixpkgs.url = "/home/swhitt/Data/Repos/nixpkgs";
+  inputs.nixpkgs.url = "/home/swhitt/.dotfiles/deps/nixpkgs";
 
   inputs.home-manager = {
     url = "github:nix-community/home-manager";
@@ -26,6 +26,5 @@
           })
         ];
     };
-
   };
 }

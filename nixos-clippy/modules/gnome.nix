@@ -7,6 +7,9 @@
 
     xkbOptions = "caps:super";
 
+    # Nouveau working for now!
+    # videoDrivers = [ "nvidia" ];
+
     # Touch pad settings
     libinput = {
       enable = true;
@@ -14,20 +17,22 @@
     };
 
     desktopManager.gnome.enable = true;
-    displayManager.sddm.enable = true;
+    displayManager.gdm.enable = true;
 
   };
 
   # services.gnome.gnome-online-accounts.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    xorg.xkill
-    xbindkeys
-    xdotool
-    wmctrl
+  environment.systemPackages = with pkgs;
+    [
 
-    gnome.gnome-tweaks
-    gnomeExtensions.paperwm
-  ];
+      # Wayland now...
+      # xorg.xkill
+      # xbindkeys
+      # xdotool
+      # wmctrl
+      # jumpapp
 
+      gnome.gnome-tweaks
+    ];
 }

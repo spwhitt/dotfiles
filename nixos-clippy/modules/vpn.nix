@@ -1,6 +1,46 @@
 { config, lib, pkgs, ... }:
+let
+  killswitch-enabled = (pkgs.writeScriptBin "killswitch-enabled" ''
+    #! ${pkgs.runtimeShell}
 
-{
+    export PATH=${pkgs.iptables}/bin
+
+    iptables -C OUTPUT -j nixos-vpn-killswitch &> /dev/null
+  '');
+  killswitch-up = (pkgs.writeScriptBin "killswitch-up" ''
+    #! ${pkgs.runtimeShell}
+
+    export PATH=${pkgs.iptables}/bin:${killswitch-enabled}/bin
+
+    if killswitch-enabled; then
+      echo "Killswitch already enabled";
+    else
+      iptables -A OUTPUT -j nixos-vpn-killswitch
+    fi
+  '');
+  killswitch-down = (pkgs.writeScriptBin "killswitch-down" ''
+    #! ${pkgs.runtimeShell}
+
+    export PATH=${pkgs.iptables}/bin:${killswitch-enabled}/bin
+
+    if killswitch-enabled; then
+      iptables -D OUTPUT -j nixos-vpn-killswitch
+    else
+      echo "Killswitch already disabled";
+    fi
+  '');
+  killswitch-toggle = (pkgs.writeScriptBin "killswitch-toggle" ''
+    #! ${pkgs.runtimeShell}
+
+    export PATH=${pkgs.iptables}/bin:${killswitch-enabled}/bin:${killswitch-up}/bin:${killswitch-down}/bin
+
+    if killswitch-enabled; then
+      killswitch-down
+    else
+      killswitch-up
+    fi
+  '');
+in {
   # 2. Write a script for connecting to the VPN which punches a hole in the firewall
   #    for the VPN server (and tun0?)
   # 3. Write a script which explicitly opens firewall for outbound traffic without
@@ -54,20 +94,6 @@
     # ip6tables -P FORWARD DROP
   '';
 
-  # TODO: Complete this
-  # script = pkgs.writeScriptBin "vpnkillswitch" ''
-  #   #! ${pkgs.runtimeShell}
-
-  #   # Disable vpn kill switch
-  #   iptables -D OUTPUT -j nixos-vpn-killswitch
-
-  #   # Enable vpn kill switch
-  #   iptables -A OUTPUT -j nixos-vpn-killswitch
-
-  #   # Check if kill switch is enabled
-  #   iptables -L OUTPUT | grep nixos-vpn-killswitch
-  # '';
-
   # There may be a moment of leakage when we reload the firewall
   # Ideally we'd fix this by adding commands below
   # networking.firewall.extraStopCommands = ''
@@ -76,48 +102,69 @@
   # networking.firewall.extraStopCommands = ''
   # '';
 
-  # Start VPN automatically
-  # networking.networkmanager.dispatcherScripts = [ {
-  #   source = pkgs.writeScript "03startvpn" ''
-  #     #!${pkgs.bash}/bin/bash
-  #     VPN_NAME="NordVPN-US"
-  #     interface=$1 status=$2
-  #     case $status in
-  #       up)
-  #       ${pkgs.networkmanager}/bin/nmcli connection up id "$VPN_NAME"
-  #       ;;
-  #       down)
-  #       if ${pkgs.networkmanager}/bin/nmcli connection show --active | grep "$VPN_NAME"; then
-  #       ${pkgs.networkmanager}/bin/nmcli connection down id "$VPN_NAME"
-  #       fi
-  #       ;;
-  #       vpn-up)
-  #       ;;
-  #     esac
-  #   '';
-  #   type = "basic";
-  # } ];
+  # Scripts to control the killswitch
+  environment.systemPackages =
+    [ killswitch-up killswitch-down killswitch-enabled killswitch-toggle ];
+
+  networking.networkmanager.dispatcherScripts = [{
+    source = pkgs.writeScript "03vpnkillswitch" ''
+      interface=$1 status=$2
+
+      # Automatically turn on killswitch when VPN connects
+      # Require manual disengage on disconnect
+      case $status in
+        vpn-up)
+          ${killswitch-up}/bin/killswitch-up
+        ;;
+      esac
+
+      exit 0
+    '';
+    type = "basic";
+  }
+
+  #{ source = pkgs.writeScript "03startvpn" ''
+  #    #!${pkgs.bash}/bin/bash
+  #    VPN_NAME="NordVPN-US"
+  #    interface=$1 status=$2
+
+  #    Automatically connect VPN when wifi connects
+  #    case $status in
+  #      up)
+  #      ${pkgs.networkmanager}/bin/nmcli connection up id "$VPN_NAME"
+  #      ;;
+  #      down)
+  #      if ${pkgs.networkmanager}/bin/nmcli connection show --active | grep "$VPN_NAME"; then
+  #      ${pkgs.networkmanager}/bin/nmcli connection down id "$VPN_NAME"
+  #      fi
+  #      ;;
+  #      vpn-up)
+  #      ;;
+  #    esac
+  #  '';
+  #  type = "basic"; }
+    ];
 
   # Works but something is slow.
   # I think DNS is not being routed through the VPN.
   # May be better to use networkmanager-openvpn anyway.
-  services.openvpn.servers = {
-    nordvpn-us = {
-      autoStart = false;
-      config = ''
-        config /etc/nixos/ovpn/ovpn_udp/us4594.nordvpn.com.udp.ovpn
-        auth-user-pass /etc/nixos/nordvpn_auth.txt
-      '';
-      updateResolvConf = true;
-    };
-    nordvpn-p2p = {
-      autoStart = false;
-      config = ''
-        config /etc/nixos/ovpn/ovpn_udp/us3395.nordvpn.com.udp.ovpn
-        auth-user-pass /etc/nixos/nordvpn_auth.txt
-      '';
-    };
-  };
+  # services.openvpn.servers = {
+  #   nordvpn-us = {
+  #     autoStart = false;
+  #     config = ''
+  #       config /etc/nixos/ovpn/ovpn_udp/us4594.nordvpn.com.udp.ovpn
+  #       auth-user-pass /etc/nixos/nordvpn_auth.txt
+  #     '';
+  #     updateResolvConf = true;
+  #   };
+  #   nordvpn-p2p = {
+  #     autoStart = false;
+  #     config = ''
+  #       config /etc/nixos/ovpn/ovpn_udp/us3395.nordvpn.com.udp.ovpn
+  #       auth-user-pass /etc/nixos/nordvpn_auth.txt
+  #     '';
+  #   };
+  # };
 
   # networking.nftables.enable = true;
   # networking.nftables.ruleset = ''

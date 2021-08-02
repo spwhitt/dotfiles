@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
   # Allow service discovery e.g. network printers
   services.avahi.enable = false;
   services.avahi.nssmdns = false;
@@ -22,7 +21,5 @@
     };
   };
 
-  environment.systemPackages = [ pkgs.simple-scan ];
-
-  users.extraUsers.swhitt.extraGroups = ["scanner" "lp"];
+  users.extraUsers.swhitt.extraGroups = [ "scanner" "lp" ];
 }

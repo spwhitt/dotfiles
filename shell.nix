@@ -1,8 +1,8 @@
-with import <nixpkgs> {};
+{ pkgs ? import <nixpkgs> { } }:
+with pkgs;
 
 mkShell {
-  name="env";
-  buildInputs = [
-    stow
-  ];
+  name = "env";
+  buildInputs = [ stow ];
 }
+

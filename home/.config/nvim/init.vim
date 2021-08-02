@@ -5,6 +5,7 @@ scriptencoding utf-8
 let mapleader = ' '
 let g:mapleader = ' '
 let maplocalleader = 's'
+
 " Plugins {{{1
 call plug#begin('~/.local/share/nvim/plugged')
 
@@ -127,6 +128,8 @@ Plug 'tpope/vim-dispatch'
 
 " Send text to a REPL
 Plug 'jpalardy/vim-slime'
+" Plug 'sillybun/vim-repl'
+" Plug 'rhysd/reply.vim'
 
 " :Delete: Delete a buffer and the file on disk simultaneously.
 " :Unlink: Like :Delete, but keeps the now empty buffer.
@@ -209,6 +212,8 @@ let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown':'markdown', '.mdown':
 " Include extension in the markdown link [text](text.md) instead of [text](text)
 " Allows other programs to follow the links more easily
 let g:vimwiki_markdown_link_ext = 1
+" Some small improvements to netrw
+Plug 'tpope/vim-vinegar'
 " }}}2
 "}}}2
 
@@ -607,6 +612,9 @@ endif
 " }}}1
 " Key Bindings {{{1
 
+
+nnoremap <Return> o<esc>
+
 " Don't move cursor on visual yank
 " Less unexpected cursor movements and side effects = better
 vnoremap <expr>y "my\"" . v:register . "y`y"
@@ -641,12 +649,15 @@ nnoremap + <nop>
 xnoremap + <nop>
 
 " Equivalent to k
-nnoremap - <nop>
-xnoremap - <nop>
+" nnoremap - <nop>
+" xnoremap - <nop>
 
 " Equivalent to dl
+" eXecute - good to use for repl!
 nnoremap x <nop>
 xnoremap x <nop>
+nnoremap x :ReplSend<cr>
+vnoremap x :ReplSend<cr>
 
 " Equivalent to dh
 nnoremap X <nop>
@@ -775,6 +786,7 @@ tnoremap <M-L> <C-\><C-n><C-W>L
 
 nnoremap <M-s> :sp<cr>
 nnoremap <M-v> :vsp<cr>
+
 nnoremap <F2>f :FzfFiles<cr>
 nnoremap <F2>g :Gstatus<cr>
 nnoremap <F2>b :FzfBuffers<cr>
@@ -897,6 +909,8 @@ augroup END
 " Open vimrc in a new tab
 " Mnemonic: Edit Vimrc
 noremap <leader>ev :e $MYVIMRC<CR>
+
+noremap <leader>en :e $HOME/Data/Dropbox/Notes/index.md<CR>
 
 " Automatically source the vimrc file after saving it
 augroup reload_vimrc

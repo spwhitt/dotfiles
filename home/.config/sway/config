@@ -31,10 +31,14 @@
 ### Output configuration
 
   # Default wallpaper
-  output * bg ~/.config/sway/backgrounds/spx_wallpaper.jpg fill
+  output * bg ~/Photos/Wallpapers/samuel-ferrara.jpg fill
 
   # Force a higher resolution because KMS misidentifies this monitor
   # output VGA-1 mode --custom 1920x1080 
+
+  # Setup monitor positions for my desk
+  output VGA-1 pos 0 0
+  output LVDS-1 pos 0 1080
 
 ### Clamshell Configuration
 
@@ -114,8 +118,8 @@
   bindsym $mod+n exec true | dmenu -p workspace | xargs swaymsg rename workspace to
   # bindsym $mod+t [app_id="Alacritty" workspace=__focused__] focus
 
-  bindsym $mod+m exec true | dmenu -p mark | xargs swaymsg mark
-  bindsym $mod+u unmark
+  # bindsym $mod+m exec true | dmenu -p mark | xargs swaymsg mark
+  # bindsym $mod+u unmark
 
   # Kill focused window
   bindsym $mod+Shift+q kill
@@ -145,10 +149,13 @@
 # Moving around:
 #
   # Move your focus around
-  bindsym $mod+$left focus left
-  bindsym $mod+$down focus down
-  bindsym $mod+$up focus up
-  bindsym $mod+$right focus right
+  bindsym $mod+u focus parent
+  bindsym $mod+semicolon focus parent
+  bindsym $mod+h focus left
+  bindsym $mod+j focus down
+  bindsym $mod+k focus up
+  bindsym $mod+l focus right
+
   # Or use $mod+[up|down|left|right]
   bindsym $mod+Left focus prev
   bindsym $mod+Down focus child
@@ -202,7 +209,7 @@
 #
 
   # Default to stacked. Usually don't have to look at everything simultaneously
-  workspace_layout stacking
+  # workspace_layout stacking
 
   # You can "split" the current object of your focus with
   # $mod+b or $mod+v, for horizontal and vertical splits
@@ -242,6 +249,7 @@
 #
 # Window Preferences
 #
+
   # Make our fzf launcher display in the center of the screen
   for_window [app_id="swaypopup"] floating enable, border pixel 2, sticky enable
   # Make htop big
@@ -307,6 +315,68 @@
     bindsym Escape mode "default"
   }
   bindsym $mod+r mode "resize"
+
+## Base16 One Light
+set $base00 #fafafa
+set $base01 #f0f0f1
+set $base02 #e5e5e6
+set $base03 #a0a1a7
+set $base04 #696c77
+set $base05 #383a42
+set $base06 #202227
+set $base07 #090a0b
+set $base08 #ca1243
+set $base09 #d75f00
+set $base0A #c18401
+set $base0B #50a14f
+set $base0C #0184bc
+set $base0D #4078f2
+set $base0E #a626a4
+set $base0F #986801
+
+# Basic color configuration using the Base16 variables for windows and borders.
+# Property Name         Border  BG      Text    Indicator Child Border
+client.focused          $base05 $base0D $base00 $base0D $base0C
+client.focused_inactive $base01 $base01 $base05 $base03 $base01
+client.unfocused        $base01 $base00 $base05 $base01 $base01
+client.urgent           $base08 $base08 $base00 $base08 $base08
+client.placeholder      $base00 $base00 $base05 $base00 $base00
+client.background       $base07
+
+# bar {
+#   # Define bar colors
+#   # THIS DOESN'T WORK
+#   # include "~/.config/base16-i3/bar-colors/base16-one-light.config"
+# 
+#   status_command i3status
+# 
+#   # No way to include this, so...
+#   colors {
+#     background $base00
+#     separator  $base01
+#     statusline $base04
+# 
+#     # State             Border  BG      Text
+#     focused_workspace   $base05 $base0D $base00
+#     active_workspace    $base05 $base03 $base00
+#     inactive_workspace  $base03 $base01 $base05
+#     urgent_workspace    $base08 $base08 $base00
+#     binding_mode        $base00 $base0A $base00
+#   }
+# 
+#   position top
+# 
+#   # icon_theme adwaita
+# }
+
+# Wide border so selected window is obvious
+default_border pixel 6
+gaps outer 0
+gaps inner 0
+
+set $opacity 1.0
+for_window [class=".*"] opacity $opacity
+for_window [app_id=".*"] opacity $opacity
 
 # Execute systemd user session
 exec "systemctl --user import-environment; systemctl --user start sway-session.target"

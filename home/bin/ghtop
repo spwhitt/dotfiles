@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-# A popup for htop
-alacritty --class swaypopup -t htop -e htop

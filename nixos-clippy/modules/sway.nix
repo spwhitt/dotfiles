@@ -2,9 +2,8 @@
 
 # Release 20.09 pulseSupport defaults false for some reason
 # Unstable already has it default true. TODO: remove on upgrade
-let mywaybar = pkgs.waybar.override{ pulseSupport = true; };
-in
-{
+let mywaybar = pkgs.waybar.override { pulseSupport = true; };
+in {
   # Trying wayland
   programs.sway = {
     enable = true;
@@ -14,22 +13,22 @@ in
 
     # These simply get added to systemPackages
     # I'm managing it myself in systemPackages
-    extraPackages = [];
+    extraPackages = [ ];
 
     # I'm doing this in .zprofile at the moment instead
     # extraSessionCommands = ''
-      # export SDL_VIDEODRIVER=wayland
-      # needs qt5.qtwayland in systemPackages
-      # export QT_QPA_PLATFORM=wayland
-      # export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-      # Fix for some Java AWT applications (e.g. Android Studio),
-      # use this if they aren't displayed properly:
-      # export _JAVA_AWT_WM_NONREPARENTING=1
+    # export SDL_VIDEODRIVER=wayland
+    # needs qt5.qtwayland in systemPackages
+    # export QT_QPA_PLATFORM=wayland
+    # export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+    # Fix for some Java AWT applications (e.g. Android Studio),
+    # use this if they aren't displayed properly:
+    # export _JAVA_AWT_WM_NONREPARENTING=1
     # '';
   };
 
   # QT themeing
-  programs.qt5ct.enable = true;
+  # programs.qt5ct.enable = true;
 
   # services.redshift = {
   #   enable = true;
@@ -37,6 +36,9 @@ in
   # };
 
   environment.systemPackages = with pkgs; [
+    # For discovering sway key names
+    wev
+
     wl-clipboard # Clipboard for wayland
     # mywaybar # disabled because not needed in terminal
 
@@ -127,12 +129,13 @@ in
     partOf = [ "graphical-session.target" ];
     path = [ pkgs.bash ]; # swayidle expects to find sh on path
     serviceConfig = {
-      ExecStart = '' ${pkgs.swayidle}/bin/swayidle -w -d \
-        timeout 300 '${pkgs.sway}/bin/swaymsg "output * dpms off"' \
-        resume '${pkgs.sway}/bin/swaymsg "output * dpms on"' \
-        timeout 600 '${pkgs.systemd}/bin/systemctl suspend' \
-        after-resume '${pkgs.sway}/bin/swaymsg "output * dpms on"'
-      '';
+      ExecStart = ''
+        ${pkgs.swayidle}/bin/swayidle -w -d \
+               timeout 300 '${pkgs.sway}/bin/swaymsg "output * dpms off"' \
+               resume '${pkgs.sway}/bin/swaymsg "output * dpms on"' \
+               timeout 600 '${pkgs.systemd}/bin/systemctl suspend' \
+               after-resume '${pkgs.sway}/bin/swaymsg "output * dpms on"'
+             '';
     };
   };
 

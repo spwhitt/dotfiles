@@ -1,0 +1,1 @@
+systemd-run --user --scope --property=MemoryHigh=8G --slice=background $(which firefox) "$@"

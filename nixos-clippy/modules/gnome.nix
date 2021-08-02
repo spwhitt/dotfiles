@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 
 {
+
+  # hardware.nvidia.package = pkgs.linuxPackages.nvidia_x11_legacy390;
+
   services.xserver = {
     enable = true;
     layout = "us";
@@ -21,18 +24,24 @@
 
   };
 
+  # Theme qt to match gtk
+  qt5.enable = true;
+  qt5.platformTheme = "gnome"; # gtk2 or gnome
+  qt5.style = "adwaita";
+
   # services.gnome.gnome-online-accounts.enable = true;
 
-  environment.systemPackages = with pkgs;
-    [
+  environment.systemPackages = with pkgs; [
 
-      # Wayland now...
-      # xorg.xkill
-      # xbindkeys
-      # xdotool
-      # wmctrl
-      # jumpapp
+    # Wayland now...
+    # xorg.xkill
+    # xbindkeys
+    # xdotool
+    # wmctrl
+    # jumpapp
 
-      gnome.gnome-tweaks
-    ];
+    gnome.gnome-tweaks
+    gnomeExtensions.material-shell
+    gnome-magic-window
+  ];
 }

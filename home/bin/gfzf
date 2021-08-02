@@ -1,16 +1,13 @@
 #!/usr/bin/env bash
 # fzfmenu - fzf as dmenu replacement
 
-# fifos pass input to fzf running inside alacritty
+# fifos pass input to fzf running inside terminal
 input=$(mktemp -u --suffix .fzfmenu.input)
 output=$(mktemp -u --suffix .fzfmenu.output)
 
 mkfifo "$input"
 mkfifo "$output"
 chmod 600 "$input" "$output"
-
-# Using alacritty
-# It's fast enough, plus I can share my config with my other terminals
 
 # the ugly printf | sed thing is here to make args with quotes work.
 # (e.g. --preview='echo {1}').

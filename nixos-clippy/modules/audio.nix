@@ -14,6 +14,10 @@
   #   }))
   # ];
 
+  # Broadcom bluetooth
+  hardware.enableAllFirmware = true;
+  hardware.cpu.intel.updateMicrocode = true;
+
   # Enable bluetooth
   hardware.bluetooth = {
     enable = true;

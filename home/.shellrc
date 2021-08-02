@@ -16,7 +16,7 @@ alias fzf='fzf --bind=alt-space:abort'
 # Use neovim for manpages
 export MANPAGER='nvim +Man!'
 
-export TERMINAL='alacritty'
+export TERMINAL='kitty'
 
 # ------------------------------------------------------------------------------
 # Editor (VIM obviously)
@@ -32,6 +32,8 @@ export VISUAL="$EDITOR"
 alias nixos-test='cd /etc/nixos/; sudo nixos-rebuild test'
 # Remove symlink from test, switch to new configuration
 alias nixos-switch='rm -f /etc/nixos/result; sudo nixos-rebuild switch'
+# Search nixpkgs flake
+alias nixsearch="nix search nixpkgs"
 
 # Systemd
 alias sctl="sudo systemctl"
@@ -42,7 +44,7 @@ alias jctl="journalctl"
 alias dtrx="dtrx --one=I"
 # alias ls=exa
 
-alias vim=nvim-qt
+alias vim=nvim
 # *E*ditor
 alias e=vim
 
@@ -104,4 +106,10 @@ function b() {
   fi
 }
 
-alias nixsearch="nix search nixpkgs"
+function chill() {
+  mpv --shuffle "https://soundcloud.com/relaxdaily/sets/deep-focus-music-studying-concentration-work"
+}
+
+function dot {
+  fd . -H ~/.dotfiles | fzf --preview='head -$LINES' | xargs nvim
+}

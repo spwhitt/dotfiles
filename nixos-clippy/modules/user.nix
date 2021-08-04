@@ -1,5 +1,5 @@
 { config, pkgs, ... }: {
-  users.extraUsers.swhitt = {
+  users.users.swhitt = {
     name = "swhitt";
     uid = 1000;
     isNormalUser = true;
@@ -42,7 +42,7 @@
     zathura
     foliate # Finally a decent epub reader!
     feh
-    mpv
+    (mpv.override { scripts = [ mpvScripts.mpris ]; })
 
     # Editors
     neovim

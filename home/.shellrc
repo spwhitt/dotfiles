@@ -34,6 +34,7 @@ alias nixos-test='cd /etc/nixos/; sudo nixos-rebuild test'
 alias nixos-switch='rm -f /etc/nixos/result; sudo nixos-rebuild switch'
 # Search nixpkgs flake
 alias nixsearch="nix search nixpkgs"
+alias clip="kitty +kitten clipboard"
 
 # Systemd
 alias sctl="sudo systemctl"
@@ -43,6 +44,7 @@ alias jctl="journalctl"
 # terminal utils
 alias dtrx="dtrx --one=I"
 # alias ls=exa
+alias ls="ls --hyperlink=auto"
 
 alias vim=nvim
 # *E*ditor

@@ -356,8 +356,7 @@ let g:fzf_action = {
 " For vim-sexp to recognize file
 " let g:sexp_filetypes += 'racket'
 
-" Use :terminal to host REPL
-let g:slime_target='neovim'
+let g:slime_target='kitty'
 
 " ALE settings
 " Enabling ale completion is definitely a bad idea - it overrides sensible settings

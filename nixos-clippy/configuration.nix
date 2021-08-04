@@ -31,6 +31,10 @@
 
       # Adds support for ZSH completions - PR hasn't made it to stable channel yet
       handlr = super.pkgs.callPackage ./pkgs/handlr.nix { };
+
+      kargos = super.pkgs.callPackage ./pkgs/kargos.nix {
+        inherit (super.pkgs.plasma5Packages) plasma-framework;
+      };
     })
   ];
 

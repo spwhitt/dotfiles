@@ -41,10 +41,10 @@
 
   };
 
-  environment.systemPackages = with pkgs;
-    [
-      ww-run-raise
+  environment.systemPackages = with pkgs; [
+    ww-run-raise
+    kargos
 
-      # skanlite
-    ];
+    # skanlite
+  ];
 }

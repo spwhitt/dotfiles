@@ -34,6 +34,14 @@ alias nixos-test='cd /etc/nixos/; sudo nixos-rebuild test'
 alias nixos-switch='rm -f /etc/nixos/result; sudo nixos-rebuild switch'
 # Search nixpkgs flake
 alias nixsearch="nix search nixpkgs"
+# Build package from terminal using dependencies from nixpkgs
+# Example: callPackage ./kargos.nix "inherit (plasma5Packages) plasma-framework kwindowsystem;"
+function callPackage() {
+  nixFile="$1"
+  inherits="$2"
+  nix-build -E "with import <nixpkgs> {}; pkgs.callPackage $nixFile { $inherits }"
+}
+
 alias clip="kitty +kitten clipboard"
 
 # Systemd
@@ -109,7 +117,7 @@ function b() {
 }
 
 function chill() {
-  mpv --shuffle "https://soundcloud.com/relaxdaily/sets/deep-focus-music-studying-concentration-work"
+  mpv --shuffle --no-audio-display "https://soundcloud.com/relaxdaily/sets/deep-focus-music-studying-concentration-work"
 }
 
 function dot {

@@ -2,8 +2,6 @@ set adjust-open "best-fit"
 
 set font "Source Code Pro 11"
 
-##  Dark Theme
-
 set default-bg "#000000" #00
 set default-fg "#F7F7F6" #01
 
@@ -31,7 +29,9 @@ set completion-fg "#E0E0E0" #0C
 set notification-bg "#90A959" #0B
 set notification-fg "#151515" #00
 
-set recolor "true"
+# Toggle dark mode for reading at night
+map D set recolor
+# set recolor "true"
 set recolor-lightcolor "#000000" #00
 set recolor-darkcolor "#E0E0E0" #06
 set recolor-reverse-video "true"
